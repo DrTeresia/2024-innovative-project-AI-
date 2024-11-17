@@ -3,29 +3,55 @@ using UnityEngine;
 using Assets.Map;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using System.Globalization;
+using System.Security.Cryptography;
 
 
 public class UI_GenNameMap : MonoBehaviour
 {
-
+    public enum campType
+    {
+        None,
+        Wei,
+        Shu,
+        Wu
+    }
     private InputField _inputName;
     private Button _btnGen;
-	// Use this for initialization
+    // Use this for initialization
     private Font _dFont;
     private RawImage _image;
     private Text _mouseBiome;
+    private Text _descLabel;
     private GameObject _showMap;
-	void Start ()
-	{
+    private GameObject _showCampDivision;
+
+    [SerializeField]
+    private GameObject mainTownPrefab;
+    [SerializeField]
+    private GameObject townPrefab;
+    [SerializeField]
+    private GameObject forestPrefab;
+    [SerializeField]
+    private GameObject minePrefab;
+
+    private string _name;
+    void Start()
+    {
         _inputName = transform.Find("inputName").GetComponent<InputField>();
         _btnGen = transform.Find("btnGen").GetComponent<Button>();
         _image = transform.Find("RawImage").GetComponent<RawImage>();
         _mouseBiome = transform.Find("MouseBiome").GetComponent<Text>();
-	    _dFont = _inputName.textComponent.font;
+        _descLabel = transform.Find("DescLabel").GetComponent<Text>();
+        _dFont = _inputName.textComponent.font;
 
         _btnGen.onClick.AddListener(GenMap);
 
-	    _showMap = GameObject.Find("Map");
+        _showMap = GameObject.Find("Map");
+        _showCampDivision = GameObject.Find("CampDivision");
+        //隐藏descLabel与mouseBiome
+        transform.Find("DescLabel").gameObject.SetActive(false);
+        transform.Find("MouseBiome").gameObject.SetActive(false);
 
         transform.Find("Toggles1/Toggle1").GetComponent<Toggle>().onValueChanged.AddListener(Toggle1);
         transform.Find("Toggles1/Toggle2").GetComponent<Toggle>().onValueChanged.AddListener(Toggle2);
@@ -34,7 +60,7 @@ public class UI_GenNameMap : MonoBehaviour
 
         transform.Find("Toggles2/Toggle1").GetComponent<Toggle>().onValueChanged.AddListener(ToggleLand);
         transform.Find("Toggles2/Toggle2").GetComponent<Toggle>().onValueChanged.AddListener(ToggleLake);
-	}
+    }
 
     void Update()
     {
@@ -44,7 +70,7 @@ public class UI_GenNameMap : MonoBehaviour
     private float _nextCheckTime;
     private void CheckMouseBiome()
     {
-        if(Time.time < _nextCheckTime)
+        if (Time.time < _nextCheckTime)
             return;
         _nextCheckTime = Time.time + 0.1f;
 
@@ -72,7 +98,7 @@ public class UI_GenNameMap : MonoBehaviour
         Biome b = Biome.Ocean;
         foreach (var bc in BiomeProperties.Colors)
         {
-            if (ColorNearby(bc.Value , color))
+            if (ColorNearby(bc.Value, color))
             {
                 b = bc.Key;
                 break;
@@ -91,8 +117,8 @@ public class UI_GenNameMap : MonoBehaviour
 
     private static Texture2D _txtTexture;
     const int TextureScale = 20;
-    private const int Width = 100;
-    private const int Height = 50;
+    private const int Width = 300;
+    private const int Height = 200;
     private int _pointNum = 1000;
     private static bool _isLake = true;
     void Toggle1(bool check)
@@ -128,11 +154,16 @@ public class UI_GenNameMap : MonoBehaviour
 
     private void GenMap()
     {
-        Random.InitState((int)DateTime.Now.Ticks);
+        //获取地图名字并作为随机种子
+        _name = _inputName.text;
+        Random.InitState(_name.GetHashCode());
+        //Random.InitState((int)DateTime.Now.Ticks);
+
         _txtTexture = GetTextTexture();
 
         Map.Width = Width;
         Map.Height = Height;
+
         Map map = new Map();
         map.SetPointNum(_pointNum);
         map.Init(CheckIsland());
@@ -141,6 +172,104 @@ public class UI_GenNameMap : MonoBehaviour
         noisyEdge.BuildNoisyEdges(map);
 
         new MapTexture(TextureScale).AttachTexture(_showMap, map, noisyEdge);
+
+
+        //隐藏地图设置按钮
+        transform.Find("Toggles1").gameObject.SetActive(false);
+        transform.Find("Toggles2").gameObject.SetActive(false);
+        transform.Find("btnGen").gameObject.SetActive(false);
+        transform.Find("inputName").gameObject.SetActive(false);
+
+        //将descLabel与mouseBiome激活
+        transform.Find("DescLabel").gameObject.SetActive(true);
+        transform.Find("MouseBiome").gameObject.SetActive(true);
+
+        //随机生成Main Town预制体
+        GenMainTown();
+        //生成城镇
+        GenTown();
+        //生成森林
+        GenForest();
+        //生成矿山
+        GenMine();
+    }
+
+    private void GenCampDivision()
+    {
+        //将地图分成三个阵营
+        int width = _txtWidth;
+        int height = _txtHeight;
+        int[] campDivision = new int[3];
+        campDivision[0] = Random.Range(0, width);
+        campDivision[1] = Random.Range(0, width);
+        campDivision[2] = Random.Range(0, width);
+        Array.Sort(campDivision);
+        //生成阵营分界线
+        Texture2D texture = new Texture2D(width, height);
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Color color = Color.white;
+                if (i == campDivision[0] || i == campDivision[1] || i == campDivision[2])
+                    color = Color.black;
+                texture.SetPixel(i, j, color);
+            }
+        }
+        texture.Apply();
+        _showCampDivision.GetComponent<RawImage>().texture = texture;
+
+    }
+
+    private void GenMainTown()
+    {
+        //总共三个MainTown，分别位于三个阵营的中心
+        Debug.Log(mainTownPrefab);
+        GameObject mainTown1 = Instantiate(mainTownPrefab);
+        GameObject mainTown2 = Instantiate(mainTownPrefab);
+        GameObject mainTown3 = Instantiate(mainTownPrefab);
+        //地图的范围为（-75， 40）到（75， -60），在这个范围内随机生成MainTown，避免生成在海洋上
+        //三个主城的分布为上、左下、右下
+        mainTown1.transform.position = new Vector3(Random.Range(-10, 10), Random.Range(20, 30), 0);
+        mainTown2.transform.position = new Vector3(Random.Range(-70, -50), Random.Range(-40, -20), 0);
+        mainTown3.transform.position = new Vector3(Random.Range(50, 70), Random.Range(0, 20), 0);
+    }
+
+    private void GenTown()
+    {
+        //城镇数量随机，分布在地图上
+        int townNum = Random.Range(10, 20);
+        for (int i = 0; i < townNum; i++)
+        {
+            GameObject town = Instantiate(townPrefab);
+            town.transform.position = new Vector3(Random.Range(-75, 75), Random.Range(-60, 40), 0);
+        }
+
+    }
+
+    private void GenMine()
+    {
+        int mineNum = Random.Range(10, 20);
+        //按照正态分布生成矿山
+        for (int i = 0; i < mineNum; i++)
+        {
+            GameObject mine = Instantiate(minePrefab);
+            mine.transform.position = new Vector3(Random.Range(-20, 20), Random.Range(-10, 10), 0);
+        }
+    }
+    private void GenForest()
+    {
+        int forestNum = Random.Range(10, 20);
+        for (int i = 0; i < forestNum; i++)
+        {
+            GameObject forest = Instantiate(forestPrefab);
+            forest.transform.position = new Vector3(Random.Range(-65, 65), Random.Range(-50, 30), 0);
+            //如果森林生成在地图中心则重新生成
+            while (forest.transform.position.x > -40 && forest.transform.position.x < 40 && forest.transform.position.y > -20 && forest.transform.position.y < 0)
+            {
+                forest.transform.position = new Vector3(Random.Range(-65, 65), Random.Range(-50, 30), 0);
+            }
+        }
     }
     public static System.Func<Vector2, bool> CheckIsland()
     {
