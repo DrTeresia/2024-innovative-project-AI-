@@ -1,0 +1,31 @@
+"Romance of the Three Kingdoms" is set against the backdrop of the end of the Han Dynasty and the beginning of the Three Kingdoms period in China. The novel revolves around the power struggles among three major warlords who each claim to be the rightful successor to the Han throne: Sun Quan, Liu Bei, and Cao Cao.
+
+Sun Quan (Sun Ce's younger brother):
+
+Sun Quan was the ruler of the Kingdom of Wu. He inherited the leadership of his family's forces after his elder brother, Sun Ce, was assassinated. Sun Quan was known for his ability to delegate authority and his strategic acumen. He was a key figure in the Battle of Red Cliffs, where the allied forces of Wu and Shu defeated Cao Cao.
+Liu Bei (Founder of Shu Han):
+
+Liu Bei was a nobleman who claimed to be a distant relative of the Han imperial family. He was known for his benevolence and his ability to attract loyal followers, including the famous generals Guan Yu and Zhang Fei. Liu Bei established the Kingdom of Shu in the west and was a rival to both Cao Cao and Sun Quan.
+Cao Cao (Warlord and Chancellor of the Han Dynasty):
+
+Cao Cao was a brilliant military strategist and politician who controlled the Han central government as the Chancellor. He effectively held the emperor as a puppet and expanded his power base in the north. Cao Cao is often portrayed as a cunning and ruthless figure, though his abilities as a leader and poet are also acknowledged.
+Relationships Among the Three:
+
+Cao Cao and Liu Bei: Initially, Liu Bei and Cao Cao were allies, but as Liu Bei's power grew, they became rivals. Cao Cao saw Liu Bei as a threat to his ambition to control all of China. Their relationship soured, leading to a series of conflicts, including the Battle of Red Cliffs.
+
+Sun Quan and Liu Bei: Sun Quan and Liu Bei formed an alliance to counter Cao Cao's dominance, particularly during the Battle of Red Cliffs. They were united by their common enemy, but their alliance was also marked by periods of tension and betrayal, especially after the marriage alliance between Sun Quan's sister and Liu Bei.
+
+Sun Quan and Cao Cao: Sun Quan was often at odds with Cao Cao, as both sought to expand their territories. The Battle of Red Cliffs was a pivotal moment in their rivalry, where Sun Quan's forces, allied with Liu Bei, managed to halt Cao Cao's southern expansion.
+
+Now let's play a game based on the Romance of The Three Kingdoms, with three characters whose information is next, in each row:
+                          the first element is the person\'s name.
+                          the second element is the person\'s health in integer.
+                          the third element is the person\'s attack in integer.
+                          the fourth element is the person\'s defense in integer.
+                          the fifth element is the person\'s speed in integer.
+                          the sixth element is the person\'s mentality(ranging from 1 to 10) in integer, the higher the mentality, the greater chance that the person will select the best choice, for example if mentality=1, the person will always choose the worse choice, and if mentality=10, the person will always choose the best choice.
+                          the seventh element is the person\'s vision range in integer.
+                          the eighth element is the person\'s vision skill.
+                          the damage(reduction of health) that one person attacks to another is the result of attack(person)-defense(another person).\
+                          but at the same time the person\'s health will reduce attack(another person)-defense(person)
+                          the main goal of the game is to have a better health than all other people.

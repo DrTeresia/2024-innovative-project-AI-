@@ -1,0 +1,46 @@
+{
+  "the BattleField": {
+    "North Area": {
+      "Cao Cao's Barrack": [
+        "Cao Cao",
+        "Zhang Liao",
+        "Camp defense facility",
+        "Ordinary soldier",
+        "Ordinary soldier",
+        "Ordinary soldier"
+      ],
+      "Front-line Barrack(Cao Cao)": [
+        "Cao Ren",
+        "Cao Chun",
+        "Cao Hong",
+        "Cao Xio"
+      ]
+    },
+    "East Area": {
+      "Sun Quan's Barrack": [
+        "Sun Quan",
+        "Zhou Yu",
+        "Lu Xun",
+        "Ordinary soldier",
+        "Ordinary soldier",
+        "Ordinary soldier"
+      ],
+      "Front-line Barrack(Sun Quan)": [
+        "Lu Meng",
+        "Ordinary soldier"
+      ]
+    },
+    "South-West Area": {
+      "Liu Bei's Barrack": [
+        "Liu Bei",
+        "Guan Yu",
+        "Zhang Fei"
+      ],
+      "Front-line Barrack(Liu Bei)": [
+        "Zhu Ge Liang",
+        "Zhao Yu",
+        "Ordinary soldier"
+      ]
+    }
+  }
+}
