@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI; 
+using UnityEngine.UI;
+using Pathfinding;
 
 public class sprite : MonoBehaviour
 {
@@ -14,16 +14,22 @@ public class sprite : MonoBehaviour
     private Animator animator;// Animator组件引用
     private Rigidbody2D rb; // 用于移动的Rigidbody2D组件
     public LayerMask enemyLayer; // 敌人所在的LayerMask
-    public GameObject dialogPanel; // 对话框的GameObject
-    private bool isDialogActive = false; // 对话框是否激活
+    //public GameObject dialogPanel; // 对话框的GameObject
+    //private bool isDialogActive = false; // 对话框是否激活
     private HashSet<GameObject> encounteredEnemies = new HashSet<GameObject>(); // 已遇到的敌人集合
 
+    public float detectionRange_of_attack = 0.2f; // 检测范围
+
+    public float moveSpeed = 0.5f; // 角色移动速度
+
     // Start is called before the first frame update
+
+
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        dialogPanel.SetActive(false);
+        //dialogPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,22 +40,19 @@ public class sprite : MonoBehaviour
         animator.SetBool("IsAttackingLeft", false);
 
 
-        float detectionRange_of_attack = 0.2f; // 检测范围
-
+        //获取鼠标点击位置
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPosition = mousePos;
-        }
-        
 
-        //敌人列表
-        Collider2D[] enemiesInView = Physics2D.OverlapCircleAll(transform.position, detectionRange_of_attack).Where(c => c.gameObject.layer == enemyLayer.value).ToArray();
+
+        }
+
 
         // 移动角色到目标位置
         if (targetPosition != Vector2.zero)
         {
-            float moveSpeed = 10.0f; // 角色移动速度
             Vector2 moveDirection = (targetPosition - (Vector2)transform.position).normalized;
             //rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
 
@@ -92,19 +95,10 @@ public class sprite : MonoBehaviour
 
         if (isIdle)         //是否攻击
         {
-            //Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectionRange);
-            //foreach (var enemy in enemies)
-            //{
-            //    if (enemy.CompareTag("Enemy"))
-            //    {
-            //        // 根据敌人的方向进行攻击
-            //        Vector2 direction = (enemy.transform.position - transform.position).normalized;
-            //        AttackInDirection(direction);
-            //    }
-            //}
 
-            
-            
+            //敌人列表
+            Collider2D[] enemiesInView = Physics2D.OverlapCircleAll(transform.position, detectionRange_of_attack).Where(c => c.gameObject.layer == enemyLayer.value).ToArray();
+
             if (enemiesInView.Length > 0)
             {
                 // 处理检测到的敌人
@@ -113,32 +107,6 @@ public class sprite : MonoBehaviour
 
         }
 
-        float triggerDistance = 0.2f; // 触发对话的距离
-
-        if (isIdle)
-        {
-            if(enemiesInView.Length > 0)
-            {
-                Dialogtrigger(enemiesInView, encounteredEnemies);
-            }
-        }
-
-        //foreach (var enemy in enemiesInView)
-        //{
-        //    if (enemy.gameObject.layer == enemyLayer.value && !isDialogActive)
-        //    {
-        //        // 显示对话框
-        //        OpenDialog();
-        //        isDialogActive = true;
-        //        break; // 假设一次只能与一个敌人对话
-        //    }
-        //}
-
-        //// 检测空格键是否被按下以关闭对话框
-        //if (isDialogActive && Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    CloseDialog();
-        //}
 
     }
     void MirrorCharacter(bool mirror)              //镜像器
@@ -195,39 +163,6 @@ public class sprite : MonoBehaviour
         }
     }
 
-    void Dialogtrigger(Collider2D[] enemies, HashSet<GameObject> encounteredEnemies)
-    {
-        // 检测周围的敌人
-        //Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectionRange);
-        foreach (var enemy in enemies)
-        {
-            if (enemy.gameObject.layer == enemyLayer.value && !encounteredEnemies.Contains(enemy.gameObject))
-            {
-                // 敌人第一次进入范围，显示对话框
-                OpenDialog();
-                isDialogActive = true;
-                encounteredEnemies.Add(enemy.gameObject); // 将敌人添加到已遇到的集合中
-                break; // 假设一次只能与一个敌人对话
-            }
-        }
 
-        // 如果对话框已激活，检测空格键是否被按下以关闭对话框
-        if (isDialogActive && Input.GetKeyDown(KeyCode.Space))
-        {
-            CloseDialog();
-        }
-    }
 
-    void OpenDialog()
-    {
-        // 显示对话框
-        dialogPanel.SetActive(true);
-    }
-
-     void CloseDialog()
-    {
-        // 隐藏对话框
-        dialogPanel.SetActive(false);
-        isDialogActive = false;
-    }
 }

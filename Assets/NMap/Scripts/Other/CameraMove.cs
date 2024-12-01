@@ -12,7 +12,7 @@ public class CameraMove : MonoBehaviour
     private float mouseCenter;
     private int maxView = int.MaxValue;
     private int minView = int.MinValue;
-    private float slideSpeed = 5;
+    public float slideSpeed = 5.0f;
 
     public Vector3 last_frame_mouse_position;
     public float horizontal_speed = 2.0f;
@@ -32,17 +32,24 @@ public class CameraMove : MonoBehaviour
         float mouseCenter = Input.GetAxis("Mouse ScrollWheel");
         if (mouseCenter > 0)
         {
-            if (c.fieldOfView > minView)
+            //投影采用orthographic
+            if (c.orthographic)
             {
-                c.fieldOfView -= slideSpeed;
+                c.orthographicSize -= slideSpeed;
+                c.orthographicSize = Mathf.Clamp(c.orthographicSize, 1, 100);
             }
+            UnityEngine.Debug.Log(c.fieldOfView);
         }
         else if (mouseCenter < 0)
         {
-            if (c.fieldOfView < maxView)
+            //投影采用orthographic
+            if (c.orthographic)
             {
-                c.fieldOfView += slideSpeed;
+                c.orthographicSize += slideSpeed;
+                c.orthographicSize = Mathf.Clamp(c.orthographicSize, 1, 100);
             }
+
+            UnityEngine.Debug.Log(c.fieldOfView);
         }
         //摄像机移动，仅相对世界参考系，与摄像机旋转无关
         if (Input.GetMouseButtonDown(1))
@@ -52,7 +59,9 @@ public class CameraMove : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             Vector3 delta = Input.mousePosition - last_frame_mouse_position;
-            transform.Translate(-delta.x * horizontal_speed * Time.deltaTime, -delta.y * vertical_speed * Time.deltaTime, 0);
+            //摄像机视角越宽，移动速度越快， 乘以视角大小的比例， 且与鼠标拖拽一致
+            //transform.Translate(-delta.x * horizontal_speed * Time.deltaTime, -delta.y * vertical_speed * Time.deltaTime, 0);
+            c.transform.Translate(-delta.x * horizontal_speed * Time.deltaTime * c.orthographicSize / 5, -delta.y * vertical_speed * Time.deltaTime * c.orthographicSize / 5, 0);
             //c.transform.position = new Vector3(Mathf.Clamp(c.transform.position.x, -horizontal_limit, horizontal_limit), Mathf.Clamp(c.transform.position.y, -vertical_limit, vertical_limit), c.transform.position.z);
             last_frame_mouse_position = Input.mousePosition;
         }

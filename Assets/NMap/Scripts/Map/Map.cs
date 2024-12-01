@@ -46,8 +46,26 @@ namespace Assets.Map
 
             var voronoi = new Voronoi(points, colors, new Rect(0, 0, Width, Height));
 
+            Debug.Log("Asset/Map/CheckIsland");
             checkIsland = checkIsland ?? IslandShape.makePerlin();
+            if(checkIsland == null)
+            {
+                Debug.Log("Asset/Map/CheckIsland failed");
+            }
+            else
+            {
+                Debug.Log("Asset/Map/CheckIsland success");
+            }
+            //check what is null
+            if (points == null)
+            {
+                Debug.Log("Asset/Map/Points failed");
+            }
+            if (voronoi == null)
+                Debug.Log("Asset/Map/Voronoi failed");
+
             Graph = new Graph(checkIsland,points, voronoi, (int)Width, (int)Height, _lakeThreshold);
+            Debug.Log("Asset/Map/Graph success");
         }
     }
 }
