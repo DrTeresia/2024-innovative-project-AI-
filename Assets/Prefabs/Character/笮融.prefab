@@ -61,12 +61,12 @@ PrefabInstance:
     - target: {fileID: 3509024468150545204, guid: dc9d01a7a09ea7741921923fc1529b48,
         type: 3}
       propertyPath: m_Name
-      value: "\u9EC4\u76D6"
+      value: "\u7B2E\u878D"
       objectReference: {fileID: 0}
     - target: {fileID: 5802763387538976077, guid: dc9d01a7a09ea7741921923fc1529b48,
         type: 3}
       propertyPath: m_Text
-      value: "\u9EC4\u76D6"
+      value: "\u7B2E\u878D"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

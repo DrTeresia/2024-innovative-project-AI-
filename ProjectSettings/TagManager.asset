@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Building
+  - SunCeMilitary
+  - YanBaihuMilitary
+  - LiuYaoMilitary
+  - NPC
+  - WangLangMilitary
   layers:
   - Default
   - TransparentFX
@@ -19,8 +24,8 @@ TagManager:
   - Camera
   - Character
   - PostProcessing
-  - 
-  - 
+  - Enemy
+  - obstacle
   - 
   - 
   - 

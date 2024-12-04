@@ -63,6 +63,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u4E25\u767D\u864E"
       objectReference: {fileID: 0}
+    - target: {fileID: 3509024468150545204, guid: dc9d01a7a09ea7741921923fc1529b48,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509024468150545204, guid: dc9d01a7a09ea7741921923fc1529b48,
+        type: 3}
+      propertyPath: m_TagString
+      value: YanBaihuMilitary
+      objectReference: {fileID: 0}
     - target: {fileID: 5802763387538976077, guid: dc9d01a7a09ea7741921923fc1529b48,
         type: 3}
       propertyPath: m_Text

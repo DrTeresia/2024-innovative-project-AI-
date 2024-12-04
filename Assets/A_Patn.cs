@@ -22,7 +22,8 @@ public class NewBehaviourScript : MonoBehaviour
     public float speed;
     private Animator animator;// Animator组件引用
     private Rigidbody2D rb; // 用于移动的Rigidbody2D组件
-    public LayerMask enemyLayer; // 敌人所在的LayerMask
+    //public LayerMask enemyLayer; // 敌人所在的LayerMask
+    public string enemyTag; // 敌人的标签
     private HashSet<GameObject> encounteredEnemies = new HashSet<GameObject>(); // 已遇到的敌人集合
     public float detectionRange_of_attack; // 检测范围
 
@@ -32,28 +33,33 @@ public class NewBehaviourScript : MonoBehaviour
         mSeeker = GetComponent<Seeker>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        //enemyLayer = LayerMask.NameToLayer("enemy");           //图层为enemy
+        //将enemyTag设置为物体自己的tag
+        enemyTag = gameObject.tag;
 
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   /*
         if (Input.GetMouseButtonDown(1))     //右键取消框选的兵种
         {
             isSelected = false;
         }
+        */
 
-            //攻击状态清除
-            animator.SetBool("IsAttackingUp", false);
+        //攻击状态清除
+        animator.SetBool("IsAttackingUp", false);
         animator.SetBool("IsAttackingDown", false);
         animator.SetBool("IsAttackingLeft", false);
 
         if (!isSelected)
         {
+            //如果没有被选中则每五秒选择一次目的地进行随机移动
             return;
         }
         if (Input.GetMouseButtonDown(0))
-        {   
+        {
             //点击鼠标获得新位置时，先把位置重置
             animator.SetBool("IsWalkingLeft", false);
             animator.SetBool("IsWalkingUp", false);
@@ -69,9 +75,27 @@ public class NewBehaviourScript : MonoBehaviour
     }
     private void Move()
     {
-        Collider2D[] enemiesInView = Physics2D.OverlapCircleAll(transform.position, detectionRange_of_attack).Where(c => c.gameObject.layer == enemyLayer.value).ToArray();
+        //Collider2D[] enemiesInView = Physics2D.OverlapCircleAll(transform.position, detectionRange_of_attack).Where(c => c.gameObject.layer == enemyLayer.value).ToArray();
+        // 获取所有在检测范围内的对象
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRange_of_attack);
 
-        if (mPathPointList == null || mPathPointList.Count <= 0 )
+        // 过滤出标签为enemyTag的对象
+        Collider2D[] enemiesInView = new Collider2D[0]; // 初始化为空数组
+        foreach (var collider in colliders)
+        {
+            if (!collider.gameObject.CompareTag(enemyTag))
+            {
+                // 将符合条件的敌人添加到数组中
+                // 注意：这里需要扩展数组，因为数组的大小是固定的，不能直接添加元素
+                // 可以使用List<Collider2D>来收集，最后转换为数组
+                List<Collider2D> tempEnemiesInView = new List<Collider2D>(enemiesInView);
+                tempEnemiesInView.Add(collider);
+                enemiesInView = tempEnemiesInView.ToArray();
+            }
+        }
+
+
+        if (mPathPointList == null || mPathPointList.Count <= 0)
         {
             // 如果没有移动方向，默认的Idle状态
             animator.SetBool("IsWalkingLeft", false);
@@ -131,7 +155,7 @@ public class NewBehaviourScript : MonoBehaviour
                 animator.SetBool("IsWalkingDown", false);
             }
 
-            
+
         }
         else      //到达目标点
         {
