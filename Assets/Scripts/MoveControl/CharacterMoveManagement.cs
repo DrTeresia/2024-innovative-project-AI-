@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class CharacterMoveManagement : MonoBehaviour
 {
+    public enum MoveType
+    {
+        move,
+        leave,
+        idle
+    }
+    public enum ActionType
+    {
+
+        attack,
+        idle
+    }
     // Load self game object
     private double upperBound = 40;
     private double lowerBound = -60;
@@ -12,29 +24,30 @@ public class CharacterMoveManagement : MonoBehaviour
     private float DISTANCE_TOLERANCE = 1.0f;
 
     public Vector3 targetPosition;
-    public bool idle = true;
+    public bool isIdle = true;
+    public MoveType moveStatus;
+    public ActionType actionStatus;
 
-    public enum MoveType
-    {
-        move,
-        leave
-    }
-    public enum ActionType
-    {
-        attack,
-        idle
-    }
+
     // Start is called before the first frame update
     void Start() 
     {
         //randomly set a target
-        this.gameObject.GetComponent<NewBehaviourScript>().SetSelected(false);        
+        this.gameObject.GetComponent<NewBehaviourScript>().SetSelected(false);     
+        moveStatus = MoveType.idle;
+        actionStatus = ActionType.idle;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //if the object's position is close to the target position, set the object to idle
+        if (MoveType.move == moveStatus && Vector3.Distance(targetPosition, transform.position) < DISTANCE_TOLERANCE)
+        {
+            moveStatus = MoveType.idle;
+            isIdle = true;
+        }
+
     }
 
     void escapeFrom (Vector3 playerPosition)
