@@ -4,18 +4,7 @@ using UnityEngine;
 
 public class CharacterMoveManagement : MonoBehaviour
 {
-    public enum MoveType
-    {
-        move,
-        leave,
-        idle
-    }
-    public enum ActionType
-    {
-
-        attack,
-        idle
-    }
+    
     // Load self game object
     private double upperBound = 40;
     private double lowerBound = -60;
@@ -25,8 +14,9 @@ public class CharacterMoveManagement : MonoBehaviour
 
     public Vector3 targetPosition;
     public bool isIdle = true;
-    public MoveType moveStatus;
-    public ActionType actionStatus;
+    public GlobalMoveManagement.MoveType moveStatus;
+    public GlobalMoveManagement.ActionType actionStatus;
+    public GlobalMoveManagement.Camp camp;
 
 
     // Start is called before the first frame update
@@ -34,23 +24,23 @@ public class CharacterMoveManagement : MonoBehaviour
     {
         //randomly set a target
         this.gameObject.GetComponent<NewBehaviourScript>().SetSelected(false);     
-        moveStatus = MoveType.idle;
-        actionStatus = ActionType.idle;
+        moveStatus = GlobalMoveManagement.MoveType.idle;
+        actionStatus = GlobalMoveManagement.ActionType.idle;
     }
 
     // Update is called once per frame
     void Update()
     {
         //if the object's position is close to the target position, set the object to idle
-        if (MoveType.move == moveStatus && Vector3.Distance(targetPosition, transform.position) < DISTANCE_TOLERANCE)
+        if (GlobalMoveManagement.MoveType.move == moveStatus && Vector3.Distance(targetPosition, transform.position) < DISTANCE_TOLERANCE)
         {
-            moveStatus = MoveType.idle;
+            moveStatus = GlobalMoveManagement.MoveType.idle;
             isIdle = true;
         }
 
     }
 
-    void escapeFrom (Vector3 playerPosition)
+    public void escapeFrom (Vector3 playerPosition)
     {
         // Move away from the player
         // Select a random position away from the player
@@ -60,7 +50,7 @@ public class CharacterMoveManagement : MonoBehaviour
         this.gameObject.GetComponent<NewBehaviourScript>().targetPosition = playerPosition;
     }
 
-    void escapeFrom(GameObject player)
+    public void escapeFrom(GameObject player)
     {
         // Move away from the player
         Vector3 direction = transform.position - player.transform.position;
@@ -69,13 +59,13 @@ public class CharacterMoveManagement : MonoBehaviour
         this.gameObject.GetComponent<NewBehaviourScript>().targetPosition = playerPosition;
     }
 
-    void moveTowards(Vector3 playerPosition)
+    public void moveTowards(Vector3 playerPosition)
     {
         // Move towards the player
         this.gameObject.GetComponent<NewBehaviourScript>().targetPosition = playerPosition;
     }
 
-    void moveTowards(GameObject player)
+    public void moveTowards(GameObject player)
     {
         // Move towards the player
         this.gameObject.GetComponent<NewBehaviourScript>().targetPosition = player.transform.position;

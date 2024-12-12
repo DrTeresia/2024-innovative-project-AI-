@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class GlobalMoveManagement : MonoBehaviour
 {
@@ -16,7 +16,8 @@ public class GlobalMoveManagement : MonoBehaviour
     public enum MoveType
     {
         move,
-        leave
+        leave,
+        idle
     }
     public enum ActionType
     {
@@ -51,7 +52,7 @@ public class GlobalMoveManagement : MonoBehaviour
     void Start()
     {
         allPlayer = GameObject.FindGameObjectsWithTag("Player");
-        mapName = GameObject.Find("MapName").GetComponent<Text>();
+        mapName = GameObject.Find("MapName").GetComponent<Text>().text;
 
         camp = new List<GameObject>[15];
         for (int i = 0; i < 15; i++)
@@ -64,52 +65,54 @@ public class GlobalMoveManagement : MonoBehaviour
                 
                 foreach (GameObject player in allPlayer)
                 {
-                    if (player.GetComponent<NewBehaviourScript>().camp == Camp.²Ü²Ù)
+                    if (player.GetComponent<CharacterMoveManagement>().camp == Camp.²Ü²Ù)
                     {
-                        camp[Enum.GetValue(Camp.²Ü²Ù)].Add(player);
+                        camp[(int)Camp.²Ü²Ù].Add(player);
                     }
-                    else if (player.GetComponent<NewBehaviourScript>().camp == Camp.ÂÀ²¼)
+                    else if (player.GetComponent<CharacterMoveManagement>().camp == Camp.ÂÀ²¼)
                     {
-                        camp[Enum.GetValue(Camp.ÂÀ²¼)].Add(player);
+                        camp[(int)Camp.ÂÀ²¼].Add(player);
                     }
-                    else if (player.GetComponent<NewBehaviourScript>().camp == Camp.Ô¬ÉÜ)
+                    else if (player.GetComponent<CharacterMoveManagement>().camp == Camp.Ô¬ÉÜ)
                     {
-                        camp[Enum.GetValue(Camp.Ô¬ÉÜ)].Add(player);
+                        camp[(int)Camp.Ô¬ÉÜ].Add(player);
                     }
                 }
                 break;
             case "JiangDong":
                 foreach (GameObject player in allPlayer)
                 {
-                    if (player.GetComponent<NewBehaviourScript>().camp == Camp.Ëï²ß)
+                    if (player.GetComponent<CharacterMoveManagement>().camp == Camp.Ëï²ß)
                     {
-                        camp[Camp.Ëï²ß.GetValue()].Add(player);
+                        camp[(int)Camp.Ëï²ß].Add(player);
                     }
-                    else if (player.GetComponent<NewBehaviourScript>().camp == Camp.Áõôí)
+                    else if (player.GetComponent<CharacterMoveManagement>().camp == Camp.Â½»ëÈº)
                     {
-                        camp[Camp.Áõôí.GetValue()].Add(player);
+                        camp[(int)Camp.Â½»ëÈº].Add(player);
                     }
-                    else if (player.GetComponent<NewBehaviourScript>().camp == Camp.ÑÏ°×»¢)
+                    else if (player.GetComponent<CharacterMoveManagement>().camp == Camp.»Æ½í¾ü)
                     {
-                        camp[Camp.ÑÏ°×»¢.GetValue()].Add(player);
+                        camp[(int)Camp.»Æ½í¾ü].Add(player);
                     }
                 }
+                break;
             case "JinZhou":
                 foreach (GameObject player in allPlayer)
                 {
-                    if (player.GetComponent<NewBehaviourScript>().camp == Camp.Ô¬Êõ)
+                    if (player.GetComponent<CharacterMoveManagement>().camp == Camp.Ô¬Êõ)
                     {
-                        camp[Camp.Ô¬Êõ.GetValue()].Add(player);
+                        camp[(int)Camp.Ô¬Êõ].Add(player);
                     }
-                    else if (player.GetComponent<NewBehaviourScript>().camp == Camp.¶­×¿)
+                    else if (player.GetComponent<CharacterMoveManagement>().camp == Camp.¶­×¿)
                     {
-                        camp[Camp.¶­×¿.GetValue()].Add(player);
+                        camp[(int)Camp.¶­×¿].Add(player);
                     }
-                    else if (player.GetComponent<NewBehaviourScript>().camp == Camp.ÌÕÇ«)
+                    else if (player.GetComponent<CharacterMoveManagement>().camp == Camp.Ì£¶Ùµ¥ÓÚ)
                     {
-                        camp[Camp.ÌÕÇ«.GetValue()].Add(player);
+                        camp[(int)Camp.Ì£¶Ùµ¥ÓÚ].Add(player);
                     }
                 }
+                break;
         }
     }
 
@@ -135,18 +138,19 @@ public class GlobalMoveManagement : MonoBehaviour
         }
         return isEliminate;
     }
+
     public void groupAttack(Camp camp, GameObject underAttacker)
     {
-        foreach (GameObject player in this.camp[Enum.GetValues(camp)])
+        foreach (GameObject player in this.camp[(int)camp])
         {
-            if (isEliminate(player, underAttacker))
-            {
-                player.GetComponent<NewBehaviourScript>().actionStatus = ActionType.attack;
-                player.GetComponent<NewBehaviourScript>().target = underAttacker;
-            }
+            singleAttack(player, underAttacker);
         }
     }
-
+    public void singleAttack(GameObject attacker, GameObject underAttacker)
+    {
+        attacker.GetComponent<CharacterMoveManagement>().moveTowards(underAttacker);
+        attacker.GetComponent<CharacterMoveManagement>().actionStatus = ActionType.attack;
+    }
 }
 
 
