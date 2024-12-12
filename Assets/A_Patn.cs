@@ -9,6 +9,7 @@ using FoW;
 using UnityEditor.PackageManager;
 using TMPro;
 
+
 public class NewBehaviourScript : MonoBehaviour
 {
     public bool isSelected;
@@ -27,6 +28,8 @@ public class NewBehaviourScript : MonoBehaviour
     private HashSet<GameObject> encounteredEnemies = new HashSet<GameObject>(); // 已遇到的敌人集合
     public float detectionRange_of_attack; // 检测范围
 
+    public Vector3 targetPosition; // 目标位置（坐标输入）
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,41 +37,50 @@ public class NewBehaviourScript : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         //enemyLayer = LayerMask.NameToLayer("enemy");           //图层为enemy
-        //将enemyTag设置为物体自己的tag
-        enemyTag = gameObject.tag;
+        enemyTag = "enemy";                     //标签为enemy
 
     }
 
     // Update is called once per frame
     void Update()
-    {   /*
-        if (Input.GetMouseButtonDown(1))     //右键取消框选的兵种
-        {
-            isSelected = false;
-        }
-        */
+    {
+        //if (Input.GetMouseButtonDown(1))     //右键取消框选的兵种
+        //{
+        //    isSelected = false;
+        //}
 
         //攻击状态清除
         animator.SetBool("IsAttackingUp", false);
         animator.SetBool("IsAttackingDown", false);
         animator.SetBool("IsAttackingLeft", false);
 
-        if (!isSelected)
+        //if (!isSelected)
+        //{
+        //    return;
+        //}
+        //if (Input.GetMouseButtonDown(0))              //鼠标输入
+        //{
+        //    //点击鼠标获得新位置时，先把位置重置
+        //    animator.SetBool("IsWalkingLeft", false);
+        //    animator.SetBool("IsWalkingUp", false);
+        //    animator.SetBool("IsWalkingDown", false);
+
+        //    Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    target.z = 0;
+        //    CreatePath(target);
+
+        //}
+
+        // 如果目标位置被设置，创建路径
+        if (targetPosition != Vector3.zero)
         {
-            //如果没有被选中则每五秒选择一次目的地进行随机移动
-            return;
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            //点击鼠标获得新位置时，先把位置重置
+            //获得新位置时，先把位置重置
             animator.SetBool("IsWalkingLeft", false);
             animator.SetBool("IsWalkingUp", false);
             animator.SetBool("IsWalkingDown", false);
-
-            Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            target.z = 0;
-            CreatePath(target);
-
+            targetPosition.z = 0;
+            CreatePath(targetPosition);
+            targetPosition = Vector3.zero; // 重置目标位置，避免重复移动
         }
         Move();
 
@@ -196,13 +208,18 @@ public class NewBehaviourScript : MonoBehaviour
         if (mirror)
         {
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            //角色设有子物体，子物体不受影响
+            GameObject name = transform.Find("name").gameObject;
+            name.transform.localScale = new Vector3(-Mathf.Abs(name.transform.localScale.x), name.transform.localScale.y, name.transform.localScale.z);
         }
         else
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            GameObject name = transform.Find("name").gameObject;
+            name.transform.localScale = new Vector3(Mathf.Abs(name.transform.localScale.x), name.transform.localScale.y, name.transform.localScale.z);
         }
     }
-    bool IsIdle()                                  //判断静止
+    public bool IsIdle()                                  //判断静止
     {
         //float movementThreshold = 0f; //速度判断阈值
         // 通过Rigidbody2D的velocity属性来判断角色是否静止

@@ -38,7 +38,6 @@ public class CameraMove : MonoBehaviour
                 c.orthographicSize -= slideSpeed;
                 c.orthographicSize = Mathf.Clamp(c.orthographicSize, 1, 100);
             }
-            UnityEngine.Debug.Log(c.fieldOfView);
         }
         else if (mouseCenter < 0)
         {
@@ -48,8 +47,6 @@ public class CameraMove : MonoBehaviour
                 c.orthographicSize += slideSpeed;
                 c.orthographicSize = Mathf.Clamp(c.orthographicSize, 1, 100);
             }
-
-            UnityEngine.Debug.Log(c.fieldOfView);
         }
         //摄像机移动，仅相对世界参考系，与摄像机旋转无关
         if (Input.GetMouseButtonDown(1))
