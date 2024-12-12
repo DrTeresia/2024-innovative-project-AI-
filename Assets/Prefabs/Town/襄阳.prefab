@@ -11,12 +11,12 @@ PrefabInstance:
     - target: {fileID: 3546169344317289055, guid: 55cac95052ddfd243b602853f60a3d39,
         type: 3}
       propertyPath: m_Name
-      value: "\u5BFF\u6625"
+      value: "\u8944\u9633"
       objectReference: {fileID: 0}
     - target: {fileID: 3780437857750285530, guid: 55cac95052ddfd243b602853f60a3d39,
         type: 3}
       propertyPath: m_Text
-      value: "\u5BFF\u6625"
+      value: "\u8944\u9633"
       objectReference: {fileID: 0}
     - target: {fileID: 8077211757570608120, guid: 55cac95052ddfd243b602853f60a3d39,
         type: 3}
