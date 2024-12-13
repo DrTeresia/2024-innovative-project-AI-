@@ -10,7 +10,7 @@ using UnityEditor.PackageManager;
 using TMPro;
 
 
-public class NewBehaviourScript : MonoBehaviour
+public class A_Path : MonoBehaviour
 {
     public bool isSelected;
     public void SetSelected(bool selected)

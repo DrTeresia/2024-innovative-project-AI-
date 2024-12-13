@@ -22,11 +22,13 @@ public class GlobalMoveManagement : MonoBehaviour
     public enum ActionType
     {
         attack,
+        conversation,
         idle
     }
 
     public enum Camp
     {
+        ÎÞÕóÓª,
         ²Ü²Ù,
         ÂÀ²¼,
         Ô¬ÉÜ,
@@ -151,6 +153,8 @@ public class GlobalMoveManagement : MonoBehaviour
         attacker.GetComponent<CharacterMoveManagement>().moveTowards(underAttacker);
         attacker.GetComponent<CharacterMoveManagement>().actionStatus = ActionType.attack;
     }
+
+    
 }
 
 

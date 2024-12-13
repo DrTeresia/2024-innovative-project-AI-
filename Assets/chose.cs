@@ -42,7 +42,7 @@ public class SelectionBox : MonoBehaviour
         foreach (var soldier in soldiers)
         {
             // 找物体的活动脚本
-            NewBehaviourScript a = soldier.GetComponent<NewBehaviourScript>();
+            A_Path a = soldier.GetComponent<A_Path>();
             if (a != null)
             {
                 a.SetSelected(true);

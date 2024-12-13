@@ -2,6 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//该组件用于控制单个角色的移动，与GlobalMoveManagement组件配合使用
+//该组件需要挂载在角色的GameObject上
+//角色的行为分为两个维度，一个是移动，一个是动作，分别对应moveStatus和actionStatus
+//角色的阵营由camp决定，camp由GlobalMoveManagement组件设置
+//角色的目标位置由targetPosition决定，targetPosition调用了A_Patn中的功能
+
+/*角色的移动状态分为三种：
+ * idle：空闲状态，不移动
+ * move：移动状态，朝着targetPosition移动
+ * leave：离开状态，朝着targetPosition移动
+ * 
+ * 当角色的isIdle为true时，向DeepSeek询问下一步动作
+ */
+
 public class CharacterMoveManagement : MonoBehaviour
 {
     
@@ -23,21 +37,39 @@ public class CharacterMoveManagement : MonoBehaviour
     void Start() 
     {
         //randomly set a target
-        this.gameObject.GetComponent<NewBehaviourScript>().SetSelected(false);     
+        this.gameObject.GetComponent<A_Path>().SetSelected(false);     
         moveStatus = GlobalMoveManagement.MoveType.idle;
         actionStatus = GlobalMoveManagement.ActionType.idle;
+
+        camp = GlobalMoveManagement.Camp.无阵营;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if the object's position is close to the target position, set the object to idle
-        if (GlobalMoveManagement.MoveType.move == moveStatus && Vector3.Distance(targetPosition, transform.position) < DISTANCE_TOLERANCE)
+        //if the object's position is close to the target position, set the moveAction to idle
+        if (GlobalMoveManagement.MoveType.move == moveStatus && Vector2.Distance(targetPosition, transform.position) < DISTANCE_TOLERANCE)
         {
             moveStatus = GlobalMoveManagement.MoveType.idle;
+        }
+        //if the object's is close to the target position, and the action is idle, set the isIdle to true
+        if (GlobalMoveManagement.ActionType.idle == actionStatus && GlobalMoveManagement.MoveType.idle == moveStatus)
+        {
             isIdle = true;
         }
+        else
+        {
+            isIdle = false;
+        }
 
+        //if the object is idle, ask DeepSeek for the next action
+        if (isIdle)
+        {
+            //select a random target position
+            targetPosition = new Vector3(Random.Range((float)leftBound, (float)rightBound), Random.Range((float)lowerBound, (float)upperBound), 0);
+            moveTowards(targetPosition);
+        }
     }
 
     public void escapeFrom (Vector3 playerPosition)
@@ -47,7 +79,8 @@ public class CharacterMoveManagement : MonoBehaviour
         Vector3 direction = transform.position - playerPosition;
         direction.Normalize();
         playerPosition += direction * direction.magnitude * 2;
-        this.gameObject.GetComponent<NewBehaviourScript>().targetPosition = playerPosition;
+        this.gameObject.GetComponent<A_Path>().targetPosition = playerPosition;
+        moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
     public void escapeFrom(GameObject player)
@@ -56,18 +89,29 @@ public class CharacterMoveManagement : MonoBehaviour
         Vector3 direction = transform.position - player.transform.position;
         direction.Normalize();
         Vector3 playerPosition = player.transform.position + direction * direction.magnitude * 2;
-        this.gameObject.GetComponent<NewBehaviourScript>().targetPosition = playerPosition;
+        this.gameObject.GetComponent<A_Path>().targetPosition = playerPosition;
+        moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
     public void moveTowards(Vector3 playerPosition)
     {
         // Move towards the player
-        this.gameObject.GetComponent<NewBehaviourScript>().targetPosition = playerPosition;
+        this.gameObject.GetComponent<A_Path>().targetPosition = playerPosition;
+        moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
     public void moveTowards(GameObject player)
     {
         // Move towards the player
-        this.gameObject.GetComponent<NewBehaviourScript>().targetPosition = player.transform.position;
+        this.gameObject.GetComponent<A_Path>().targetPosition = player.transform.position;
+        moveStatus = GlobalMoveManagement.MoveType.move;
+    }
+
+    public void conversationTo(GameObject player)
+    {
+        // Move towards the player
+        this.gameObject.GetComponent<A_Path>().targetPosition = player.transform.position;
+        moveStatus = GlobalMoveManagement.MoveType.move;
+        actionStatus = GlobalMoveManagement.ActionType.conversation;
     }
 }
