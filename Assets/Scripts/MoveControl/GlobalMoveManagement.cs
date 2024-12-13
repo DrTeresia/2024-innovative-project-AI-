@@ -16,13 +16,13 @@ public class GlobalMoveManagement : MonoBehaviour
     public enum MoveType
     {
         move,
-        leave,
         idle
     }
     public enum ActionType
     {
         attack,
         conversation,
+        stay,
         idle
     }
 

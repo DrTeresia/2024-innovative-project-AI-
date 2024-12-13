@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8224157992605194020}
   m_Layer: 0
   m_Name: Town
-  m_TagString: Building
+  m_TagString: Town
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

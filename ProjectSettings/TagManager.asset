@@ -10,6 +10,7 @@ TagManager:
   - LiuYaoMilitary
   - NPC
   - WangLangMilitary
+  - Town
   layers:
   - Default
   - TransparentFX

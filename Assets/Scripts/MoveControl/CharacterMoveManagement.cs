@@ -18,13 +18,24 @@ using UnityEngine;
 
 public class CharacterMoveManagement : MonoBehaviour
 {
-    
-    // Load self game object
+
+    // Range of map
     private double upperBound = 40;
     private double lowerBound = -60;
     private double leftBound = -75;
     private double rightBound = 75;
+
+    //stay timer
+    private float maxStayTime = 2.0f;
+    private float stayStartTime = 0.0f;
+
+    //constant values
     private float DISTANCE_TOLERANCE = 1.0f;
+    private float RANGE_OF_VIEW = 5.0f;
+
+    //global infomation
+    public static GameObject[] players;
+    public static GameObject[] towns;
 
     public Vector3 targetPosition;
     public bool isIdle = true;
@@ -34,10 +45,18 @@ public class CharacterMoveManagement : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start() 
+    void Awake()
+    {
+        //load players
+        players = GameObject.FindGameObjectsWithTag("Player");
+        //load towns
+        towns = GameObject.FindGameObjectsWithTag("Town");
+
+    }
+    void Start()
     {
         //randomly set a target
-        this.gameObject.GetComponent<A_Path>().SetSelected(false);     
+        this.gameObject.GetComponent<A_Path>().SetSelected(false);
         moveStatus = GlobalMoveManagement.MoveType.idle;
         actionStatus = GlobalMoveManagement.ActionType.idle;
 
@@ -48,10 +67,16 @@ public class CharacterMoveManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         //if the object's position is close to the target position, set the moveAction to idle
         if (GlobalMoveManagement.MoveType.move == moveStatus && Vector2.Distance(targetPosition, transform.position) < DISTANCE_TOLERANCE)
         {
             moveStatus = GlobalMoveManagement.MoveType.idle;
+        }
+        //if the object's stay time is than maxStayTime, set the actionStatus to idle
+        if (GlobalMoveManagement.MoveType.idle == moveStatus && Time.time - stayStartTime > maxStayTime)
+        {
+            actionStatus = GlobalMoveManagement.ActionType.idle;
         }
         //if the object's is close to the target position, and the action is idle, set the isIdle to true
         if (GlobalMoveManagement.ActionType.idle == actionStatus && GlobalMoveManagement.MoveType.idle == moveStatus)
@@ -67,12 +92,20 @@ public class CharacterMoveManagement : MonoBehaviour
         if (isIdle)
         {
             //select a random target position
-            targetPosition = new Vector3(Random.Range((float)leftBound, (float)rightBound), Random.Range((float)lowerBound, (float)upperBound), 0);
+            int index = Random.Range(0, towns.Length + players.Length);
+            if (index < towns.Length)
+            {
+                targetPosition = towns[index].transform.position;
+            }
+            else
+            {
+                targetPosition = players[index - towns.Length].transform.position;
+            }
             moveTowards(targetPosition);
         }
     }
 
-    public void escapeFrom (Vector3 playerPosition)
+    public void escapeFrom(Vector3 playerPosition)
     {
         // Move away from the player
         // Select a random position away from the player
@@ -107,11 +140,13 @@ public class CharacterMoveManagement : MonoBehaviour
         moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
-    public void conversationTo(GameObject player)
+    private void isMeet(GameObject player)
     {
-        // Move towards the player
-        this.gameObject.GetComponent<A_Path>().targetPosition = player.transform.position;
-        moveStatus = GlobalMoveManagement.MoveType.move;
-        actionStatus = GlobalMoveManagement.ActionType.conversation;
+        // Check if the player is close to the object
+        if (Vector2.Distance(player.transform.position, transform.position) < RANGE_OF_VIEW)
+        {
+            // If the player is close, ask GPT what to do.
+            //GlobalMoveManagement.ActionType action = GlobalMoveManagement.ActionType.idle;
+        }
     }
 }
