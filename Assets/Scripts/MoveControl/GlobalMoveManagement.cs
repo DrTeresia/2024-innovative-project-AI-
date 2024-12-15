@@ -64,7 +64,7 @@ public class GlobalMoveManagement : MonoBehaviour
         switch (mapName)
         {
             case "North":
-                
+
                 foreach (GameObject player in allPlayer)
                 {
                     if (player.GetComponent<CharacterMoveManagement>().camp == Camp.²Ü²Ù)
@@ -153,8 +153,5 @@ public class GlobalMoveManagement : MonoBehaviour
         attacker.GetComponent<CharacterMoveManagement>().moveTowards(underAttacker);
         attacker.GetComponent<CharacterMoveManagement>().actionStatus = ActionType.attack;
     }
-
-    
 }
-
 

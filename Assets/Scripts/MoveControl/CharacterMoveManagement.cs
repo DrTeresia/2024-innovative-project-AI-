@@ -149,4 +149,12 @@ public class CharacterMoveManagement : MonoBehaviour
             //GlobalMoveManagement.ActionType action = GlobalMoveManagement.ActionType.idle;
         }
     }
+    public GlobalMoveManagement.Camp getCamp()
+    {
+        return camp;
+    }
+    public void setCamp(GlobalMoveManagement.Camp camp)
+    {
+        this.camp = camp;
+    }
 }
