@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/mapByName.unity
+    guid: 6c9894343ec0bf64c802136294d95c08
+  - enabled: 1
+    path: Assets/Scenes/startScene.unity
+    guid: cb050ca70fa75244d867d03365961e9d
+  - enabled: 1
+    path: Assets/Scenes/Demo.unity
+    guid: 79883178826fb4e77a1f5cda54f78635
+  - enabled: 1
+    path: Assets/Scenes/DiscretBattle/JiangdongUnifyBattle.unity
+    guid: 5f92e683fcc97b74db960f49c5e6c131
+  - enabled: 1
+    path: Assets/Scenes/DiscretBattle/NorthUnifyBattle.unity
+    guid: c82b2dcdb81a84f4b94743f0ecd9848f
+  m_configObjects: {}
