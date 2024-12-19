@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Pathfinding;
 using FoW;
-using UnityEditor.PackageManager;
+//using UnityEditor.PackageManager;
 using TMPro;
 
 
@@ -117,7 +117,7 @@ public class A_Path : MonoBehaviour
             }
         }
 
-        if(count>=60){
+        if(count>=300){
             count=0;
             myself.changeSurroundings(personas);
             string prompt_input = promptGenerate.ReadTextFile(".\\战役背景\\荆州之战.txt")+promptGenerate.create_all_persona_pos_prompt(myself)+promptGenerate.create_persona_choice_prompt();

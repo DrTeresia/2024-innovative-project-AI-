@@ -73,7 +73,7 @@ public class ChatWithOpenAI {
             Debug.LogError("Exception: " + e.Message);
         }
     }
-    public async void chat() {
+    public async Task<string> chat() {
         try {
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, "https://api.deepseek.com/chat/completions");
@@ -124,10 +124,13 @@ public class ChatWithOpenAI {
                 File.WriteAllText(filePath, messageContent);
                 Debug.Log("Message content has been written to file: " + filePath);
             }
+            return responseString;
         } catch (HttpRequestException e) {
             Debug.LogError("HttpRequestException: " + e.Message + " - " + e.InnerException?.Message);
+            return null;
         } catch (Exception e) {
             Debug.LogError("Exception: " + e.Message);
+            return null;
         }
     }
 }

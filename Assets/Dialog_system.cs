@@ -142,7 +142,10 @@ public class Dialog_system : MonoBehaviour
                 // 敌人第一次进入范围，显示对话框
                 string prompt_input = promptGenerate.create_fight_prompt(person1, person2);
                 gpt.setPrompt(prompt_input);
-                gpt.chat();
+
+                //receive the response from the GPT use gpt.chat()
+                var response = gpt.chat();
+
 
                 //GetTextFromFile(textFile); // 重新加载文本文件
                 index = 0; // 重置文本索引
@@ -285,4 +288,6 @@ public class Dialog_system : MonoBehaviour
         cancelTyping = false;
         textFinished = true;
     }
+
+    
 }

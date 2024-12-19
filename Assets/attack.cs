@@ -13,11 +13,13 @@ public class UnitHealthAndAttack : MonoBehaviour
     public string FriendTag; // 敌人的标签
     private float nextAttackTime = 0f; // 下次攻击的时间
     private Rigidbody2D rb; // 用于移动的Rigidbody2D组件
+    private SPUM_Prefabs spumPrefabs; // 控制动画的脚本引用
 
     void Start()
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
+        spumPrefabs = GetComponent<SPUM_Prefabs>();
     }
 
     void Update()
@@ -66,6 +68,7 @@ public class UnitHealthAndAttack : MonoBehaviour
     private void Die()
     {
         Destroy(gameObject);
+        //spumPrefabs.PlayAnimation(2);
         // 可以在这里添加额外的死亡逻辑，如播放动画、生成掉落物等。
     }
     bool IsIdle()                                  //判断静止

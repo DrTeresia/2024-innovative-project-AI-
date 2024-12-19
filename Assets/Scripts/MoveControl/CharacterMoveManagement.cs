@@ -56,7 +56,6 @@ public class CharacterMoveManagement : MonoBehaviour
     void Start()
     {
         //randomly set a target
-        this.gameObject.GetComponent<A_Path>().SetSelected(false);
         moveStatus = GlobalMoveManagement.MoveType.idle;
         actionStatus = GlobalMoveManagement.ActionType.idle;
 
@@ -112,7 +111,7 @@ public class CharacterMoveManagement : MonoBehaviour
         Vector3 direction = transform.position - playerPosition;
         direction.Normalize();
         playerPosition += direction * direction.magnitude * 2;
-        this.gameObject.GetComponent<A_Path>().targetPosition = playerPosition;
+        this.gameObject.GetComponent<Movement>().targetPosition = playerPosition;
         moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
@@ -122,21 +121,21 @@ public class CharacterMoveManagement : MonoBehaviour
         Vector3 direction = transform.position - player.transform.position;
         direction.Normalize();
         Vector3 playerPosition = player.transform.position + direction * direction.magnitude * 2;
-        this.gameObject.GetComponent<A_Path>().targetPosition = playerPosition;
+        this.gameObject.GetComponent<Movement>().targetPosition = playerPosition;
         moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
     public void moveTowards(Vector3 playerPosition)
     {
         // Move towards the player
-        this.gameObject.GetComponent<A_Path>().targetPosition = playerPosition;
+        this.gameObject.GetComponent<Movement>().targetPosition = playerPosition;
         moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
     public void moveTowards(GameObject player)
     {
         // Move towards the player
-        this.gameObject.GetComponent<A_Path>().targetPosition = player.transform.position;
+        this.gameObject.GetComponent<Movement>().targetPosition = player.transform.position;
         moveStatus = GlobalMoveManagement.MoveType.move;
     }
 

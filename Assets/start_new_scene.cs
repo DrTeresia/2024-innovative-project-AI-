@@ -7,14 +7,14 @@ public class jumpScenes : MonoBehaviour
 {
     public void jumpto_jingzhou(string sceneName)
     {
-        SceneManager.LoadScene(5);//场景的编号
+        SceneManager.LoadScene(3);//场景的编号
     }
     public void jumpto_jiangdong(string sceneName)
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(1);
     }
     public void jumpto_North(string sceneName)
     {
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene(2);
     }
 }

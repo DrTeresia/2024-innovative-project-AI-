@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Pathfinding;
 using FoW;
-using UnityEditor.PackageManager;
+//using UnityEditor.PackageManager;
 using TMPro;
 
 
@@ -31,6 +31,14 @@ public class Movement : MonoBehaviour
     public Vector3 targetPosition; // 目标位置（坐标输入）
 
     private SPUM_Prefabs spumPrefabs; // 控制动画的脚本引用
+
+    //gpt相关
+    public Persona myself;
+    public List<Persona> personas = new List<Persona>();
+    ChatWithOpenAI gpt = new ChatWithOpenAI("");
+    PromptGenerate promptGenerate = new PromptGenerate();
+
+    public int count = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -62,30 +70,32 @@ public class Movement : MonoBehaviour
         //{
         //    return;
         //}
-        if (Input.GetMouseButtonDown(0))              //鼠标输入
-        {
-            ////点击鼠标获得新位置时，先把位置重置
-            //animator.SetBool("IsWalkingLeft", false);
-            //animator.SetBool("IsWalkingUp", false);
-            //animator.SetBool("IsWalkingDown", false);
 
-            Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            target.z = 0;
-            CreatePath(target);
-
-        }
-
-        //// 如果目标位置被设置，创建路径
-        //if (targetPosition != Vector3.zero)
+        //if (Input.GetMouseButtonDown(0))              //鼠标输入
         //{
-        //    //获得新位置时，先把位置重置
-        //    animator.SetBool("IsWalkingLeft", false);
-        //    animator.SetBool("IsWalkingUp", false);
-        //    animator.SetBool("IsWalkingDown", false);
-        //    targetPosition.z = 0;
-        //    CreatePath(targetPosition);
-        //    targetPosition = Vector3.zero; // 重置目标位置，避免重复移动
+        //    ////点击鼠标获得新位置时，先把位置重置
+        //    //animator.SetBool("IsWalkingLeft", false);
+        //    //animator.SetBool("IsWalkingUp", false);
+        //    //animator.SetBool("IsWalkingDown", false);
+
+        //    Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    target.z = 0;
+        //    CreatePath(target);
+
         //}
+
+
+        // 如果目标位置被设置，创建路径
+        if (targetPosition != Vector3.zero)
+        {
+            //获得新位置时，先把位置重置
+            animator.SetBool("IsWalkingLeft", false);
+            animator.SetBool("IsWalkingUp", false);
+            animator.SetBool("IsWalkingDown", false);
+            targetPosition.z = 0;
+            CreatePath(targetPosition);
+            targetPosition = Vector3.zero; // 重置目标位置，避免重复移动
+        }
         Move();
 
     }
@@ -108,6 +118,16 @@ public class Movement : MonoBehaviour
                 tempEnemiesInView.Add(collider);
                 enemiesInView = tempEnemiesInView.ToArray();
             }
+        }
+
+        if (count >= 300)
+        {
+            count = 0;
+            myself.changeSurroundings(personas);
+            string prompt_input = promptGenerate.ReadTextFile(".\\战役背景\\荆州之战.txt") + promptGenerate.create_all_persona_pos_prompt(myself) + promptGenerate.create_persona_choice_prompt();
+            Debug.Log(prompt_input);
+            gpt.setPrompt(prompt_input);
+            gpt.choice();
         }
 
 
