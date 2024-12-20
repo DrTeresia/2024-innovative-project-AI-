@@ -14,6 +14,8 @@ namespace Assets.Map
             //{ RIVER, HexToColor("225588") },
             { Biome.Marsh, HexToColor("2f6666") },
             { Biome.Ice, HexToColor("99ffff") },
+
+
             { Biome.Beach, HexToColor("a09077") },
             //{ ROAD1, HexToColor("442211") },
             //{ ROAD2, HexToColor("553322") },

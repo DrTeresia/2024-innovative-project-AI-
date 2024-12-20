@@ -73,6 +73,11 @@ PrefabInstance:
       propertyPath: m_Text
       value: "\u5173\u7FBD"
       objectReference: {fileID: 0}
+    - target: {fileID: 6403546776205102118, guid: dc9d01a7a09ea7741921923fc1529b48,
+        type: 3}
+      propertyPath: _horse
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

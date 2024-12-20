@@ -102,9 +102,9 @@ public class DirectGenMap : MonoBehaviour
 
     private static Texture2D _txtTexture;
     const int TextureScale = 20;
-    private const int Width = 300;
-    private const int Height = 200;
-    private int _pointNum = 1000;
+    private const int Width = 600;
+    private const int Height = 400;
+    private int _pointNum = 3000;
     private static bool _isLake = true;
 
     void Toggle1(bool check)

@@ -32,6 +32,8 @@ public class Movement : MonoBehaviour
 
     private SPUM_Prefabs spumPrefabs; // 控制动画的脚本引用
 
+    private GameObject name;
+
     //gpt相关
     public Persona myself;
     public List<Persona> personas = new List<Persona>();
@@ -50,6 +52,12 @@ public class Movement : MonoBehaviour
         //enemyTag = "enemy";                     //标签为enemy
         // 获取SPUM_Prefabs脚本的引用
         spumPrefabs = GetComponent<SPUM_Prefabs>();
+        //gpt相关
+        myself = new Persona(gameObject.name);
+
+        //找到子类name
+        name = transform.Find("name").gameObject;
+
 
     }
 
@@ -83,8 +91,6 @@ public class Movement : MonoBehaviour
         //    CreatePath(target);
 
         //}
-
-
         // 如果目标位置被设置，创建路径
         if (targetPosition != Vector3.zero)
         {
@@ -101,10 +107,8 @@ public class Movement : MonoBehaviour
     }
     private void Move()
     {
-        //Collider2D[] enemiesInView = Physics2D.OverlapCircleAll(transform.position, detectionRange_of_attack).Where(c => c.gameObject.layer == enemyLayer.value).ToArray();
         // 获取所有在检测范围内的对象
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRange_of_attack);
-
         // 过滤出标签为enemyTag的对象
         Collider2D[] enemiesInView = new Collider2D[0]; // 初始化为空数组
         foreach (var collider in colliders)
@@ -120,7 +124,8 @@ public class Movement : MonoBehaviour
             }
         }
 
-        if (count >= 300)
+        
+        if (count >= 3600)
         {
             count = 0;
             myself.changeSurroundings(personas);
@@ -129,6 +134,7 @@ public class Movement : MonoBehaviour
             gpt.setPrompt(prompt_input);
             gpt.choice();
         }
+        
 
 
         if (mPathPointList == null || mPathPointList.Count <= 0)
@@ -236,10 +242,14 @@ public class Movement : MonoBehaviour
         if (mirror)
         {
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            //镜像name
+            name.transform.localScale = new Vector3(-Mathf.Abs(name.transform.localScale.x), name.transform.localScale.y, name.transform.localScale.z);
         }
         else
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            //镜像name
+            name.transform.localScale = new Vector3(Mathf.Abs(name.transform.localScale.x), name.transform.localScale.y, name.transform.localScale.z);
         }
     }
     bool IsIdle()                                  //判断静止

@@ -39,6 +39,8 @@ public class Dialog_system : MonoBehaviour
     private FileSystemWatcher watcher;//监听器变量
     private string filePath;
 
+    private GameObject message; // 用于显示对话的GameObject子类
+
     public static string background = "根据《三国演义》书籍中的内容";
     PromptGenerate promptGenerate = new PromptGenerate();
     ChatWithOpenAI gpt = new ChatWithOpenAI(background);    
@@ -67,6 +69,7 @@ public class Dialog_system : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         //dialogPanel.SetActive(false);
         name_self = gameObject.name;
+        message = GameObject.Find("message");
     }
 
     // Update is called once per frame
@@ -128,7 +131,8 @@ public class Dialog_system : MonoBehaviour
             watcher.Dispose();
         }
     }
-    void Dialogtrigger(Collider2D[] enemies, HashSet<GameObject> encounteredEnemies)
+    string responseString;
+    async void Dialogtrigger(Collider2D[] enemies, HashSet<GameObject> encounteredEnemies)
     {
 
         foreach (var enemy in enemies)
@@ -144,7 +148,10 @@ public class Dialog_system : MonoBehaviour
                 gpt.setPrompt(prompt_input);
 
                 //receive the response from the GPT use gpt.chat()
-                var response = gpt.chat();
+                //注意chat返回的是Task<string>类型，需要用await接收
+                responseString = gpt.chat().Result;
+                //responseString = await gpt.chat();
+
 
 
                 //GetTextFromFile(textFile); // 重新加载文本文件
@@ -288,6 +295,5 @@ public class Dialog_system : MonoBehaviour
         cancelTyping = false;
         textFinished = true;
     }
-
-    
 }
+

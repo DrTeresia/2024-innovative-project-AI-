@@ -19,7 +19,8 @@ public class ChatWithOpenAI {
         this.prompt_input = input;
     }
 
-    public async void choice() {
+    public async Task<string> choice()
+    {
         try {
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, "https://api.deepseek.com/chat/completions");
@@ -67,14 +68,18 @@ public class ChatWithOpenAI {
                 File.WriteAllText(filePath, messageContent);
                 Debug.Log("Message content has been written to file: " + filePath);
             }
+            return responseString;
         } catch (HttpRequestException e) {
             Debug.LogError("HttpRequestException: " + e.Message + " - " + e.InnerException?.Message);
+            return null;
         } catch (Exception e) {
             Debug.LogError("Exception: " + e.Message);
+            return null;
         }
     }
-    public async Task<string> chat() {
-        try {
+    public async Task<string> chat()
+    {
+    try {
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, "https://api.deepseek.com/chat/completions");
             request.Headers.Add("Accept", "application/json");

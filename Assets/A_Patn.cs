@@ -96,21 +96,15 @@ public class A_Path : MonoBehaviour
     private void Move()
     {
         count++;
-        //Collider2D[] enemiesInView = Physics2D.OverlapCircleAll(transform.position, detectionRange_of_attack).Where(c => c.gameObject.layer == enemyLayer.value).ToArray();
-        // ��ȡ�����ڼ�ⷶΧ�ڵĶ���
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRange_of_attack);
         personas = new List<Persona>();
-        // ���˳���ǩΪenemyTag�Ķ���
-        Collider2D[] enemiesInView = new Collider2D[0]; // ��ʼ��Ϊ������
+        Collider2D[] enemiesInView = new Collider2D[0];
         foreach (var collider in colliders)
         {
             Persona newPerson = new Persona(collider.gameObject.name);
             personas.Add(newPerson);
             if (!collider.gameObject.CompareTag(FriendTag))
             {
-                // �����������ĵ������ӵ�������
-                // ע�⣺������Ҫ��չ���飬��Ϊ����Ĵ�С�ǹ̶��ģ�����ֱ������Ԫ��
-                // ����ʹ��List<Collider2D>���ռ������ת��Ϊ����
                 List<Collider2D> tempEnemiesInView = new List<Collider2D>(enemiesInView);
                 tempEnemiesInView.Add(collider);
                 enemiesInView = tempEnemiesInView.ToArray();
