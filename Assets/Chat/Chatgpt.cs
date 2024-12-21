@@ -63,10 +63,10 @@ public class ChatWithOpenAI {
             ResponseData responseData = JsonUtility.FromJson<ResponseData>(responseString);
             if (responseData != null && responseData.choices.Length > 0) {
                 string messageContent = responseData.choices[0].message.content;
-                Debug.Log("Message Content: " + messageContent);
+                //Debug.Log("Message Content: " + messageContent);
                 string filePath = Path.Combine(".\\", "choices.txt");
                 File.WriteAllText(filePath, messageContent);
-                Debug.Log("Message content has been written to file: " + filePath);
+                //Debug.Log("Message content has been written to file: " + filePath);
             }
             return responseString;
         } catch (HttpRequestException e) {

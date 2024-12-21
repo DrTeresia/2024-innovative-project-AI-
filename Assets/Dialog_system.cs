@@ -79,6 +79,7 @@ public class Dialog_system : MonoBehaviour
     {
         //SetupWatcher();
 
+        //isChatting = false;
         //敌人列表
         Collider2D[] enemiesInView = Physics2D.OverlapCircleAll(transform.position, triggerDistance).Where(c => c.gameObject.layer == enemyLayer.value).ToArray();
 
@@ -132,14 +133,18 @@ public class Dialog_system : MonoBehaviour
         }
     }
     string responseString;
+    private bool isChatting = false;
     async void Dialogtrigger(Collider2D[] enemies, HashSet<GameObject> encounteredEnemies)
     {
 
         foreach (var enemy in enemies)
         {
-            if (enemy.gameObject.layer == enemyLayer.value && !encounteredEnemies.Contains(enemy.gameObject) && enemy.gameObject != gameObject)  //排除自身
+            
+            if (enemy.gameObject.layer == enemyLayer.value && !encounteredEnemies.Contains(enemy.gameObject) && enemy.gameObject != gameObject && !isChatting)  //排除自身
             {
                 name_enemy = enemy.gameObject.name;
+
+                isChatting  = true;
 
                 Persona person1 = new Persona(name_self, "魏国", 800, 100, 30, 5, 10, 8);  //自己信息
                 Persona person2 = new Persona(name_enemy, "魏国", 800, 100, 30, 5, 10, 8);  //对面信息
@@ -149,7 +154,7 @@ public class Dialog_system : MonoBehaviour
 
                 //receive the response from the GPT use gpt.chat()
                 //注意chat返回的是Task<string>类型，需要用await接收
-                responseString = gpt.chat().Result;
+                responseString = await gpt.chat();
                 //responseString = await gpt.chat();
 
 

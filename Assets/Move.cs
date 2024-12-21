@@ -35,6 +35,7 @@ public class Movement : MonoBehaviour
     private GameObject name;
 
     //gpt相关
+    string responseString;
     public Persona myself;
     public List<Persona> personas = new List<Persona>();
     ChatWithOpenAI gpt = new ChatWithOpenAI("");
@@ -104,6 +105,12 @@ public class Movement : MonoBehaviour
         }
         Move();
 
+        count++;
+        if (count >= 300 && !isChoice) {
+            gptChoice();
+            count = 0;
+        }
+        isChoice = false;
     }
     private void Move()
     {
@@ -122,17 +129,6 @@ public class Movement : MonoBehaviour
                 tempEnemiesInView.Add(collider);
                 enemiesInView = tempEnemiesInView.ToArray();
             }
-        }
-
-        
-        if (count >= 3600)
-        {
-            count = 0;
-            myself.changeSurroundings(personas);
-            string prompt_input = promptGenerate.ReadTextFile(".\\战役背景\\荆州之战.txt") + promptGenerate.create_all_persona_pos_prompt(myself) + promptGenerate.create_persona_choice_prompt();
-            Debug.Log(prompt_input);
-            gpt.setPrompt(prompt_input);
-            gpt.choice();
         }
         
 
@@ -295,4 +291,17 @@ public class Movement : MonoBehaviour
             }
         }
     }
+    //获取gpt.choice()的返回值
+
+    private bool isChoice = false;
+    private async void gptChoice()
+    {
+        isChoice = true;
+        count = 0;
+        myself.changeSurroundings(personas);
+        string prompt_input = promptGenerate.ReadTextFile(".\\战役背景\\荆州之战.txt") + promptGenerate.create_all_persona_pos_prompt(myself) + promptGenerate.create_persona_choice_prompt();
+        Debug.Log(prompt_input);
+        gpt.setPrompt(prompt_input);
+        responseString = await gpt.choice();
+    } 
 }
