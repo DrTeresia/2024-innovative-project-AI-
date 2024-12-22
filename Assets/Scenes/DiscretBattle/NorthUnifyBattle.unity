@@ -3045,6 +3045,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< HEAD
     - target: {fileID: 389754064372440713, guid: 9f9e387392b11f54c8716ab9caf760c8,
         type: 3}
       propertyPath: m_Sprite
@@ -3082,6 +3083,8 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+=======
+>>>>>>> origin/main
     - target: {fileID: 4954997209678248076, guid: 9f9e387392b11f54c8716ab9caf760c8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3132,23 +3135,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 6252097588050533201, guid: 9f9e387392b11f54c8716ab9caf760c8,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 39a56a3aeb71c48868cc05a1eac06177,
         type: 3}
+=======
+>>>>>>> origin/main
     - target: {fileID: 6313987211571275111, guid: 9f9e387392b11f54c8716ab9caf760c8,
         type: 3}
       propertyPath: m_Name
       value: "\u66F9\u64CD"
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 9077436600053041753, guid: 9f9e387392b11f54c8716ab9caf760c8,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e592bb91d066246f591de7cabe07c536,
         type: 3}
+=======
+>>>>>>> origin/main
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4187,6 +4196,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< HEAD
     - target: {fileID: 389754064372440713, guid: 4810e0b5507bdc4439eca53fb4b36a06,
         type: 3}
       propertyPath: m_Size.x
@@ -4259,6 +4269,8 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+=======
+>>>>>>> origin/main
     - target: {fileID: 4954997209678248076, guid: 4810e0b5507bdc4439eca53fb4b36a06,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4309,6 +4321,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 6252097588050533201, guid: 4810e0b5507bdc4439eca53fb4b36a06,
         type: 3}
       propertyPath: m_Sprite
@@ -4330,11 +4343,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.9685534
       objectReference: {fileID: 0}
+=======
+>>>>>>> origin/main
     - target: {fileID: 6313987211571275111, guid: 4810e0b5507bdc4439eca53fb4b36a06,
         type: 3}
       propertyPath: m_Name
       value: "\u5173\u7FBD"
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 8248301764155384203, guid: 4810e0b5507bdc4439eca53fb4b36a06,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4366,6 +4382,8 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.3609429
       objectReference: {fileID: 0}
+=======
+>>>>>>> origin/main
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7998,6 +8016,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< HEAD
     - target: {fileID: 389754064372440713, guid: d2e5bbe9badc9c142a36c75d941baf3f,
         type: 3}
       propertyPath: m_Sprite
@@ -8046,6 +8065,8 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+=======
+>>>>>>> origin/main
     - target: {fileID: 4954997209678248076, guid: d2e5bbe9badc9c142a36c75d941baf3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8096,17 +8117,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 6252097588050533201, guid: d2e5bbe9badc9c142a36c75d941baf3f,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 39a56a3aeb71c48868cc05a1eac06177,
         type: 3}
+=======
+>>>>>>> origin/main
     - target: {fileID: 6313987211571275111, guid: d2e5bbe9badc9c142a36c75d941baf3f,
         type: 3}
       propertyPath: m_Name
       value: "\u5218\u5907"
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 9077436600053041753, guid: d2e5bbe9badc9c142a36c75d941baf3f,
         type: 3}
       propertyPath: m_Sprite
@@ -8128,6 +8153,8 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.59119487
       objectReference: {fileID: 0}
+=======
+>>>>>>> origin/main
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

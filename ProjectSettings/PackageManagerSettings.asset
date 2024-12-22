@@ -21,7 +21,11 @@ MonoBehaviour:
   m_Registries:
   - m_Id: main
     m_Name: 
+<<<<<<< HEAD
     m_Url: https://packages.unity.cn
+=======
+    m_Url: https://packages.unity.com
+>>>>>>> origin/main
     m_Scopes: []
     m_IsDefault: 1
     m_Capabilities: 7
