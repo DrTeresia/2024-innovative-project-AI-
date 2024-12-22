@@ -185,4 +185,9 @@ public class CharacterMoveManagement : MonoBehaviour
         moveStatus = GlobalMoveManagement.MoveType.move;
         actionStatus = GlobalMoveManagement.ActionType.attack;
     }
+    public void betrayTo(GameObject player)
+    {
+        // Change self's camp to the player's camp, 通过修改tag来实现
+        this.gameObject.tag = player.tag;
+    }
 }

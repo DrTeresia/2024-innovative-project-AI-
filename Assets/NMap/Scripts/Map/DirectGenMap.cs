@@ -139,8 +139,8 @@ public class DirectGenMap : MonoBehaviour
     }
     private void GenMap()
     {
-        //获取地图名字并作为随机种子
-        _name = _inputName.text;
+        //获取地图名字并作为随机种子, 地图名字位于Map物体下的MapName子物体下的Text组件，废弃inputname的使用
+        _name = _showMap.transform.Find("MapName").GetComponent<Text>().text;
         Random.InitState(_name.GetHashCode());
         //Random.InitState((int)DateTime.Now.Ticks);
 
