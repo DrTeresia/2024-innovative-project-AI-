@@ -112,7 +112,11 @@ public class Movement : MonoBehaviour
             Debug.Log("todo: " + responseString);
             //语句解析。responseString有多行，行数不固定，每行是一个语句
             //语句结构为：[角色名],[动作],[目标]
+<<<<<<< HEAD
             //动作有：撤退，结盟，进攻，佯攻，防守
+=======
+            //动作有：撤退，结盟，进攻，佯攻，防守，叛变
+>>>>>>> 8d0c59d140e122f8394329e8368c1e1d1125cdc9
             //相关动作用CharacterMoveManagement.cs中的函数
             string[] responseStringList = responseString.Split('\n');
             bool isFound = false;
@@ -154,6 +158,12 @@ public class Movement : MonoBehaviour
                 case "防守":
                     characterMoveManagement.stayForSecond();
                     break;
+<<<<<<< HEAD
+=======
+                case "叛变":
+                    characterMoveManagement.betrayTo(targetObject);
+                    break;
+>>>>>>> 8d0c59d140e122f8394329e8368c1e1d1125cdc9
             }
         }
         isChoice = false;
