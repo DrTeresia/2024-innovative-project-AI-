@@ -112,11 +112,7 @@ public class Movement : MonoBehaviour
             Debug.Log("todo: " + responseString);
             //语句解析。responseString有多行，行数不固定，每行是一个语句
             //语句结构为：[角色名],[动作],[目标]
-<<<<<<< HEAD
             //动作有：撤退，结盟，进攻，佯攻，防守
-=======
-            //动作有：撤退，结盟，进攻，佯攻，防守，叛变
->>>>>>> 8d0c59d140e122f8394329e8368c1e1d1125cdc9
             //相关动作用CharacterMoveManagement.cs中的函数
             string[] responseStringList = responseString.Split('\n');
             bool isFound = false;
@@ -143,27 +139,37 @@ public class Movement : MonoBehaviour
             CharacterMoveManagement characterMoveManagement = this.GetComponent<CharacterMoveManagement>();
             switch (action)
             {
-                case "撤退":
-                    characterMoveManagement.escapeFrom(targetObject);
+                case "撤退": //前往随机城镇
+                    characterMoveManagement.moveToRandomTown();
+                    Debug.Log("move to random town");
                     break;
                 case "结盟":
                     characterMoveManagement.allianceWith(targetObject);
+                    Debug.Log("alliance");
                     break;
-                case "进攻":
+                case "攻击":
                     characterMoveManagement.attack(targetObject);
+                    Debug.Log("attack");
                     break;
                 case "佯攻":
                     characterMoveManagement.pretendAttack(targetObject);
+                    Debug.Log("pretend attack");
                     break;
                 case "防守":
                     characterMoveManagement.stayForSecond();
+                    Debug.Log("stay");
                     break;
-<<<<<<< HEAD
-=======
                 case "叛变":
                     characterMoveManagement.betrayTo(targetObject);
+                    Debug.Log("betray");
                     break;
->>>>>>> 8d0c59d140e122f8394329e8368c1e1d1125cdc9
+                case "移动": // 前往特定城镇
+                    characterMoveManagement.moveTowards(targetObject);
+                    Debug.Log("move");
+                    break;
+                default:
+                    Debug.Log("no action");
+                    break;
             }
         }
         isChoice = false;
@@ -356,7 +362,7 @@ public class Movement : MonoBehaviour
         isChoice = true;
         count = 0;
         myself.changeSurroundings(personas);
-        string prompt_input = promptGenerate.ReadTextFile(".\\战役背景\\荆州之战.txt") + promptGenerate.create_all_persona_pos_prompt(myself) + promptGenerate.create_persona_choice_prompt();
+        string prompt_input = promptGenerate.ReadTextFile(".\\战役背景\\荆州之战.txt") + promptGenerate.create_persona_choice_prompt(myself);
         Debug.Log("prompt imput: " + prompt_input);
         gpt.setPrompt(prompt_input);
         responseString = await gpt.choice();

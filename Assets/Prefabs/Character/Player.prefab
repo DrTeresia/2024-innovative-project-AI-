@@ -1467,7 +1467,6 @@ GameObject:
   - component: {fileID: 2607336029678419052}
   - component: {fileID: 3019536856541740404}
   - component: {fileID: 351022797990508020}
-  - component: {fileID: 7736497361379469918}
   - component: {fileID: 4236966084258385548}
   - component: {fileID: 1024876281906420687}
   - component: {fileID: 4504532947338892459}
@@ -1674,24 +1673,6 @@ MonoBehaviour:
   skillPrefab: {fileID: 609406308895504931, guid: 0cf323a9572c404e8967837546721593,
     type: 3}
   skillRange: 1
---- !u!114 &7736497361379469918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3509024468150545204}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0cffd2a50bd8ee44aef51883142d8fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSelected: 1
-  speed: 5
-  FriendTag: Player
-  detectionRange_of_attack: 1
-  targetPosition: {x: 0, y: 0, z: 0}
-  count: 0
 --- !u!114 &4236966084258385548
 MonoBehaviour:
   m_ObjectHideFlags: 0
