@@ -154,7 +154,7 @@ public class Dialog_system : MonoBehaviour
 
                 //receive the response from the GPT use gpt.chat()
                 //注意chat返回的是Task<string>类型，需要用await接收
-                responseString = await gpt.chat();
+                //responseString = await gpt.chat();
                 //responseString = await gpt.chat();
 
 

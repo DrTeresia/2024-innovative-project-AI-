@@ -33,6 +33,7 @@ public class Movement : MonoBehaviour
     private SPUM_Prefabs spumPrefabs; // 控制动画的脚本引用
 
     private GameObject name;
+    private string nameString;
 
     //gpt相关
     string responseString;
@@ -55,11 +56,11 @@ public class Movement : MonoBehaviour
         spumPrefabs = GetComponent<SPUM_Prefabs>();
         //gpt相关
         myself = new Persona(gameObject.name);
+        Debug.Log("myself: " + myself.name);
 
         //找到子类name
         name = transform.Find("name").gameObject;
-
-
+        nameString = name.GetComponent<TextMeshPro>().text;
     }
 
     // Update is called once per frame
@@ -103,14 +104,62 @@ public class Movement : MonoBehaviour
             CreatePath(targetPosition);
             targetPosition = Vector3.zero; // 重置目标位置，避免重复移动
         }
-        Move();
-
         count++;
-        if (count >= 300 && !isChoice) {
+        if (count >= 500 && !isChoice)
+        {
             gptChoice();
             count = 0;
+            Debug.Log("todo: " + responseString);
+            //语句解析。responseString有多行，行数不固定，每行是一个语句
+            //语句结构为：[角色名],[动作],[目标]
+            //动作有：撤退，结盟，进攻，佯攻，防守
+            //相关动作用CharacterMoveManagement.cs中的函数
+            string[] responseStringList = responseString.Split('\n');
+            bool isFound = false;
+            string action = "";
+            string target = "";
+            foreach (string response in responseStringList)
+            {
+                if (response == "")
+                {
+                    continue;
+                }
+                string[] responseList = response.Split(',');
+                string name = responseList[0];
+                if (name == myself.name)
+                {
+                    isFound = true;
+                    Debug.Log(myself.name + "is found");
+                    action = responseList[1];
+                    target = responseList[2];
+                    break;
+                }
+            }
+            GameObject targetObject = GameObject.Find(target);
+            CharacterMoveManagement characterMoveManagement = this.GetComponent<CharacterMoveManagement>();
+            switch (action)
+            {
+                case "撤退":
+                    characterMoveManagement.escapeFrom(targetObject);
+                    break;
+                case "结盟":
+                    characterMoveManagement.allianceWith(targetObject);
+                    break;
+                case "进攻":
+                    characterMoveManagement.attack(targetObject);
+                    break;
+                case "佯攻":
+                    characterMoveManagement.pretendAttack(targetObject);
+                    break;
+                case "防守":
+                    characterMoveManagement.stayForSecond();
+                    break;
+            }
         }
         isChoice = false;
+        Move();
+
+        
     }
     private void Move()
     {
@@ -130,8 +179,6 @@ public class Movement : MonoBehaviour
                 enemiesInView = tempEnemiesInView.ToArray();
             }
         }
-        
-
 
         if (mPathPointList == null || mPathPointList.Count <= 0)
         {
@@ -300,7 +347,7 @@ public class Movement : MonoBehaviour
         count = 0;
         myself.changeSurroundings(personas);
         string prompt_input = promptGenerate.ReadTextFile(".\\战役背景\\荆州之战.txt") + promptGenerate.create_all_persona_pos_prompt(myself) + promptGenerate.create_persona_choice_prompt();
-        Debug.Log(prompt_input);
+        Debug.Log("prompt imput: " + prompt_input);
         gpt.setPrompt(prompt_input);
         responseString = await gpt.choice();
     } 

@@ -88,20 +88,20 @@ public class CharacterMoveManagement : MonoBehaviour
         }
 
         //if the object is idle, ask DeepSeek for the next action
-        if (isIdle)
-        {
-            //select a random target position
-            int index = Random.Range(0, towns.Length + players.Length);
-            if (index < towns.Length)
-            {
-                targetPosition = towns[index].transform.position;
-            }
-            else
-            {
-                targetPosition = players[index - towns.Length].transform.position;
-            }
-            moveTowards(targetPosition);
-        }
+        //if (isIdle)
+        //{
+        //    //select a random target position
+        //    int index = Random.Range(0, towns.Length + players.Length);
+        //    if (index < towns.Length)
+        //    {
+        //        targetPosition = towns[index].transform.position;
+        //    }
+        //    else
+        //    {
+        //        targetPosition = players[index - towns.Length].transform.position;
+        //    }
+        //    moveTowards(targetPosition);
+        //}
     }
 
     public void escapeFrom(Vector3 playerPosition)
@@ -139,13 +139,50 @@ public class CharacterMoveManagement : MonoBehaviour
         moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
-    private void isMeet(GameObject player)
+    public void stayForSecond(float time = 3.0f)
     {
-        // Check if the player is close to the object
-        if (Vector2.Distance(player.transform.position, transform.position) < RANGE_OF_VIEW)
-        {
-            // If the player is close, ask GPT what to do.
-            //GlobalMoveManagement.ActionType action = GlobalMoveManagement.ActionType.idle;
-        }
+        stayStartTime = Time.time;
+        maxStayTime = time;
+        moveStatus = GlobalMoveManagement.MoveType.idle;
+        actionStatus = GlobalMoveManagement.ActionType.stay;
+    }
+
+    //佯攻，朝着playerPosition移动，但是停在playerPosition的前方
+    public void pretendAttack(Vector3 playerPosition)
+    {
+        // Pretend to attack the player
+        Vector3 direction = transform.position - playerPosition;
+        direction.Normalize();
+        Vector3 playerPositionFront = playerPosition + direction * 2;
+        this.gameObject.GetComponent<Movement>().targetPosition = playerPositionFront;
+        moveStatus = GlobalMoveManagement.MoveType.move;
+        actionStatus = GlobalMoveManagement.ActionType.stay;
+    }
+    public void pretendAttack(GameObject player)
+    {
+        // Pretend to attack the player
+        Vector3 direction = transform.position - player.transform.position;
+        direction.Normalize();
+        Vector3 playerPositionFront = player.transform.position + direction * 2;
+        this.gameObject.GetComponent<Movement>().targetPosition = playerPositionFront;
+        moveStatus = GlobalMoveManagement.MoveType.move;
+        actionStatus = GlobalMoveManagement.ActionType.stay;
+    }
+    public void allianceWith(GameObject player)
+    {
+        // Pretend to attack the player
+        Vector3 direction = transform.position - player.transform.position;
+        direction.Normalize();
+        Vector3 playerPositionFront = player.transform.position + direction * 2;
+        this.gameObject.GetComponent<Movement>().targetPosition = playerPositionFront;
+        moveStatus = GlobalMoveManagement.MoveType.move;
+        actionStatus = GlobalMoveManagement.ActionType.conversation;
+    }
+    public void attack(GameObject player)
+    {
+        // Attack the player
+        this.gameObject.GetComponent<Movement>().targetPosition = player.transform.position;
+        moveStatus = GlobalMoveManagement.MoveType.move;
+        actionStatus = GlobalMoveManagement.ActionType.attack;
     }
 }

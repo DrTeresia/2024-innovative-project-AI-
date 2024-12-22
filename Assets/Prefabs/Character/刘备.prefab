@@ -63,6 +63,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u5218\u5907"
       objectReference: {fileID: 0}
+    - target: {fileID: 3598005989476979970, guid: dc9d01a7a09ea7741921923fc1529b48,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c9d3f0a0ea95f4f4c96b680e452e65e2,
+        type: 3}
     - target: {fileID: 5802763387538976077, guid: dc9d01a7a09ea7741921923fc1529b48,
         type: 3}
       propertyPath: m_Text
