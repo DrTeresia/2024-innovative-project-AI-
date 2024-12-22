@@ -7,11 +7,7 @@
       "dependencies": {
         "com.unity.modules.physics": "1.0.0"
       },
-<<<<<<< HEAD
       "url": "https://packages.unity.cn"
-=======
-      "url": "https://packages.unity.com"
->>>>>>> origin/main
     },
     "com.unity.textmeshpro": {
       "version": "3.0.9",
@@ -20,11 +16,7 @@
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-<<<<<<< HEAD
       "url": "https://packages.unity.cn"
-=======
-      "url": "https://packages.unity.com"
->>>>>>> origin/main
     },
     "com.unity.ugui": {
       "version": "1.0.0",

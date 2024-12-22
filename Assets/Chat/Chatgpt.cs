@@ -67,8 +67,9 @@ public class ChatWithOpenAI {
                 string filePath = Path.Combine(".\\", "choices.txt");
                 File.WriteAllText(filePath, messageContent);
                 //Debug.Log("Message content has been written to file: " + filePath);
+                return messageContent;
             }
-            return responseString;
+            return null;
         } catch (HttpRequestException e) {
             Debug.LogError("HttpRequestException: " + e.Message + " - " + e.InnerException?.Message);
             return null;

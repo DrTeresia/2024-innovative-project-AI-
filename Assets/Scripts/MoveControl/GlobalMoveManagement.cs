@@ -45,7 +45,6 @@ public class GlobalMoveManagement : MonoBehaviour
         Â½»ëÈº,
         »Æ½í¾ü
     }
-
     public MoveType move;
     public ActionType action;
     public List<GameObject>[] camp;
