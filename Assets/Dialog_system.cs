@@ -48,6 +48,8 @@ public class Dialog_system : MonoBehaviour
     List<string> textList = new List<string>();
     // Start is called before the first frame update
 
+    private GameObject chatBar;
+
     void Awake()
     {
         //GetTextFromFile(textFile);
@@ -70,6 +72,7 @@ public class Dialog_system : MonoBehaviour
         //dialogPanel.SetActive(false);
         name_self = gameObject.name;
         message = GameObject.Find("message");
+        chatBar = GameObject.Find("chatBar");
     }
 
     // Update is called once per frame
@@ -155,7 +158,11 @@ public class Dialog_system : MonoBehaviour
                 //receive the response from the GPT use gpt.chat()
                 //注意chat返回的是Task<string>类型，需要用await接收
                 //responseString = await gpt.chat();
-                //responseString = await gpt.chat();
+                responseString = "。。。。。。";
+                responseString = await gpt.chat();
+                //write responseString to chatBar
+                chatBar.GetComponent<TextMeshProUGUI>().text = responseString;
+
 
 
 

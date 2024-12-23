@@ -29,12 +29,12 @@ namespace Assets.Map
             { Biome.Taiga, HexToColor("99aa77") },
             { Biome.Shrubland, HexToColor("889977") },
             { Biome.TemperateDesert, HexToColor("c9d29b") },
-            { Biome.TemperateRainForest, HexToColor("448855") },
-            { Biome.TemperateDeciduousForest, HexToColor("679459") },
+            { Biome.TemperateRainForest, HexToColor("708755") },
+            { Biome.TemperateDeciduousForest, HexToColor("8f965a") },
             { Biome.Grassland, HexToColor("88aa55") },
             { Biome.SubtropicalDesert, HexToColor("d2b98b") },
-            { Biome.TropicalRainForest, HexToColor("337755") },
-            { Biome.TropicalSeasonalForest, HexToColor("559944") }
+            { Biome.TropicalRainForest, HexToColor("5f8128") },
+            { Biome.TropicalSeasonalForest, HexToColor("879944") }
         };
 
         public static Dictionary<Biome, string> Chinese = new Dictionary<Biome, string>
