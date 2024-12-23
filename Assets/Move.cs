@@ -34,6 +34,7 @@ public class Movement : MonoBehaviour
 
     private GameObject name;
     private string nameString;
+    private GameObject message;
 
     //gptÏà¹Ø
     string responseString;
@@ -60,7 +61,10 @@ public class Movement : MonoBehaviour
 
         //ÕÒµ½×ÓÀàname
         name = transform.Find("name").gameObject;
-        nameString = name.GetComponent<TextMeshPro>().text;
+        nameString = name.GetComponent<TextMesh>().text;
+
+        message = transform.Find("message").gameObject;
+
     }
 
     // Update is called once per frame
@@ -171,6 +175,35 @@ public class Movement : MonoBehaviour
                     Debug.Log("no action");
                     break;
             }
+            string actionToEng = "";
+            switch (action)
+            {
+                case "³·ÍË":
+                    actionToEng = "retreat";
+                    break;
+                case "½áÃË":
+                    actionToEng = "alliance";
+                    break;
+                case "¹¥»÷":
+                    actionToEng = "attack";
+                    break;
+                case "Ñð¹¥":
+                    actionToEng = "pretend attack";
+                    break;
+                case "·ÀÊØ":
+                    actionToEng = "stay";
+                    break;
+                case "ÅÑ±ä":
+                    actionToEng = "betray";
+                    break;
+                case "ÒÆ¶¯":
+                    actionToEng = "move";
+                    break;
+                default:
+                    break;
+            }
+            //message use TMP
+            message.GetComponent<TextMeshPro>().text = actionToEng;
         }
         isChoice = false;
         Move();
@@ -303,12 +336,17 @@ public class Movement : MonoBehaviour
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             //¾µÏñname
             name.transform.localScale = new Vector3(-Mathf.Abs(name.transform.localScale.x), name.transform.localScale.y, name.transform.localScale.z);
+            //¾µÏñmessage£¬messageÓÃµÄÊÇrect transform
+            message.transform.localScale = new Vector3(-Mathf.Abs(message.transform.localScale.x), message.transform.localScale.y, message.transform.localScale.z);
         }
         else
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             //¾µÏñname
             name.transform.localScale = new Vector3(Mathf.Abs(name.transform.localScale.x), name.transform.localScale.y, name.transform.localScale.z);
+            //¾µÏñmessage
+            message.transform.localScale = new Vector3(Mathf.Abs(message.transform.localScale.x), message.transform.localScale.y, message.transform.localScale.z);
+
         }
     }
     bool IsIdle()                                  //ÅÐ¶Ï¾²Ö¹

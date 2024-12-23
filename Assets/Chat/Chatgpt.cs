@@ -114,12 +114,12 @@ public class ChatWithOpenAI {
             }}";
 
             var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
-            Debug.Log("Request body size: " + content.Headers.ContentLength);
+            //Debug.Log("Request body size: " + content.Headers.ContentLength);
             request.Content = content;
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
             string responseString = await response.Content.ReadAsStringAsync();
-            Debug.Log("Response: " + responseString);
+            //Debug.Log("Response: " + responseString);
 
             // 解析 JSON 响应
             ResponseData responseData = JsonUtility.FromJson<ResponseData>(responseString);
@@ -129,8 +129,9 @@ public class ChatWithOpenAI {
                 string filePath = Path.Combine(Application.persistentDataPath, "dialogue.txt");
                 File.WriteAllText(filePath, messageContent);
                 Debug.Log("Message content has been written to file: " + filePath);
+                return messageContent;
             }
-            return responseString;
+            return null;
         } catch (HttpRequestException e) {
             Debug.LogError("HttpRequestException: " + e.Message + " - " + e.InnerException?.Message);
             return null;

@@ -71,7 +71,7 @@ public class Dialog_system : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         //dialogPanel.SetActive(false);
         name_self = gameObject.name;
-        message = GameObject.Find("message");
+        //找到该物体下的子物体chatBar
         chatBar = GameObject.Find("chatBar");
     }
 
@@ -135,7 +135,7 @@ public class Dialog_system : MonoBehaviour
             watcher.Dispose();
         }
     }
-    string responseString;
+    string messageContent;
     private bool isChatting = false;
     async void Dialogtrigger(Collider2D[] enemies, HashSet<GameObject> encounteredEnemies)
     {
@@ -158,10 +158,10 @@ public class Dialog_system : MonoBehaviour
                 //receive the response from the GPT use gpt.chat()
                 //注意chat返回的是Task<string>类型，需要用await接收
                 //responseString = await gpt.chat();
-                responseString = "。。。。。。";
-                responseString = await gpt.chat();
+                messageContent = "。。。。。。";
+                messageContent = await gpt.chat();
                 //write responseString to chatBar
-                chatBar.GetComponent<TextMeshProUGUI>().text = responseString;
+                //chatBar.GetComponent<TextMesh>().text = messageContent;
 
 
 
