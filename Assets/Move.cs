@@ -10,6 +10,7 @@ using FoW;
 using TMPro;
 
 
+
 public class Movement : MonoBehaviour
 {
     //public bool isSelected;
@@ -109,7 +110,8 @@ public class Movement : MonoBehaviour
             targetPosition = Vector3.zero; // 重置目标位置，避免重复移动
         }
         count++;
-        if (count >= 500 && !isChoice)
+        int randomWaitingTime = Random.Range(300, 600);
+        if (count >= randomWaitingTime && !isChoice)
         {
             gptChoice();
             count = 0;
@@ -118,6 +120,7 @@ public class Movement : MonoBehaviour
             //语句结构为：[角色名],[动作],[目标]
             //动作有：撤退，结盟，进攻，佯攻，防守
             //相关动作用CharacterMoveManagement.cs中的函数
+            
             string[] responseStringList = responseString.Split('\n');
             bool isFound = false;
             string action = "";
@@ -161,7 +164,7 @@ public class Movement : MonoBehaviour
                     break;
                 case "防守":
                     characterMoveManagement.stayForSecond();
-                    Debug.Log("stay");
+                    Debug.Log("defend");
                     break;
                 case "叛变":
                     characterMoveManagement.betrayTo(targetObject);
@@ -175,7 +178,7 @@ public class Movement : MonoBehaviour
                     Debug.Log("no action");
                     break;
             }
-            string actionToEng = "";
+            string actionToEng = "。。。。。。";
             switch (action)
             {
                 case "撤退":
@@ -191,7 +194,7 @@ public class Movement : MonoBehaviour
                     actionToEng = "pretend attack";
                     break;
                 case "防守":
-                    actionToEng = "stay";
+                    actionToEng = "defend";
                     break;
                 case "叛变":
                     actionToEng = "betray";
@@ -355,7 +358,7 @@ public class Movement : MonoBehaviour
         // 通过Rigidbody2D的velocity属性来判断角色是否静止
         return rb.velocity.sqrMagnitude <= 0;
     }
-    void HandleEnemies(Collider2D[] enemies)               //周围有无敌人+处理方式
+    void HandleEnemies(Collider2D[] enemies)  //周围有无敌人+处理方式
     {
         foreach (var enemy in enemies)
         {

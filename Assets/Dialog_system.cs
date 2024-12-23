@@ -48,7 +48,6 @@ public class Dialog_system : MonoBehaviour
     List<string> textList = new List<string>();
     // Start is called before the first frame update
 
-    private GameObject chatBar;
 
     void Awake()
     {
@@ -72,7 +71,6 @@ public class Dialog_system : MonoBehaviour
         //dialogPanel.SetActive(false);
         name_self = gameObject.name;
         //找到该物体下的子物体chatBar
-        chatBar = GameObject.Find("chatBar");
     }
 
     // Update is called once per frame
