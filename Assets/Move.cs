@@ -25,7 +25,9 @@ public class Movement : MonoBehaviour
     private Animator animator;// Animator组件引用
     private Rigidbody2D rb; // 用于移动的Rigidbody2D组件
     //public LayerMask enemyLayer; // 敌人所在的LayerMask
-    public string FriendTag; // 队友的标签
+    public string enemyTag1; // 敌人的标签
+    public string enemyTag2;
+    public string enemyTag3;
     private HashSet<GameObject> encounteredEnemies = new HashSet<GameObject>(); // 已遇到的敌人集合
     public float detectionRange_of_attack; // 检测范围
 
@@ -221,7 +223,7 @@ public class Movement : MonoBehaviour
         Collider2D[] enemiesInView = new Collider2D[0]; // 初始化为空数组
         foreach (var collider in colliders)
         {
-            if (!collider.gameObject.CompareTag(FriendTag))
+            if (collider.gameObject.CompareTag(enemyTag1) && collider.gameObject.CompareTag(enemyTag2) && collider.gameObject.CompareTag(enemyTag3))
             {
                 // 将符合条件的敌人添加到数组中
                 // 注意：这里需要扩展数组，因为数组的大小是固定的，不能直接添加元素
@@ -262,14 +264,14 @@ public class Movement : MonoBehaviour
             //transform.position = Vector2.MoveTowards(transform.position, mPathPointList[mCurrentIndex], moveDistance);
 
             // 根据移动方向设置Animator参数和镜像
-            if (dir.x >= 0 && Mathf.Abs(dir.x) >= Mathf.Abs(dir.y))
+            if (dir.x >= 0 )
             {
                 // 向右走，使用IsWalkingLeft动画并通过镜像实现
                 //animator.SetBool("IsWalkingLeft", true);
                 spumPrefabs.PlayAnimation(1);
                 MirrorCharacter(true);
             }
-            else if (dir.x < 0 && Mathf.Abs(dir.x) >= Mathf.Abs(dir.y))
+            else if (dir.x < 0 )
             {
                 // 向左走，直接使用IsWalkingLeft动画
                 //animator.SetBool("IsWalkingLeft", true);
