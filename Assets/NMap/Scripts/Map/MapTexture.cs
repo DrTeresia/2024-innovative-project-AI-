@@ -13,13 +13,20 @@ namespace Assets.Map
             _textureScale = textureScale;
         }
 
-        public Texture2D GetTexture(Map map, NoisyEdges noisyEdge)
+        public Texture2D GetTexture(Map map, NoisyEdges noisyEdge, int indexOfTexture = 0)
         {
             int textureWidth = (int)Map.Width * _textureScale;
             int textureHeight = (int)Map.Height * _textureScale;
 
             Texture2D texture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGB565, true);
-            texture.SetPixels(Enumerable.Repeat(BiomeProperties.Colors[Biome.Ocean], textureWidth * textureHeight).ToArray());
+            if (indexOfTexture == 0)
+                texture.SetPixels(Enumerable.Repeat(BiomeProperties.Colors[Biome.Ocean], textureWidth * textureHeight).ToArray());
+            else if (indexOfTexture == 1)
+                texture.SetPixels(Enumerable.Repeat(BiomeProperties.ColorsForJinZhou[Biome.Ocean], textureWidth * textureHeight).ToArray());
+            else if (indexOfTexture == 2)
+                texture.SetPixels(Enumerable.Repeat(BiomeProperties.ColorsForJiangdong[Biome.Ocean], textureWidth * textureHeight).ToArray());
+            else
+                texture.SetPixels(Enumerable.Repeat(BiomeProperties.Colors[Biome.Ocean], textureWidth * textureHeight).ToArray());
 
             //绘制扰乱的边缘
             foreach (Center p in map.Graph.centers)
@@ -35,8 +42,8 @@ namespace Assets.Map
                         continue;
                     }
                     //绘制扰乱后的形状
-                    DrawNoisyPolygon(texture, p, noisyEdge.path0[edge.index]);
-                    DrawNoisyPolygon(texture, p, noisyEdge.path1[edge.index]);
+                    DrawNoisyPolygon(texture, p, noisyEdge.path0[edge.index], indexOfTexture);
+                    DrawNoisyPolygon(texture, p, noisyEdge.path1[edge.index], indexOfTexture);
                 }
             }
             //绘制扰乱后的河流
@@ -57,19 +64,33 @@ namespace Assets.Map
             return texture;
         }
 
-        public void AttachTexture(GameObject plane, Map map, NoisyEdges noisyEdge)
+        public void AttachTexture(GameObject plane, Map map, NoisyEdges noisyEdge, int indexOfTexture = 0)
         {
-            Texture2D texture = GetTexture(map, noisyEdge);
+            Texture2D texture = GetTexture(map, noisyEdge, indexOfTexture);
             plane.GetComponent<Renderer>().material.mainTexture = texture;
         }
 
         readonly List<Vector2> _edgePoints = new List<Vector2>();
-        private void DrawNoisyPolygon(Texture2D texture, Center p, List<Vector2> orgEdges)
+        private void DrawNoisyPolygon(Texture2D texture, Center p, List<Vector2> orgEdges, int indexOfTexture = 0)
         {
             _edgePoints.Clear();
             _edgePoints.AddRange(orgEdges);
             _edgePoints.Add(p.point);
-            texture.FillPolygon(
+
+            if (indexOfTexture == 0)
+                texture.FillPolygon(
+                    _edgePoints.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(),
+                    BiomeProperties.Colors[p.biome]);
+            else if (indexOfTexture == 1)
+                texture.FillPolygon(
+                    _edgePoints.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(),
+                    BiomeProperties.ColorsForJinZhou[p.biome]);
+            else if (indexOfTexture == 2)
+                texture.FillPolygon(
+                    _edgePoints.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(),
+                    BiomeProperties.ColorsForJiangdong[p.biome]);
+            else
+                texture.FillPolygon(
                 _edgePoints.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(),
                 BiomeProperties.Colors[p.biome]);
         }
