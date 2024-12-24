@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using UnityEngine.SceneManagement;
+
 public class PromptGenerate
 {
     public string create_persona_info_prompt(List<Persona> personas){
         List<string> prompt_input = new List<string>();
-        prompt_input.Add("现在我们模拟这个战役完成一次游戏，各个人物的数据如下：");
+        string sceneName = SceneManager.GetActiveScene().name;
+        prompt_input.Add("现在我们模拟这个战役完成一次游戏，这场战役的名字叫做：" + sceneName + "曹操、刘备等阵营会优先攻击袁绍等人，且曹操会优先前往官渡，曹操在NorthUnityBattle中不会攻击关羽，各个人物的数据如下：");
         foreach (Persona p in personas){
             prompt_input.Add("name:"+p.name);
             prompt_input.Add("faction:"+p.faction);
@@ -29,8 +32,18 @@ public class PromptGenerate
             info+=p.name+",";    
         }
         prompt_input.Add(info);
+        info = "";
+        prompt_input.Add("现在" + persona.name + "周围检测到的城镇为:");
+        GameObject[] towns = GameObject.FindGameObjectsWithTag("Town");
+        foreach (GameObject town in towns)
+        {
+            info += town.name + ",";
+        }
+        prompt_input.Add(info);
         prompt_input.Add("只有检测到的信息才能对其进行抉择,检测到自己忽略(无法对自己进行抉择),检测不到的信息无法对其进行抉择");
-        prompt_input.Add("此时" + persona.name + "根据检测到的信息作出抉择,请生成"+persona.name+"此时的抉择,只能有一个抉择,抉择只能从移动,攻击,佯攻,防守,撤退,诈败,结盟这七个抉择中选择一个,抉择对象只能有一个,抉择要求符合将领的背景和性格以及战役背景,每个抉择中间需要换行,生成的格式为（"+persona.name+"）,（抉择名称）,（抉择对象）,其中移动,诈败,撤退和防守的抉择对象必须为无,这是一个示例:"+persona.name + ",攻击,刘备");
+        prompt_input.Add("此时" + persona.name + "根据检测到的信息作出抉择,请生成"+persona.name+"此时的抉择,只能有一个抉择,抉择只能从移动,攻击,佯攻,防守,撤退,诈败,结盟,叛变这八个抉择中选择一个,抉择对象只能有一个,抉择要求符合将领的背景和性格以及战役背景,每个抉择中间需要换行,生成的格式为: " + persona.name + ",抉择名称,抉择对象,这是一个示例:"+persona.name + ",攻击,刘备");
+        prompt_input.Add("移动只能选择城镇，攻击只能选择敌人，不能选择城镇，佯攻只能选择敌人，不能选择城镇，防守只能选择无，结盟只能选择敌人，不能选择城镇，叛变只能选择敌人，不能选择城镇");
+        prompt_input.Add("决策需要有多样性，每个决策概率相等");
         return string.Join(",", prompt_input);
     }
 

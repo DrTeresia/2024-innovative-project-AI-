@@ -52,6 +52,11 @@ public class follow_boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (leader == null)
+        {
+            Debug.Log("Leader is null. Destroying character.");
+            Destroy(gameObject); // 销毁当前游戏对象
+        }
         //if (Input.GetMouseButtonDown(1))     //右键取消框选的兵种
         //{
         //    isSelected = false;

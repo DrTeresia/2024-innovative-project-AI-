@@ -197,4 +197,14 @@ public class CharacterMoveManagement : MonoBehaviour
         targetPosition = towns[index].transform.position;
         moveTowards(targetPosition);
     }
+    public void pretendDefeat(GameObject targetObject)
+    {
+        // Pretend to be defeated by the targetObject
+        Vector3 direction = transform.position - targetObject.transform.position;
+        direction.Normalize();
+        Vector3 playerPositionFront = targetObject.transform.position + direction * 5;
+        this.gameObject.GetComponent<Movement>().targetPosition = playerPositionFront;
+        moveStatus = GlobalMoveManagement.MoveType.move;
+        actionStatus = GlobalMoveManagement.ActionType.stay;
+    }
 }

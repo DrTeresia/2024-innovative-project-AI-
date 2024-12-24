@@ -154,7 +154,7 @@ public class Movement : MonoBehaviour
                     break;
                 case "½áÃË":
                     characterMoveManagement.allianceWith(targetObject);
-                    Debug.Log("alliance");
+                    Debug.Log("allience");
                     break;
                 case "¹¥»÷":
                     characterMoveManagement.attack(targetObject);
@@ -176,6 +176,10 @@ public class Movement : MonoBehaviour
                     characterMoveManagement.moveTowards(targetObject);
                     Debug.Log("move");
                     break;
+                case "Õ©°Ü":
+                    characterMoveManagement.pretendDefeat(targetObject);
+                    Debug.Log("pretend defeat");
+                    break;
                 default:
                     Debug.Log("no action");
                     break;
@@ -187,7 +191,7 @@ public class Movement : MonoBehaviour
                     actionToEng = "retreat";
                     break;
                 case "½áÃË":
-                    actionToEng = "alliance";
+                    actionToEng = "pretend alliance";
                     break;
                 case "¹¥»÷":
                     actionToEng = "attack";
@@ -203,6 +207,9 @@ public class Movement : MonoBehaviour
                     break;
                 case "ÒÆ¶¯":
                     actionToEng = "move";
+                    break;
+                case "Õ©°Ü":
+                    actionToEng = "pretend defeat";
                     break;
                 default:
                     break;
