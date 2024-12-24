@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 using System.Globalization;
 using System.Security.Cryptography;
 
-public class DirectGenMap : MonoBehaviour
+public class DirectGenMapForJinZhou : MonoBehaviour //单独写一份地图生成是很蠢的决定
 {
     private InputField _inputName;
     private Button _btnGen;
@@ -18,9 +18,7 @@ public class DirectGenMap : MonoBehaviour
     private GameObject _showMap;
     private GameObject _showCampDivision;
 
-    public string _name;
-
-    
+    private string _name;
     void Start()
     {
         _inputName = transform.Find("inputName").GetComponent<InputField>();
@@ -158,25 +156,7 @@ public class DirectGenMap : MonoBehaviour
         NoisyEdges noisyEdge = new NoisyEdges();
         noisyEdge.BuildNoisyEdges(map);
 
-        int indexOfTexture = 0;
-        //north is 0, JinZhou is 1, JiangDong is 2
-        if (_name == "North")
-        {
-            indexOfTexture = 0;
-        }
-        else if (_name == "JinZhou")
-        {
-            indexOfTexture = 1;
-        }
-        else if (_name == "JiangDong")
-        {
-            indexOfTexture = 2;
-        }
-        else
-        {
-            indexOfTexture = 0;
-        }
-        new MapTexture(TextureScale).AttachTexture(_showMap, map, noisyEdge, indexOfTexture);
+        new MapTexture(TextureScale).AttachTexture(_showMap, map, noisyEdge);
 
 
         //隐藏地图设置按钮
@@ -186,8 +166,8 @@ public class DirectGenMap : MonoBehaviour
         transform.Find("inputName").gameObject.SetActive(false);
 
         //将descLabel与mouseBiome激活
-        //transform.Find("DescLabel").gameObject.SetActive(true);
-        //transform.Find("MouseBiome").gameObject.SetActive(true);
+        transform.Find("DescLabel").gameObject.SetActive(true);
+        transform.Find("MouseBiome").gameObject.SetActive(true);
     }
 
     public static System.Func<Vector2, bool> CheckIsland()

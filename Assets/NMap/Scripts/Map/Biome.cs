@@ -5,7 +5,7 @@ namespace Assets.Map
 {
     public static class BiomeProperties
     {
-        public static Dictionary<Biome, Color> Colors = new Dictionary<Biome, Color>
+        public static Dictionary<Biome, Color> Colors = new Dictionary<Biome, Color> //color of NorthUnify
         {
             { Biome.Ocean, HexToColor("44447a") },
             //{ COAST, HexToColor("33335a") },
@@ -14,8 +14,6 @@ namespace Assets.Map
             //{ RIVER, HexToColor("225588") },
             { Biome.Marsh, HexToColor("2f6666") },
             { Biome.Ice, HexToColor("99ffff") },
-
-
             { Biome.Beach, HexToColor("a09077") },
             //{ ROAD1, HexToColor("442211") },
             //{ ROAD2, HexToColor("553322") },
@@ -35,6 +33,66 @@ namespace Assets.Map
             { Biome.SubtropicalDesert, HexToColor("d2b98b") },
             { Biome.TropicalRainForest, HexToColor("5f8128") },
             { Biome.TropicalSeasonalForest, HexToColor("879944") }
+        };
+
+        public static Dictionary<Biome, Color> ColorsForJinZhou = new Dictionary<Biome, Color> //color for JinZhou, looks more green than North
+        {
+            { Biome.Ocean, HexToColor("44447a") },
+            //{ COAST, HexToColor("33335a") },
+            //{ LAKESHORE, HexToColor("225588") },
+            { Biome.Lake, HexToColor("336699") },
+            //{ RIVER, HexToColor("225588") },
+            { Biome.Marsh, HexToColor("2f6666") },
+            { Biome.Ice, HexToColor("99ffff") },
+            { Biome.Beach, HexToColor("a09077") },
+            //{ ROAD1, HexToColor("442211") },
+            //{ ROAD2, HexToColor("553322") },
+            //{ ROAD3, HexToColor("664433") },
+            //{ BRIDGE, HexToColor("686860") },
+            //{ LAVA, HexToColor("cc3333") },
+            { Biome.Snow, HexToColor("ffffff") },
+            { Biome.Tundra, HexToColor("bbbbaa") },
+            { Biome.Bare, HexToColor("888888") },
+            { Biome.Scorched, HexToColor("555555") },
+            { Biome.Taiga, HexToColor("99aa77") },
+            { Biome.Shrubland, HexToColor("889977") },
+            { Biome.TemperateDesert, HexToColor("c9d29b") },
+            { Biome.TemperateRainForest, HexToColor("448855") },
+            { Biome.TemperateDeciduousForest, HexToColor("679459") },
+            { Biome.Grassland, HexToColor("88aa55") },
+            { Biome.SubtropicalDesert, HexToColor("d2b98b") },
+            { Biome.TropicalRainForest, HexToColor("337755") },
+            { Biome.TropicalSeasonalForest, HexToColor("559944") }
+        };
+
+        public static Dictionary<Biome, Color> ColorsForJiangdong = new Dictionary<Biome, Color> // color for jiangdong, looks more blue than north
+        {
+            { Biome.Ocean, HexToColor("44447a") },
+            //{ COAST, HexToColor("33335a") },
+            //{ LAKESHORE, HexToColor("225588") },
+            { Biome.Lake, HexToColor("336699") },
+            //{ RIVER, HexToColor("225588") },
+            { Biome.Marsh, HexToColor("2f6666") },
+            { Biome.Ice, HexToColor("99ffff") },
+            { Biome.Beach, HexToColor("a09077") },
+            //{ ROAD1, HexToColor("442211") },
+            //{ ROAD2, HexToColor("553322") },
+            //{ ROAD3, HexToColor("664433") },
+            //{ BRIDGE, HexToColor("686860") },
+            //{ LAVA, HexToColor("cc3333") },
+            { Biome.Snow, HexToColor("ffffff") },
+            { Biome.Tundra, HexToColor("bbbbaa") },
+            { Biome.Bare, HexToColor("888888") },
+            { Biome.Scorched, HexToColor("555555") },
+            { Biome.Taiga, HexToColor("99aa99") },
+            { Biome.Shrubland, HexToColor("889999") },
+            { Biome.TemperateDesert, HexToColor("99d29b") },
+            { Biome.TemperateRainForest, HexToColor("448866") },
+            { Biome.TemperateDeciduousForest, HexToColor("659466") },
+            { Biome.Grassland, HexToColor("66aa66") },
+            { Biome.SubtropicalDesert, HexToColor("99b999") },
+            { Biome.TropicalRainForest, HexToColor("337766") },
+            { Biome.TropicalSeasonalForest, HexToColor("559966") }
         };
 
         public static Dictionary<Biome, string> Chinese = new Dictionary<Biome, string>
