@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 public class NoisyEdges
 {
-    private static readonly float NOISY_LINE_TRADEOFF = 0.5f;// low: jagged vedge; high: jagged dedge
+    private static readonly float NOISY_LINE_TRADEOFF = 1.0f;// low: jagged vedge; high: jagged dedge
     public Dictionary<int, List<Vector2>> path0 = new Dictionary<int, List<Vector2>>();// edge index -> Vector.<Point>
     public Dictionary<int, List<Vector2>> path1 = new Dictionary<int, List<Vector2>>();// edge index -> Vector.<Point>
 
@@ -21,8 +21,18 @@ public class NoisyEdges
     // distance: path0 is from v0 to the midpoint and path1 is from v1
     // to the midpoint. When drawing the polygons, one or the other
     // must be drawn in reverse order.
-    public void BuildNoisyEdges(Map map)
+    public void BuildNoisyEdges(Map map, bool isNoisy)
     {
+        if (isNoisy == false)
+        {
+            //Copy edge to noisy edge
+            foreach (Center p in map.Graph.centers)
+            {
+                if (p.water || p.ocean)
+                    continue;
+                
+                }
+        }
         foreach (Center p in map.Graph.centers)
         {
             foreach (Edge edge in p.borders)
@@ -31,6 +41,7 @@ public class NoisyEdges
                     && !path0.ContainsKey(edge.index))
                 {
                     float f = NOISY_LINE_TRADEOFF;
+
                     Vector2 t = Vector2Extensions.Interpolate(edge.v0.point, edge.d0.point, f);
                     Vector2 q = Vector2Extensions.Interpolate(edge.v0.point, edge.d1.point, f);
                     Vector2 r = Vector2Extensions.Interpolate(edge.v1.point, edge.d0.point, f);
@@ -59,6 +70,12 @@ public class NoisyEdges
         subdivide(A, B, C, D,points,minLength);
         points.Add(C);
 
+        return points;
+    }
+
+    private List<Vector2> buildLineSegment(Vector2 A, Vector2 B, Vector2 C, Vector2 D, float minLength)
+    {
+        List<Vector2> points = new List<Vector2>();
         return points;
     }
 

@@ -16,7 +16,15 @@ public class DirectGenMap : MonoBehaviour
     private Text _mouseBiome;
     private Text _descLabel;
     private GameObject _showMap;
-    private GameObject _showCampDivision;
+    private GameObject _showCamp;
+    public Map globalMap;
+
+    private GameObject _townPrefab;
+    private GameObject _bush1Prefab;
+    private GameObject _bush2Prefab;
+    private GameObject _GoldVeinPrefab;
+    private GameObject _BoulderPrefab;
+
 
     public string _name;
 
@@ -28,78 +36,21 @@ public class DirectGenMap : MonoBehaviour
         _image = transform.Find("RawImage").GetComponent<RawImage>();
         _mouseBiome = transform.Find("MouseBiome").GetComponent<Text>();
         _descLabel = transform.Find("DescLabel").GetComponent<Text>();
-        _dFont = _inputName.textComponent.font;
+        //_dFont = _inputName.textComponent.font;
+
+        _townPrefab = GameObject.Find("Town");
+        _bush1Prefab = GameObject.Find("Bush1");
+        _bush2Prefab = GameObject.Find("Bush2");
+        _GoldVeinPrefab = GameObject.Find("GoldVein");
+        _BoulderPrefab = GameObject.Find("Boulder");
 
         //_btnGen.onClick.AddListener(GenMap);
 
         _showMap = GameObject.Find("Map");
-        _showCampDivision = GameObject.Find("CampDivision");
-        //隐藏descLabel与mouseBiome
-        transform.Find("DescLabel").gameObject.SetActive(false);
-        transform.Find("MouseBiome").gameObject.SetActive(false);
-
-        transform.Find("Toggles1/Toggle1").GetComponent<Toggle>().onValueChanged.AddListener(Toggle1);
-        transform.Find("Toggles1/Toggle2").GetComponent<Toggle>().onValueChanged.AddListener(Toggle2);
-        transform.Find("Toggles1/Toggle3").GetComponent<Toggle>().onValueChanged.AddListener(Toggle3);
-        transform.Find("Toggles1/Toggle4").GetComponent<Toggle>().onValueChanged.AddListener(Toggle4);
-
-        transform.Find("Toggles2/Toggle1").GetComponent<Toggle>().onValueChanged.AddListener(ToggleLand);
-        transform.Find("Toggles2/Toggle2").GetComponent<Toggle>().onValueChanged.AddListener(ToggleLake);
+        _showCamp = GameObject.Find("CampMap");
 
         GenMap();
-    }
-
-    void Update()
-    {
-        CheckMouseBiome();
-    }
-
-    private float _nextCheckTime;
-    private void CheckMouseBiome()
-    {
-        if (Time.time < _nextCheckTime)
-            return;
-        _nextCheckTime = Time.time + 0.1f;
-
-        Vector2 pos = Input.mousePosition; // Mouse position
-        RaycastHit hit;
-        Camera _cam = Camera.main; // Camera to use for raycasting
-        Ray ray = _cam.ScreenPointToRay(pos);
-        Physics.Raycast(_cam.transform.position, ray.direction, out hit, 10000.0f);
-        Color c;
-        if (hit.collider)
-        {
-            Texture2D tex = (Texture2D)hit.collider.gameObject.GetComponent<Renderer>().material.mainTexture; // Get texture of object under mouse pointer
-            if (tex)
-            {
-                c = tex.GetPixelBilinear(hit.textureCoord2.x, hit.textureCoord2.y); // Get color from texture
-
-                Biome b = ChangeColorToBiome(c);
-                _mouseBiome.text = BiomeProperties.Chinese[b];
-            }
-        }
-    }
-
-    private Biome ChangeColorToBiome(Color color)
-    {
-        Biome b = Biome.Ocean;
-        foreach (var bc in BiomeProperties.Colors)
-        {
-            if (ColorNearby(bc.Value, color))
-            {
-                b = bc.Key;
-                break;
-            }
-        }
-        return b;
-    }
-
-    bool ColorNearby(Color ls, Color rs)
-    {
-        bool rSame = Mathf.Abs(ls.r - rs.r) < 0.02f;
-        bool gSame = Mathf.Abs(ls.g - rs.g) < 0.02f;
-        bool bSame = Mathf.Abs(ls.b - rs.b) < 0.02f;
-        return rSame && gSame && bSame;
+        
     }
 
     private static Texture2D _txtTexture;
@@ -156,7 +107,7 @@ public class DirectGenMap : MonoBehaviour
         map.Init(CheckIsland());
         //扰乱边缘
         NoisyEdges noisyEdge = new NoisyEdges();
-        noisyEdge.BuildNoisyEdges(map);
+        noisyEdge.BuildNoisyEdges(map, false);
 
         int indexOfTexture = 0;
         //north is 0, JinZhou is 1, JiangDong is 2
@@ -176,18 +127,67 @@ public class DirectGenMap : MonoBehaviour
         {
             indexOfTexture = 0;
         }
+
         new MapTexture(TextureScale).AttachTexture(_showMap, map, noisyEdge, indexOfTexture);
+        new MapTexture(TextureScale).AttachCampTexture(_showCamp, map, noisyEdge, indexOfTexture);
+
+        globalMap = map;
 
 
-        //隐藏地图设置按钮
-        transform.Find("Toggles1").gameObject.SetActive(false);
-        transform.Find("Toggles2").gameObject.SetActive(false);
-        transform.Find("btnGen").gameObject.SetActive(false);
-        transform.Find("inputName").gameObject.SetActive(false);
 
-        //将descLabel与mouseBiome激活
-        //transform.Find("DescLabel").gameObject.SetActive(true);
-        //transform.Find("MouseBiome").gameObject.SetActive(true);
+        //将_showCamp显示在比_showMap更高的图层上，并将其透明度调整为0.5
+        _showCamp.transform.position = _showMap.transform.position;
+        _showCamp.transform.rotation = _showMap.transform.rotation;
+        _showCamp.transform.localScale = _showMap.transform.localScale;
+        _showCamp.SetActive(true);
+        _showCamp.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Diffuse");
+
+        _showCamp.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.5f);
+
+        //在center上生成城镇
+        foreach (Center p in map.Graph.centers)
+        {
+            if (p.water || p.ocean)
+                continue;
+            // 生成概率，大于0.8则生成城镇
+            float f = Random.value;
+            if (f > 0.95)
+            {
+                p.property = 1;
+                GameObject town = Instantiate(_townPrefab);
+                town.transform.position = new Vector3(p.point.x/4 - 75, p.point.y/4 - 50, 0);
+                //将物体挂载到_showMap上
+                town.transform.parent = _showMap.transform;
+            }
+            else if (f > 0.925)
+            {
+                p.property = 2;
+                GameObject bush1 = Instantiate(_bush1Prefab);
+                bush1.transform.position = new Vector3(p.point.x / 4 - 75, p.point.y / 4 - 50, 0);
+                bush1.transform.parent = _showMap.transform;
+            }
+            else if (f > 0.90)
+            {
+                p.property = 3;
+                GameObject bush2 = Instantiate(_bush2Prefab);
+                bush2.transform.position = new Vector3(p.point.x / 4 - 75, p.point.y / 4 - 50, 0);
+                bush2.transform.parent = _showMap.transform;
+            }
+            else if (f > 0.875)
+            {
+                p.property = 4;
+                GameObject boulder = Instantiate(_BoulderPrefab);
+                boulder.transform.position = new Vector3(p.point.x / 4 - 75, p.point.y / 4 - 50, 0);
+                boulder.transform.parent = _showMap.transform;
+            }
+            else if (f > 0.85)
+            {
+                p.property = 5;
+                GameObject goldVein = Instantiate(_GoldVeinPrefab);
+                goldVein.transform.position = new Vector3(p.point.x / 4 - 75, p.point.y / 4 - 50, 0);
+                goldVein.transform.parent = _showMap.transform;
+            }
+        }
     }
 
     public static System.Func<Vector2, bool> CheckIsland()
@@ -246,4 +246,5 @@ public class DirectGenMap : MonoBehaviour
 
         return output;
     }
+
 }

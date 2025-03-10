@@ -169,7 +169,7 @@ public class UI_GenNameMap : MonoBehaviour
         map.Init(CheckIsland());
         //扰乱边缘
         NoisyEdges noisyEdge = new NoisyEdges();
-        noisyEdge.BuildNoisyEdges(map);
+        noisyEdge.BuildNoisyEdges(map, false);
 
         new MapTexture(TextureScale).AttachTexture(_showMap, map, noisyEdge);
 

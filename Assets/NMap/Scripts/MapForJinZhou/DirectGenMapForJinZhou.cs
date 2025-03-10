@@ -154,7 +154,7 @@ public class DirectGenMapForJinZhou : MonoBehaviour //单独写一份地图生成是很蠢的
         map.Init(CheckIsland());
         //扰乱边缘
         NoisyEdges noisyEdge = new NoisyEdges();
-        noisyEdge.BuildNoisyEdges(map);
+        noisyEdge.BuildNoisyEdges(map, false);
 
         new MapTexture(TextureScale).AttachTexture(_showMap, map, noisyEdge);
 

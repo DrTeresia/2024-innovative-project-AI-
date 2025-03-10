@@ -20,7 +20,7 @@ public class UI_Main : MonoBehaviour
         map.Init();
         //扰乱边缘
         NoisyEdges noisyEdge = new NoisyEdges();
-        noisyEdge.BuildNoisyEdges(map);
+        noisyEdge.BuildNoisyEdges(map, false);
 
         new MapTexture(TextureScale).AttachTexture(GameObject.Find("Map"), map, noisyEdge);
     }

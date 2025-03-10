@@ -64,7 +64,7 @@ namespace Assets.Map
             if (voronoi == null)
                 Debug.Log("Asset/Map/Voronoi failed");
 
-            Graph = new Graph(checkIsland,points, voronoi, (int)Width, (int)Height, _lakeThreshold);
+            Graph = new Graph(checkIsland, points, voronoi, (int)Width, (int)Height, _lakeThreshold);
             Debug.Log("Asset/Map/Graph success");
         }
     }

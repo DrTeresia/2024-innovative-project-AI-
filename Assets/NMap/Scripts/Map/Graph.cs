@@ -63,6 +63,9 @@ namespace Assets.Map
             AssignPolygonMoisture();
 
             centers.ForEach(p => p.biome = GetBiome(p));
+
+            // Assign each center to a camp
+            SetCamp(3);
         }
 
         private void BuildGraph(IEnumerable<Vector2> points, Delaunay.Voronoi voronoi)
@@ -622,6 +625,42 @@ namespace Assets.Map
             }
         }
 
+        float initCampRange = 100.0f;//在该范围外的center不会被刷漆
+
+        void SetCamp(int campNum = 1)
+        {
+            //重设Random
+            UnityEngine.Random.InitState(DateTime.Now.Millisecond);
+            //从所有的center中随机选取campNum个作为阵营的基地，并将这些节点的引用保存在campList中
+            List<Center> campList = new List<Center>();
+            for (int i = 0; i < campNum; i++)
+            {
+                Center camp = null;
+                do
+                {
+                    camp = centers[UnityEngine.Random.Range(0, centers.Count - 1)];
+                } while (campList.Contains(camp));
+                campList.Add(camp);
+            }
+
+            //遍历所有Center，计算每个Center到阵营基地的距离，将Center分配给距离最近的阵营
+            foreach (Center center in centers)
+            {
+                float minDistance = float.MaxValue;
+                int minIndex = -1;
+                for (int i = 0; i < campList.Count; i++)
+                {
+                    float distance = Vector2.Distance(center.point, campList[i].point);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        minIndex = i;
+                    }
+                }
+                if (minDistance < initCampRange)
+                    center.camp = minIndex;
+            }
+        }
         static Biome GetBiome(Center p)
         {
             if (p.ocean)
@@ -680,6 +719,16 @@ namespace Assets.Map
                 point.Set(point.x / region.Count, point.y / region.Count);
                 yield return point;
             }
+        }
+
+        public Center FindCenter(Vector2 point)
+        {
+            foreach (var center in centers)
+            {
+                if (center.PointInside(point.x, point.y))
+                    return center;
+            }
+            return null;
         }
     }
 }

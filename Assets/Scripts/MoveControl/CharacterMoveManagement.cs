@@ -66,7 +66,7 @@ public class CharacterMoveManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         //if the object's position is close to the target position, set the moveAction to idle
         if (GlobalMoveManagement.MoveType.move == moveStatus && Vector2.Distance(targetPosition, transform.position) < DISTANCE_TOLERANCE)
         {
