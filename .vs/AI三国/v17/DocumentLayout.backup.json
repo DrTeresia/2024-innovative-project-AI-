@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "D:\\Unity\\AI\u4E09\u56FD\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|d:\\unity\\ai\u4E09\u56FD\\assets\\cover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|solutionrelative:assets\\cover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|d:\\unity\\ai\u4E09\u56FD\\assets\\animator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|solutionrelative:assets\\animator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|d:\\unity\\ai\u4E09\u56FD\\assets\\ambushcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|solutionrelative:assets\\ambushcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|D:\\Unity\\AI\u4E09\u56FD\\assets\\move.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|solutionrelative:assets\\move.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|d:\\unity\\ai\u4E09\u56FD\\assets\\cover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|solutionrelative:assets\\cover.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|D:\\Unity\\AI\u4E09\u56FD\\assets\\animator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{57D64C48-64E2-C554-0F85-E2AAA4957CF6}|Assembly-CSharp.csproj|solutionrelative:assets\\animator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,19 +31,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AmbushController.cs",
+              "DocumentMoniker": "D:\\Unity\\AI\u4E09\u56FD\\Assets\\AmbushController.cs",
+              "RelativeDocumentMoniker": "Assets\\AmbushController.cs",
+              "ToolTip": "D:\\Unity\\AI\u4E09\u56FD\\Assets\\AmbushController.cs",
+              "RelativeToolTip": "Assets\\AmbushController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-23T06:03:57.069Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Cover.cs",
               "DocumentMoniker": "D:\\Unity\\AI\u4E09\u56FD\\Assets\\Cover.cs",
               "RelativeDocumentMoniker": "Assets\\Cover.cs",
               "ToolTip": "D:\\Unity\\AI\u4E09\u56FD\\Assets\\Cover.cs",
               "RelativeToolTip": "Assets\\Cover.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwCkAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-23T04:17:48.91Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "animator.cs",
               "DocumentMoniker": "D:\\Unity\\AI\u4E09\u56FD\\Assets\\animator.cs",
               "RelativeDocumentMoniker": "Assets\\animator.cs",
@@ -52,15 +69,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Move.cs",
               "DocumentMoniker": "D:\\Unity\\AI\u4E09\u56FD\\Assets\\Move.cs",
               "RelativeDocumentMoniker": "Assets\\Move.cs",
               "ToolTip": "D:\\Unity\\AI\u4E09\u56FD\\Assets\\Move.cs",
               "RelativeToolTip": "Assets\\Move.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAPAAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAuwCgAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-15T08:25:57.873Z"
+              "WhenOpened": "2025-03-15T08:25:57.873Z",
+              "EditorCaption": ""
             }
           ]
         }
