@@ -625,7 +625,7 @@ namespace Assets.Map
             }
         }
 
-        float initCampRange = 100.0f;//在该范围外的center不会被刷漆
+        float initCampRange = 10.0f;//在该范围外的center不会被刷漆
 
         void SetCamp(int campNum = 1)
         {
@@ -635,12 +635,12 @@ namespace Assets.Map
             List<Center> campList = new List<Center>();
             for (int i = 0; i < campNum; i++)
             {
-                Center camp = null;
+                Center campBase = null;
                 do
                 {
-                    camp = centers[UnityEngine.Random.Range(0, centers.Count - 1)];
-                } while (campList.Contains(camp));
-                campList.Add(camp);
+                    campBase = centers[UnityEngine.Random.Range(0, centers.Count - 1)];
+                } while (campList.Contains(campBase));
+                campList.Add(campBase);
             }
 
             //遍历所有Center，计算每个Center到阵营基地的距离，将Center分配给距离最近的阵营
@@ -723,12 +723,81 @@ namespace Assets.Map
 
         public Center FindCenter(Vector2 point)
         {
+            // 根据坐标查找所在的多边形，并返回这个多边形的Center
             foreach (var center in centers)
             {
                 if (center.PointInside(point.x, point.y))
+                {
                     return center;
+                }
+                Debug.Log("Location of center: " + center.point.x + " " + center.point.y);
             }
+            Debug.Log("Center not found");
             return null;
+        }
+
+        public Center ChangeCenterCamp(Vector2 point, int camp)
+        {
+            // 改变Center的阵营
+            Center center = FindCenter(point);
+            if (center != null)
+            {
+                center.camp = camp;
+            }
+            return center;
+        }
+
+        public Center NearestCenter(Vector2 point)
+        {
+            // 根据坐标查找最近的Center
+            Center nearest = null;
+            float minDistance = float.MaxValue;
+            foreach (var center in centers)
+            {
+                float distance = Vector2.Distance(center.point, point);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    nearest = center;
+                }
+            }
+            // 返回这个center的引用
+            return nearest;
+        }
+
+        public void ChangeNearestCenterCamp(Vector2 point, int camp)
+        {
+            // 改变最近的Center的阵营
+            Center center = NearestCenter(point);
+            if (center != null)
+            {
+                center.camp = camp;
+            }
+
+        }
+
+        public Center RandomCenter()
+        {
+            // 随机选择一个Center
+            return centers[UnityEngine.Random.Range(0, centers.Count - 1)];
+        }
+
+        public void DisplayCamp()
+        {
+            // 在每个Center上显示阵营的编号，用文本框来实现，这些文本框会在0.5s后自动消失
+            foreach (Center center in centers)
+            {
+               
+                GameObject text = new GameObject();
+                TextMesh textMesh = text.AddComponent<TextMesh>();
+                textMesh.text = center.camp.ToString();
+                textMesh.fontSize = 20;
+                text.transform.position = new Vector3(center.point.x / 4 - 75, center.point.y / 4 - 50, 0);
+                text.AddComponent<DestroySelf>();
+                //移入TemporarySet下
+                text.transform.parent = GameObject.Find("TemporarySet").transform;
+                
+            }
         }
     }
 }

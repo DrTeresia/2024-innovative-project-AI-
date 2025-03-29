@@ -11,28 +11,18 @@ using Random = UnityEngine.Random;
 
 public class NoisyEdges
 {
-    private static readonly float NOISY_LINE_TRADEOFF = 1.0f;// low: jagged vedge; high: jagged dedge
+    private static readonly float NOISY_LINE_TRADEOFF = 0.5f;// low: jagged vedge; high: jagged dedge
     public Dictionary<int, List<Vector2>> path0 = new Dictionary<int, List<Vector2>>();// edge index -> Vector.<Point>
     public Dictionary<int, List<Vector2>> path1 = new Dictionary<int, List<Vector2>>();// edge index -> Vector.<Point>
 
-    private const float SizeScale = 0.1f;
+    private const float SizeScale = float.MaxValue;
     // Build noisy line paths for each of the Voronoi edges. There are
     // two noisy line paths for each edge, each covering half the
     // distance: path0 is from v0 to the midpoint and path1 is from v1
     // to the midpoint. When drawing the polygons, one or the other
     // must be drawn in reverse order.
-    public void BuildNoisyEdges(Map map, bool isNoisy)
+    public void BuildNoisyEdges(Map map, bool isNoisy = true)
     {
-        if (isNoisy == false)
-        {
-            //Copy edge to noisy edge
-            foreach (Center p in map.Graph.centers)
-            {
-                if (p.water || p.ocean)
-                    continue;
-                
-                }
-        }
         foreach (Center p in map.Graph.centers)
         {
             foreach (Edge edge in p.borders)

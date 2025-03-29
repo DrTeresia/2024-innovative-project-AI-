@@ -42,7 +42,7 @@ public class SelectionBox : MonoBehaviour
         foreach (var soldier in soldiers)
         {
             // 找物体的活动脚本
-            Movement a = soldier.GetComponent<Movement>();
+            Move a = soldier.GetComponent<Move>();
             if (a != null)
             {
                 //a.SetSelected(true);

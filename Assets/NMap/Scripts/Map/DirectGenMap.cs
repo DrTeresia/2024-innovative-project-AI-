@@ -36,7 +36,7 @@ public class DirectGenMap : MonoBehaviour
         _image = transform.Find("RawImage").GetComponent<RawImage>();
         _mouseBiome = transform.Find("MouseBiome").GetComponent<Text>();
         _descLabel = transform.Find("DescLabel").GetComponent<Text>();
-        //_dFont = _inputName.textComponent.font;
+        _dFont = _inputName.textComponent.font;
 
         _townPrefab = GameObject.Find("Town");
         _bush1Prefab = GameObject.Find("Bush1");
@@ -54,11 +54,15 @@ public class DirectGenMap : MonoBehaviour
     }
 
     private static Texture2D _txtTexture;
-    const int TextureScale = 20;
     private const int Width = 600;
     private const int Height = 400;
-    private int _pointNum = 3000;
+    private int _pointNum = 500;
     private static bool _isLake = true;
+
+
+    const int TextureScale = 20;
+    public NoisyEdges noisyEdge;
+    public int indexOfTexture = 0;
 
     void Toggle1(bool check)
     {
@@ -106,10 +110,10 @@ public class DirectGenMap : MonoBehaviour
         map.SetPointNum(_pointNum);
         map.Init(CheckIsland());
         //»≈¬“±ﬂ‘µ
-        NoisyEdges noisyEdge = new NoisyEdges();
-        noisyEdge.BuildNoisyEdges(map, false);
+        //noisyEdge = new NoisyEdges();
+        //noisyEdge.BuildNoisyEdges(map);
 
-        int indexOfTexture = 0;
+        indexOfTexture = 0;
         //north is 0, JinZhou is 1, JiangDong is 2
         if (_name == "North")
         {
@@ -128,8 +132,11 @@ public class DirectGenMap : MonoBehaviour
             indexOfTexture = 0;
         }
 
-        new MapTexture(TextureScale).AttachTexture(_showMap, map, noisyEdge, indexOfTexture);
-        new MapTexture(TextureScale).AttachCampTexture(_showCamp, map, noisyEdge, indexOfTexture);
+        //new MapTexture(TextureScale).AttachTexture(_showMap, map, noisyEdge, indexOfTexture);
+        //new MapTexture(TextureScale).AttachCampTexture(_showCamp, map, noisyEdge, indexOfTexture);
+
+        new MapTexture(TextureScale).FastAttachTexture(_showMap, map, indexOfTexture);
+        new MapTexture(TextureScale).FastAttachCampTexture(_showCamp, map, indexOfTexture);
 
         globalMap = map;
 
@@ -196,7 +203,7 @@ public class DirectGenMap : MonoBehaviour
         {
             int x = Convert.ToInt32(q.x / Width * _txtWidth);
             int y = Convert.ToInt32(q.y / Height * _txtHeight);
-            Color tColor = _txtTexture.GetPixel(x, y);
+            Color tColor = _txtTexture.GetPixel(x, y);  
             bool isLand = false;
             if (_isLake)
                 isLand = tColor != Color.white;
@@ -245,6 +252,11 @@ public class DirectGenMap : MonoBehaviour
         Destroy(tempObject);
 
         return output;
+    }
+    
+    public int getTextureScale()
+    {
+        return TextureScale;
     }
 
 }

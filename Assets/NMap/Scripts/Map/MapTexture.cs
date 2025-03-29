@@ -7,7 +7,7 @@ namespace Assets.Map
     public class MapTexture
     {
         private readonly int _textureScale;
-
+        
         public MapTexture(int textureScale)
         {
             _textureScale = textureScale;
@@ -19,16 +19,9 @@ namespace Assets.Map
             int textureHeight = (int)Map.Height * _textureScale;
 
             Texture2D texture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGB565, true);
-            if (indexOfTexture == 0)
-                texture.SetPixels(Enumerable.Repeat(BiomeProperties.Colors[Biome.Ocean], textureWidth * textureHeight).ToArray());
-            else if (indexOfTexture == 1)
-                texture.SetPixels(Enumerable.Repeat(BiomeProperties.ColorsForJinZhou[Biome.Ocean], textureWidth * textureHeight).ToArray());
-            else if (indexOfTexture == 2)
-                texture.SetPixels(Enumerable.Repeat(BiomeProperties.ColorsForJiangdong[Biome.Ocean], textureWidth * textureHeight).ToArray());
-            else
-                texture.SetPixels(Enumerable.Repeat(BiomeProperties.Colors[Biome.Ocean], textureWidth * textureHeight).ToArray());
-
+            
             //绘制扰乱的边缘
+            List<Vector2> periphery = new List<Vector2>();
             foreach (Center p in map.Graph.centers)
             {
                 foreach (var r in p.neighbors)
@@ -41,9 +34,16 @@ namespace Assets.Map
                         // fill in these edges from the voronoi library.
                         continue;
                     }
+                    
                     //绘制扰乱后的形状
-                    DrawNoisyPolygon(texture, p, noisyEdge.path0[edge.index], indexOfTexture);
-                    DrawNoisyPolygon(texture, p, noisyEdge.path1[edge.index], indexOfTexture);
+                    //DrawNoisyPolygon(texture, p, noisyEdge.path0[edge.index], indexOfTexture);
+                    //DrawNoisyPolygon(texture, p, noisyEdge.path1[edge.index], indexOfTexture);
+                    periphery.Clear();
+                    periphery.Add(edge.v0.point);
+                    periphery.Add(edge.v1.point);
+                    periphery.Add(p.point);
+                    texture.FillPolygon(periphery.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), BiomeProperties.Colors[p.biome]);
+
                 }
             }
             //绘制边界线
@@ -74,20 +74,39 @@ namespace Assets.Map
 
             return texture;
         }
+
+        // 绘制不需扰乱的地块
+        public Texture2D FastGetTexture(Map map, int indexOfTexture = 0)
+        {
+            int textureWidth = (int)Map.Width * _textureScale;
+            int textureHeight = (int)Map.Height * _textureScale;
+            Texture2D texture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGB565, true);
+            List<Vector2> periphery = new List<Vector2>();
+            foreach (Center p in map.Graph.centers)
+            {
+                foreach (var r in p.neighbors)
+                {
+                    Edge edge = map.Graph.lookupEdgeFromCenter(p, r);
+                    if (edge == null || edge.v0 == null || edge.v1 == null || edge.d0 == null || edge.d1 == null)
+                        continue;
+                    periphery.Clear();
+                    periphery.Add(edge.v0.point);
+                    periphery.Add(edge.v1.point);
+                    periphery.Add(p.point);
+                    texture.FillPolygon(periphery.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), BiomeProperties.Colors[p.biome]);
+                }
+            }
+            texture.Apply();
+            return texture;
+        }
+
         public Texture2D GetCampTexture(Map map, NoisyEdges noisyEdge, int indexOfTexture = 0)
         {
             int textureWidth = (int)Map.Width * _textureScale;
             int textureHeight = (int)Map.Height * _textureScale;
             Texture2D texture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGB565, true);
-            if (indexOfTexture == 0)
-                texture.SetPixels(Enumerable.Repeat(BiomeProperties.Colors[Biome.Ocean], textureWidth * textureHeight).ToArray());
-            else if (indexOfTexture == 1)
-                texture.SetPixels(Enumerable.Repeat(BiomeProperties.ColorsForJinZhou[Biome.Ocean], textureWidth * textureHeight).ToArray());
-            else if (indexOfTexture == 2)
-                texture.SetPixels(Enumerable.Repeat(BiomeProperties.ColorsForJiangdong[Biome.Ocean], textureWidth * textureHeight).ToArray());
-            else
-                texture.SetPixels(Enumerable.Repeat(BiomeProperties.Colors[Biome.Ocean], textureWidth * textureHeight).ToArray());
-            //绘制扰乱的边缘
+           
+            List<Vector2> periphery = new List<Vector2>();
             foreach (Center p in map.Graph.centers)
             {
                 foreach (var r in p.neighbors)
@@ -101,8 +120,12 @@ namespace Assets.Map
                         continue;
                     }
                     //绘制扰乱后的形状
-                    DrawCampPolygon(texture, p, noisyEdge.path0[edge.index], indexOfTexture);
-                    DrawCampPolygon(texture, p, noisyEdge.path1[edge.index], indexOfTexture);
+                    periphery.Clear();
+                    periphery.Add(edge.v0.point);
+                    periphery.Add(edge.v1.point);
+                    periphery.Add(p.point);
+                    texture.FillPolygon(periphery.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), Camp.Colors[p.camp]);
+
                 }
             }
             //绘制边界线
@@ -116,16 +139,44 @@ namespace Assets.Map
                 for (int i = 0; i < edge1.Count - 1; i++)
                     DrawLine(texture, edge1[i].x, edge1[i].y, edge1[i + 1].x, edge1[i + 1].y, Color.black);
             }
-            ////绘制扰乱后的河流
-            //foreach (var line in map.Graph.edges.Where(p => p.river > 0 && !p.d0.water && !p.d1.water))
+            texture.Apply();
+            return texture;
+        }
+
+        // 不需要计算扰乱边缘
+        public Texture2D FastGetCampTexture(Map map, int indexOfTexture = 0)
+        {
+            int textureWidth = (int)Map.Width * _textureScale;
+            int textureHeight = (int)Map.Height * _textureScale;
+            Texture2D texture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGB565, true);
+            List<Vector2> periphery = new List<Vector2>();
+            foreach (Center p in map.Graph.centers)
+            {
+                foreach (var r in p.neighbors)
+                {
+                    Edge edge = map.Graph.lookupEdgeFromCenter(p, r);
+                    if (edge == null || edge.v0 == null || edge.v1 == null || edge.d0 == null || edge.d1 == null)
+                        continue;
+                    periphery.Clear();
+                    periphery.Add(edge.v0.point);
+                    periphery.Add(edge.v1.point);
+                    periphery.Add(p.point);
+                    texture.FillPolygon(periphery.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), Camp.Colors[p.camp]);
+                }
+            }
+            //// 绘制边界线
+            //foreach (var line in map.Graph.edges.Where(p => !p.d0.water && !p.d1.water))
             //{
-            //    //绘制扰乱后的边缘
-            //    List<Vector2> edge0 = noisyEdge.path0[line.index];
-            //    for (int i = 0; i < edge0.Count - 1; i++)
-            //        DrawLine(texture, edge0[i].x, edge0[i].y, edge0[i + 1].x, edge0[i + 1].y, Color.blue);
-            //    List<Vector2> edge1 = noisyEdge.path1[line.index];
-            //    for (int i = 0; i < edge1.Count - 1; i++)
-            //        DrawLine(texture, edge1[i].x, edge1[i].y, edge1[i + 1].x, edge1[i + 1].y, Color.blue);
+            //    List<Vector2> edge0 = new List<Vector2>();
+            //    edge0.Add(line.v0.point);
+            //    edge0.Add(line.v1.point);
+            //    edge0.Add(line.d0.point);
+            //    texture.FillPolygon(edge0.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), Camp.Colors[line.d0.camp]);
+            //    List<Vector2> edge1 = new List<Vector2>();
+            //    edge1.Add(line.v0.point);
+            //    edge1.Add(line.v1.point);
+            //    edge1.Add(line.d1.point);
+            //    texture.FillPolygon(edge1.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), Camp.Colors[line.d1.camp]);
             //}
             texture.Apply();
             return texture;
@@ -137,10 +188,21 @@ namespace Assets.Map
             Texture2D texture = GetTexture(map, noisyEdge, indexOfTexture);
             plane.GetComponent<Renderer>().material.mainTexture = texture;
         }
-
+        // 不需要计算扰乱边缘
+        public void FastAttachTexture(GameObject plane, Map map, int indexOfTexture = 0)
+        {
+            Texture2D texture = FastGetTexture(map, indexOfTexture);
+            plane.GetComponent<Renderer>().material.mainTexture = texture;
+        }
         public void AttachCampTexture(GameObject plane, Map map, NoisyEdges noisyEdge, int indexOfTexture = 0)
         {
             Texture2D texture = GetCampTexture(map, noisyEdge, indexOfTexture);
+            plane.GetComponent<Renderer>().material.mainTexture = texture;
+        }
+        //不需要计算扰乱边缘
+        public void FastAttachCampTexture(GameObject plane, Map map, int indexOfTexture = 0)
+        {
+            Texture2D texture = FastGetCampTexture(map, indexOfTexture);
             plane.GetComponent<Renderer>().material.mainTexture = texture;
         }
 
@@ -168,7 +230,6 @@ namespace Assets.Map
                 _edgePoints.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(),
                 BiomeProperties.Colors[p.biome]);
         }
-
         private void DrawCampPolygon(Texture2D texture, Center p, List<Vector2> orgEdges, int indexOfTexture = 0)
         {
             _edgePoints.Clear();
@@ -179,7 +240,6 @@ namespace Assets.Map
                 _edgePoints.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(),
                 Camp.Colors[p.camp]);
         }
-
 
         private void DrawLine(Texture2D texture, float x0, float y0, float x1, float y1, Color color)
         {

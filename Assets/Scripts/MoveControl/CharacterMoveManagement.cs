@@ -111,7 +111,7 @@ public class CharacterMoveManagement : MonoBehaviour
         Vector3 direction = transform.position - playerPosition;
         direction.Normalize();
         playerPosition += direction * direction.magnitude * 2;
-        this.gameObject.GetComponent<Movement>().targetPosition = playerPosition;
+        this.gameObject.GetComponent<Move>().targetPosition = playerPosition;
         moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
@@ -121,21 +121,21 @@ public class CharacterMoveManagement : MonoBehaviour
         Vector3 direction = transform.position - player.transform.position;
         direction.Normalize();
         Vector3 playerPosition = player.transform.position + direction * direction.magnitude * 2;
-        this.gameObject.GetComponent<Movement>().targetPosition = playerPosition;
+        this.gameObject.GetComponent<Move>().targetPosition = playerPosition;
         moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
     public void moveTowards(Vector3 playerPosition)
     {
         // Move towards the player
-        this.gameObject.GetComponent<Movement>().targetPosition = playerPosition;
+        this.gameObject.GetComponent<Move>().targetPosition = playerPosition;
         moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
     public void moveTowards(GameObject player)
     {
         // Move towards the player
-        this.gameObject.GetComponent<Movement>().targetPosition = player.transform.position;
+        this.gameObject.GetComponent<Move>().targetPosition = player.transform.position;
         moveStatus = GlobalMoveManagement.MoveType.move;
     }
 
@@ -154,7 +154,7 @@ public class CharacterMoveManagement : MonoBehaviour
         Vector3 direction = transform.position - playerPosition;
         direction.Normalize();
         Vector3 playerPositionFront = playerPosition + direction * 2;
-        this.gameObject.GetComponent<Movement>().targetPosition = playerPositionFront;
+        this.gameObject.GetComponent<Move>().targetPosition = playerPositionFront;
         moveStatus = GlobalMoveManagement.MoveType.move;
         actionStatus = GlobalMoveManagement.ActionType.stay;
     }
@@ -164,7 +164,7 @@ public class CharacterMoveManagement : MonoBehaviour
         Vector3 direction = transform.position - player.transform.position;
         direction.Normalize();
         Vector3 playerPositionFront = player.transform.position + direction * 2;
-        this.gameObject.GetComponent<Movement>().targetPosition = playerPositionFront;
+        this.gameObject.GetComponent<Move>().targetPosition = playerPositionFront;
         moveStatus = GlobalMoveManagement.MoveType.move;
         actionStatus = GlobalMoveManagement.ActionType.stay;
     }
@@ -174,7 +174,7 @@ public class CharacterMoveManagement : MonoBehaviour
         Vector3 direction = transform.position - player.transform.position;
         direction.Normalize();
         Vector3 playerPositionFront = player.transform.position + direction * 2;
-        this.gameObject.GetComponent<Movement>().targetPosition = playerPositionFront;
+        this.gameObject.GetComponent<Move>().targetPosition = playerPositionFront;
         moveStatus = GlobalMoveManagement.MoveType.move;
         actionStatus = GlobalMoveManagement.ActionType.conversation;
     }
@@ -203,7 +203,7 @@ public class CharacterMoveManagement : MonoBehaviour
         Vector3 direction = transform.position - targetObject.transform.position;
         direction.Normalize();
         Vector3 playerPositionFront = targetObject.transform.position + direction * 5;
-        this.gameObject.GetComponent<Movement>().targetPosition = playerPositionFront;
+        this.gameObject.GetComponent<Move>().targetPosition = playerPositionFront;
         moveStatus = GlobalMoveManagement.MoveType.move;
         actionStatus = GlobalMoveManagement.ActionType.stay;
     }
