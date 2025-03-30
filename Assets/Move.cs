@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    public int controlMode = 1;
+    public int controlMode = 1;      //1鼠标控制，0坐标控制，在其他脚本中用作移动锁；
     public float moveSpeed = 5f;
     public LayerMask obstacleLayer;
     public float nodeRadius = 0.5f;
@@ -25,7 +25,7 @@ public class Move : MonoBehaviour
         FollowPath();
     }
 
-    void HandleInput()
+    public void HandleInput()
     {
         if (controlMode == 1 && Input.GetMouseButtonDown(0))
         {
@@ -45,10 +45,11 @@ public class Move : MonoBehaviour
         currentPathIndex = 0;
     }
 
-    void FollowPath()
+    public void FollowPath()
     {
         if (currentPath == null || currentPathIndex >= currentPath.Count)
         {
+            currentPath = null;
             _currentSpeed = 0f;
             _currentDirection = Vector2.zero;
             return;

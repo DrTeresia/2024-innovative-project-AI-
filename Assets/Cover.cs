@@ -4,14 +4,14 @@ public class Cover : MonoBehaviour
 {
     [Header("基本属性")]
     public int maxCapacity = 3;                  // 最大容纳人数
-    public float safeRadius = 2f;                // 有效埋伏半径
-    public LayerMask occupantLayer;              // 占用者层级
+    public float safeRadius;                // 有效埋伏半径
+    public float occupyRadius;
 
     [Header("调试显示")]
     public Color availableColor = Color.green;   // 可用状态颜色
     public Color fullColor = Color.red;          // 满载状态颜色
 
-    private int currentOccupants = 0;            // 当前占用人数
+    public int currentOccupants = 0;            // 当前占用人数
     private SpriteRenderer spriteRenderer;
 
     void Awake()

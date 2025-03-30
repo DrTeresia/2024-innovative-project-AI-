@@ -1,87 +1,115 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Move))]
 public class AmbushController : MonoBehaviour
 {
     [Header("伏击设置")]
-    [SerializeField] private string enemyTeamTag = "TeamA";  // 敌方队伍标签
-    [SerializeField] private LayerMask componentMask;        // 需要禁用的组件所在层级
+    [SerializeField] private string enemyTeamTag = "TeamA";
+    [SerializeField] private List<Behaviour> componentsToDisable = new List<Behaviour>();
+    [SerializeField] private int originalLayer;         // 记录原始层级
+    [SerializeField] private int hiddenLayer;           // 埋伏时切换到的隐藏层级
+
+    [Header("计策")]
+    public string inputCommand; 
 
     private Move moveScript;
     private Cover currentCover;
-    private bool isAmbushing;
+    public bool isAmbushing;
+    private Dictionary<Behaviour, bool> componentStates = new Dictionary<Behaviour, bool>();
 
     void Awake()
     {
         moveScript = GetComponent<Move>();
+        originalLayer = gameObject.layer;
+    }
+
+    void Update()
+    {
+        if (inputCommand == "伏击")
+        {
+            inputCommand = ""; 
+            ExecuteAmbush();
+        }
     }
 
     // 外部调用：执行伏击指令
     public void ExecuteAmbush()
     {
-        if (isAmbushing) return;
+        if (isAmbushing)
+        {
+            Debug.LogWarning("已在埋伏状态，不可重复触发");
+            return;
+        }
 
-        // 寻找最近的可用Cover
         currentCover = Cover.FindNearestAvailableCover(transform.position, enemyTeamTag);
-        if (currentCover == null) return;
-
-        // 启动移动协程
+        if (currentCover == null)
+        {
+            Debug.LogWarning("未找到可用掩体");
+            return;
+        }
         StartCoroutine(AmbushRoutine());
     }
 
-    // 伏击流程协程
+    // 伏击流程协程（保持不变）
     private IEnumerator AmbushRoutine()
     {
-        // 移动到Cover位置
-        moveScript.StartPathfinding(currentCover.transform.position);
+        Debug.Log("开始向掩体移动");
+        moveScript.controlMode = 0;
+        moveScript.targetPosition = currentCover.transform.position;
+        //moveScript.HandleInput();
+        //moveScript.FollowPath();
 
-        // 等待到达目标
-        while (moveScript.IsPathfinding)
+        //moveScript.StartPathfinding(currentCover.transform.position);
+
+        while (Vector2.Distance(transform.position, currentCover.transform.position) > currentCover.occupyRadius)
+        {
             yield return null;
+        }
 
-        // 尝试进入埋伏状态
         if (currentCover.TryOccupyCover())
         {
+            Debug.Log("成功进入埋伏状态");
+            moveScript.controlMode = 1;
             EnterAmbushState();
-            yield return new WaitUntil(() => !isAmbushing); // 等待取消埋伏
+            yield return new WaitUntil(() => !isAmbushing);
             currentCover.ReleaseCover();
+        }
+        else
+        {
+            Debug.Log("进入埋伏失败：Cover 已满或不可用");
         }
     }
 
-    // 进入埋伏状态
+    // 进入埋伏状态（保持不变）
     private void EnterAmbushState()
     {
         isAmbushing = true;
-
-        // 禁用指定组件（如攻击、动画等）
-        foreach (var component in GetComponents<Behaviour>())
+        componentStates.Clear();
+        foreach (var component in componentsToDisable)
         {
-            if ((componentMask & (1 << component.GetType().GetHashCode())) != 0)
+            if (component != null)
+            {
+                componentStates[component] = component.enabled;
                 component.enabled = false;
+            }
         }
-
-        // 隐藏角色
-        GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<Collider2D>().enabled = false; // 可选：禁用碰撞
+        gameObject.layer = hiddenLayer;
+        GetComponent<Collider2D>().enabled = false;
     }
 
-    // 退出埋伏状态
+    // 退出埋伏状态（保持不变）
     public void ExitAmbushState()
     {
         if (!isAmbushing) return;
-
-        // 启用组件
-        foreach (var component in GetComponents<Behaviour>())
+        foreach (var component in componentsToDisable)
         {
-            if ((componentMask & (1 << component.GetType().GetHashCode())) != 0)
-                component.enabled = true;
+            if (component != null && componentStates.ContainsKey(component))
+                component.enabled = componentStates[component];
         }
-
-        // 显示角色
-        GetComponent<SpriteRenderer>().enabled = true;
+        gameObject.layer = originalLayer;
         GetComponent<Collider2D>().enabled = true;
-
         isAmbushing = false;
     }
 }

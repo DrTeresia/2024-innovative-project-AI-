@@ -383,6 +383,7 @@
 "Assets/animator.cs"
 "Assets/Cover.cs"
 "Assets/Move.cs"
+"Assets/RetreatToCity.cs"
 -langversion:9.0
 /deterministic
 /optimize+

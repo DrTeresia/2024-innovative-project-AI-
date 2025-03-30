@@ -64,6 +64,7 @@
     <Compile Include="Assets\Move.cs" />
     <Compile Include="Assets\AmbushController.cs" />
     <Compile Include="Assets\Cover.cs" />
+    <Compile Include="Assets\RetreatToCity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Free Pixel Art Overworld Tileset\Free Pixel Art overworld tileset\readme.txt" />
