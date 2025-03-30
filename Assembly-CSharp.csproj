@@ -60,12 +60,14 @@
     <Analyzer Include="D:\Unity\2022.3.53f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\PredictedStrategy.cs" />
     <Compile Include="Assets\animator.cs" />
     <Compile Include="Assets\Move.cs" />
     <Compile Include="Assets\csv.cs" />
     <Compile Include="Assets\AmbushController.cs" />
     <Compile Include="Assets\Cover.cs" />
     <Compile Include="Assets\RetreatToCity.cs" />
+    <Compile Include="Assets\JSONReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Free Pixel Art Overworld Tileset\Free Pixel Art overworld tileset\readme.txt" />
@@ -411,6 +413,10 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

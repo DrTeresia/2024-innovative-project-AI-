@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
+using System.IO;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(Move))]
 public class AmbushController : MonoBehaviour
@@ -18,13 +21,17 @@ public class AmbushController : MonoBehaviour
     private Cover currentCover;
     public bool isAmbushing;
     private Dictionary<Behaviour, bool> componentStates = new Dictionary<Behaviour, bool>();
+    private bool isStrategyLoaded = false; // 新增加载状态标识
 
     void Awake()
     {
         moveScript = GetComponent<Move>();
         originalLayer = gameObject.layer;
     }
-
+    void Start()
+    {
+        StartCoroutine(LoadStrategyFromStreamingAssets());
+    }
     void Update()
     {
         if (inputCommand == "伏击")
@@ -97,6 +104,39 @@ public class AmbushController : MonoBehaviour
         }
         gameObject.layer = hiddenLayer;
         GetComponent<Collider2D>().enabled = false;
+    }
+
+    // 新增：异步加载策略配置
+    private IEnumerator LoadStrategyFromStreamingAssets()
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath, "predicted_strategy.json");
+
+        using (UnityWebRequest request = UnityWebRequest.Get(filePath))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                try
+                {
+                    string jsonContent = request.downloadHandler.text;
+                    PredictedStrategy strategy = JsonConvert.DeserializeObject<PredictedStrategy>(jsonContent);
+                    inputCommand = strategy.strategyName;
+                    Debug.Log($"策略加载成功：{inputCommand}");
+                    isStrategyLoaded = true;
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"JSON解析失败: {e.Message}");
+                    isStrategyLoaded = false;
+                }
+            }
+            else
+            {
+                Debug.LogError($"文件加载失败：{request.error}");
+                isStrategyLoaded = false;
+            }
+        }
     }
 
     // 退出埋伏状态（保持不变）

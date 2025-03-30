@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638776308415459255
-    m_Hash: 2310779024
+      ticks: 638789237943262584
+    m_Hash: 2851983119
   m_LockFileStatus:
     m_FilePath: "D:/Unity/AI\u4E09\u56FD/Packages/packages-lock.json"
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638776308415508573
-    m_Hash: 1303622263
+      ticks: 638789237943302595
+    m_Hash: 1351698901
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -433,9 +433,11 @@ m_ResolvedPackages:
     - 3.0.28
     - 3.0.31
     - 3.0.34
+    - 3.0.35
     compatible:
     - 3.0.34
-    recommended: 3.0.34
+    - 3.0.35
+    recommended: 3.0.35
     deprecated: []
   dependencies:
   - name: com.unity.ext.nunit
@@ -517,9 +519,11 @@ m_ResolvedPackages:
     - 2.0.20
     - 2.0.21
     - 2.0.22
+    - 2.0.23
     compatible:
     - 2.0.22
-    recommended: 2.0.22
+    - 2.0.23
+    recommended: 2.0.23
     deprecated: []
   dependencies:
   - name: com.unity.test-framework
@@ -554,6 +558,85 @@ m_ResolvedPackages:
     path: 
   unityLifecycle:
     version: 2.0.22
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+  isDeprecated: 0
+  deprecationMessage: 
+  fingerprint: 
+- packageId: com.unity.nuget.newtonsoft-json@3.2.1
+  testable: 0
+  isDirectDependency: 1
+  version: 3.2.1
+  source: 1
+  resolvedPath: "D:\\Unity\\AI\u4E09\u56FD\\Library\\PackageCache\\com.unity.nuget.newtonsoft-json@3.2.1"
+  assetPath: Packages/com.unity.nuget.newtonsoft-json
+  name: com.unity.nuget.newtonsoft-json
+  displayName: Newtonsoft Json
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: library
+  description: 'Newtonsoft Json for use in Unity projects and Unity packages. Currently
+    synced to version 13.0.2.
+
+
+    This package is used for advanced json serialization
+    and deserialization. Most Unity users will be better suited using the existing
+    json tools built into Unity.
+
+    To avoid assembly clashes, please use this
+    package if you intend to use Newtonsoft Json.'
+  status: 0
+  errors: []
+  versions:
+    all:
+    - 1.0.0-preview.2
+    - 1.0.0-preview.3
+    - 1.0.0-preview.4
+    - 1.0.1-preview.1
+    - 1.1.2
+    - 2.0.0-preview
+    - 2.0.0-preview.1
+    - 2.0.0-preview.2
+    - 2.0.0
+    - 2.0.1-preview.1
+    - 2.0.2
+    - 3.0.1
+    - 3.0.2
+    - 3.1.0
+    - 3.2.0
+    - 3.2.1
+    compatible:
+    - 3.2.1
+    recommended: 3.2.1
+    deprecated: []
+  dependencies: []
+  resolvedDependencies: []
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.cn
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+  hideInEditor: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638186318800000000
+  documentationUrl: 
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.nuget.newtonsoft-json.git
+    revision: d8e49aef8979bef617144382052ec2f479645eaf
+    path: 
+  unityLifecycle:
+    version: 3.2.1
     nextVersion: 
     recommendedVersion: 
     isDeprecated: 0
@@ -3397,6 +3480,7 @@ m_ResolvedPackages:
     - 9.1.1
     - 9.1.2
     - 9.1.3
+    - 9.2.0
     - 10.0.0-pre.1
     - 10.0.0-pre.2
     - 10.0.0
@@ -3411,6 +3495,7 @@ m_ResolvedPackages:
     - 10.2.0
     compatible:
     - 9.1.3
+    - 9.2.0
     recommended: 9.1.3
     deprecated: []
   dependencies:
@@ -3525,8 +3610,10 @@ m_ResolvedPackages:
     - 5.0.1
     - 5.0.2
     - 5.0.3
+    - 5.1.0
     compatible:
     - 5.0.3
+    - 5.1.0
     recommended: 5.0.3
     deprecated: []
   dependencies: []
@@ -3658,6 +3745,7 @@ m_ResolvedPackages:
     - 8.0.3
     - 8.0.4
     - 8.0.5
+    - 8.1.0
     - 9.0.0-pre.1
     - 9.0.0-pre.2
     - 9.0.0
@@ -3668,6 +3756,7 @@ m_ResolvedPackages:
     - 10.1.0
     compatible:
     - 8.0.5
+    - 8.1.0
     recommended: 8.0.5
     deprecated: []
   dependencies:
@@ -3896,6 +3985,7 @@ m_ResolvedPackages:
     - 9.0.3
     - 9.0.4
     - 9.0.5
+    - 9.1.0
     - 10.0.0-pre.1
     - 10.0.0-pre.2
     - 10.0.0
@@ -3909,6 +3999,7 @@ m_ResolvedPackages:
     - 10.1.0
     compatible:
     - 9.0.5
+    - 9.1.0
     recommended: 9.0.5
     deprecated: []
   dependencies:
@@ -4220,6 +4311,7 @@ m_ResolvedPackages:
     - 1.2.0
     - 1.2.1
     - 1.2.2
+    - 1.2.3
     compatible:
     - 1.1.6
     - 1.1.7
@@ -4358,6 +4450,7 @@ m_ResolvedPackages:
     - 8.0.2
     - 8.0.3
     - 8.0.4
+    - 8.1.0
     - 9.0.0-pre.1
     - 9.0.0-pre.2
     - 9.0.0
@@ -4371,6 +4464,7 @@ m_ResolvedPackages:
     - 9.1.0
     compatible:
     - 8.0.4
+    - 8.1.0
     recommended: 8.0.4
     deprecated: []
   dependencies:
@@ -4600,6 +4694,7 @@ m_ResolvedPackages:
     - 2.5.1
     - 2.5.2
     - 2.5.3
+    - 2.6.0-exp.2
     compatible:
     - 1.2.4
     - 1.3.1
@@ -4628,6 +4723,7 @@ m_ResolvedPackages:
     - 2.5.1
     - 2.5.2
     - 2.5.3
+    - 2.6.0-exp.2
     recommended: 1.2.4
     deprecated: []
   dependencies:

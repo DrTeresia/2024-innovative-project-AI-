@@ -29,11 +29,7 @@ public class CSVUpdater : MonoBehaviour
 
     void InitializeSampleData()
     {
-        battleDataList.Add(new BattleData("崤之战（春秋）", 1, 0.5f, 10, 0.0f, 1, "伏击"));
-        battleDataList.Add(new BattleData("马陵之战（战国）", 1, 0.5555555555555556f, 22, 2.0f, 0, "诱敌"));
-        battleDataList.Add(new BattleData("巨鹿之战（秦末）", 1, 0.2f, 13, 1.0f, 1, "死战"));
-        battleDataList.Add(new BattleData("井陉之战（楚汉）", 1, 0.1304347826086956f, 8, 4.0f, 1, "背水阵"));
-        battleDataList.Add(new BattleData("定军山之战（三国）", 1, 0.8823529411764706f, 8, 0.0f, 1, "高地战"));
+        battleDataList.Add(new BattleData(0.5f, 10, 0.0f, 1));
     }
 
     void CreateCSV()
@@ -44,12 +40,12 @@ public class CSVUpdater : MonoBehaviour
             Directory.CreateDirectory(directory);
         }
 
-        string csvContent = "战役名称,进攻防守,兵力比归一化,地形编码,天气编码,发生时间,使用的计策\n"; // 表头
+        string csvContent = "兵力比归一化,地形编码,天气编码,发生时间（白天1）\n"; // 表头
 
         foreach (var data in battleDataList)
         {
-            csvContent += $"{data.CampaignName},{data.AttackDefense},{data.TroopRatioNormalized}," +
-                         $"{data.TerrainCode},{data.WeatherCode},{data.OccurrenceTime},{data.Strategy}\n";
+            csvContent += $"{data.TroopRatioNormalized}," +
+                         $"{data.TerrainCode},{data.WeatherCode},{data.OccurrenceTime}\n";
         }
 
         File.WriteAllText(filePath, csvContent);
@@ -61,12 +57,12 @@ public class CSVUpdater : MonoBehaviour
     {
         UpdateSampleData();
 
-        string csvContent = "战役名称,进攻防守,兵力比归一化,地形编码,天气编码,发生时间,使用的计策\n";
+        string csvContent = "兵力比归一化,地形编码,天气编码,发生时间（白天1）\n";
 
         foreach (var data in battleDataList)
         {
-            csvContent += $"{data.CampaignName},{data.AttackDefense},{data.TroopRatioNormalized}," +
-                         $"{data.TerrainCode},{data.WeatherCode},{data.OccurrenceTime},{data.Strategy}\n";
+            csvContent += $"{data.TroopRatioNormalized}," +
+                         $"{data.TerrainCode},{data.WeatherCode},{data.OccurrenceTime}\n";
         }
 
         File.WriteAllText(filePath, csvContent);
@@ -95,15 +91,12 @@ public class BattleData
     public int OccurrenceTime;
     public string Strategy;
 
-    public BattleData(string campaignName, int attackDefense, float troopRatioNormalized,
-                     int terrainCode, float weatherCode, int occurrenceTime, string strategy)
+    public BattleData( float troopRatioNormalized,
+                     int terrainCode, float weatherCode, int occurrenceTime)
     {
-        CampaignName = campaignName;
-        AttackDefense = attackDefense;
         TroopRatioNormalized = troopRatioNormalized;
         TerrainCode = terrainCode;
         WeatherCode = weatherCode;
         OccurrenceTime = occurrenceTime;
-        Strategy = strategy;
     }
 }

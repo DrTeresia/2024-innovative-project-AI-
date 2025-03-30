@@ -504,7 +504,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1127737558}
-  - component: {fileID: 1127737557}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -512,20 +511,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1127737557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1127737556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa2b9bb1c7d13da4f998650a5b784c29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  filePath: Assets/BattleData.csv
-  updateInterval: 10
 --- !u!4 &1127737558
 Transform:
   m_ObjectHideFlags: 0
