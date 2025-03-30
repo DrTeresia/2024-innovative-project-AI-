@@ -81,6 +81,15 @@ namespace Assets.Map
             int textureWidth = (int)Map.Width * _textureScale;
             int textureHeight = (int)Map.Height * _textureScale;
             Texture2D texture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGB565, true);
+
+            // 绘制camp底色为ocean, 色号为44447a
+            Color[] fillColorArray = texture.GetPixels();
+            for (int i = 0; i < fillColorArray.Length; ++i)
+            {
+                fillColorArray[i] = BiomeProperties.Colors[Biome.Ocean];
+            }
+            texture.SetPixels(fillColorArray);
+
             List<Vector2> periphery = new List<Vector2>();
             foreach (Center p in map.Graph.centers)
             {
@@ -124,7 +133,8 @@ namespace Assets.Map
                     periphery.Add(edge.v0.point);
                     periphery.Add(edge.v1.point);
                     periphery.Add(p.point);
-                    texture.FillPolygon(periphery.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), Camp.Colors[p.camp]);
+                    Color campColor = Camp.Colors[p.camp];
+                    texture.FillPolygon(periphery.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), campColor);
 
                 }
             }
@@ -149,6 +159,7 @@ namespace Assets.Map
             int textureWidth = (int)Map.Width * _textureScale;
             int textureHeight = (int)Map.Height * _textureScale;
             Texture2D texture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGB565, true);
+            
             List<Vector2> periphery = new List<Vector2>();
             foreach (Center p in map.Graph.centers)
             {
@@ -164,20 +175,11 @@ namespace Assets.Map
                     texture.FillPolygon(periphery.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), Camp.Colors[p.camp]);
                 }
             }
-            //// 绘制边界线
-            //foreach (var line in map.Graph.edges.Where(p => !p.d0.water && !p.d1.water))
-            //{
-            //    List<Vector2> edge0 = new List<Vector2>();
-            //    edge0.Add(line.v0.point);
-            //    edge0.Add(line.v1.point);
-            //    edge0.Add(line.d0.point);
-            //    texture.FillPolygon(edge0.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), Camp.Colors[line.d0.camp]);
-            //    List<Vector2> edge1 = new List<Vector2>();
-            //    edge1.Add(line.v0.point);
-            //    edge1.Add(line.v1.point);
-            //    edge1.Add(line.d1.point);
-            //    texture.FillPolygon(edge1.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), Camp.Colors[line.d1.camp]);
-            //}
+            // 绘制边界线
+            foreach (var line in map.Graph.edges.Where(p => !p.d0.water && !p.d1.water))
+            {
+                DrawLine(texture, line.v0.point.x, line.v0.point.y, line.v1.point.x, line.v1.point.y, Color.black);
+            }
             texture.Apply();
             return texture;
         }

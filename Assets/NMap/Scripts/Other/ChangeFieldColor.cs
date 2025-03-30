@@ -16,7 +16,7 @@ namespace Assets.Map
         public Vector2 position;
 
         private DirectGenMap directGenMap;
-        private int textureScale = 4;
+        private int textureScale = 10;
 
         public int camp = 1;
         public int locationCamp = -1;
@@ -31,8 +31,10 @@ namespace Assets.Map
         }
 
         // 如果该物体在统一地块上停留超过一定时间，改变地块颜色
-        private float timer = 0.2f;
+        private float timer = 0.0f;
+        private float timerMax = 1.0f;
         private Center bufferCenter;
+        private Center currentCenter;
 
         void Update()
         {
@@ -45,19 +47,29 @@ namespace Assets.Map
 
             // 找到最近的地块
             position = new Vector2((transform.position.x+75)*4, (transform.position.y+50)*4);
-            bufferCenter = directGenMap.globalMap.Graph.ChangeCenterCamp(position, camp);
 
+            // 检测是否在不同地块内逗留一定时间
+            currentCenter = directGenMap.globalMap.Graph.ChangeCenterCamp(position, camp);
 
-            // 维护timer，timer大于maxTime时改变颜色
-            if (Time.time - timer >= maxTime)
+            if (currentCenter != null && bufferCenter == null)
             {
-                // 异步加载改变颜色
-                Debug.Log("Change color");
-                timer = Time.time;
-
-                Texture2D texture = _showCamp.GetComponent<Renderer>().material.mainTexture as Texture2D;
-                StartCoroutine(ChangeColorAsync(bufferCenter, texture, camp));
-                directGenMap.globalMap.Graph.DisplayCamp();
+                bufferCenter = currentCenter;
+            }
+            if (currentCenter != null && bufferCenter != null && currentCenter != bufferCenter)
+            {
+                bufferCenter = currentCenter;
+                timer = 0.0f;
+            }
+            if (currentCenter != null && bufferCenter != null && currentCenter == bufferCenter)
+            {
+                timer += Time.deltaTime;
+                if (timer > timerMax)
+                {
+                    // 获取当前地块的材质， 从_showCamp获取
+                    Texture2D texture = _showCamp.GetComponent<Renderer>().material.mainTexture as Texture2D;
+                    StartCoroutine(ChangeColorAsync(currentCenter, texture, camp));
+                    timer = 0.0f;
+                }
             }
         }
 

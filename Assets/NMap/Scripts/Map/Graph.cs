@@ -306,7 +306,7 @@ namespace Assets.Map
                             // nicer. I'm doing it here, with elevations, but I
                             // think there must be a better way. This hack is only
                             // used with square/hexagon grids.
-                            newElevation += UnityEngine.Random.value; ;
+                            newElevation += UnityEngine.Random.value;
                         }
                     }
                     // If this point changed, we'll add it to the queue so
@@ -730,7 +730,7 @@ namespace Assets.Map
                 {
                     return center;
                 }
-                Debug.Log("Location of center: " + center.point.x + " " + center.point.y);
+                //Debug.Log("Location of center: " + center.point.x + " " + center.point.y);
             }
             Debug.Log("Center not found");
             return null;
