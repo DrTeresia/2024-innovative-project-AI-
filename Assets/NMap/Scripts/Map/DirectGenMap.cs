@@ -273,7 +273,7 @@ public class DirectGenMap : MonoBehaviour
 
 
         HashSet<Center> visited = new HashSet<Center>();
-        TraverseNeighbors(mainTown0, 5, visited);
+        TraverseNeighbors(mainTown0, 15, visited);
         foreach (Center c in visited)
         {
             c.camp = 0;
@@ -311,7 +311,7 @@ public class DirectGenMap : MonoBehaviour
 
 
         visited = new HashSet<Center>();
-        TraverseNeighbors(mainTown1, 5, visited);
+        TraverseNeighbors(mainTown1, 15, visited);
         foreach (Center c in visited)
         {
             c.camp = 1;
@@ -349,7 +349,7 @@ public class DirectGenMap : MonoBehaviour
 
 
         visited = new HashSet<Center>();
-        TraverseNeighbors(mainTown2, 5, visited);
+        TraverseNeighbors(mainTown2, 15, visited);
         foreach (Center c in visited)
         {
             c.camp = 2;
