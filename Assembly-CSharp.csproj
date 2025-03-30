@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\animator.cs" />
     <Compile Include="Assets\Move.cs" />
+    <Compile Include="Assets\csv.cs" />
     <Compile Include="Assets\AmbushController.cs" />
     <Compile Include="Assets\Cover.cs" />
     <Compile Include="Assets\RetreatToCity.cs" />
