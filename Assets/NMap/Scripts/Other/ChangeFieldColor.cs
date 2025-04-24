@@ -21,8 +21,6 @@ namespace Assets.Map
         public int camp = 1;
         public int locationCamp = -1;
 
-        private float maxTime = 0.5f;
-
         void Start()
         {
             directGenMap = Panel.GetComponent<DirectGenMap>();
@@ -32,7 +30,7 @@ namespace Assets.Map
 
         // 如果该物体在统一地块上停留超过一定时间，改变地块颜色
         private float timer = 0.0f;
-        private float timerMax = 1.0f;
+        private float timerMax = 4.0f;
         private Center bufferCenter;
         private Center currentCenter;
 

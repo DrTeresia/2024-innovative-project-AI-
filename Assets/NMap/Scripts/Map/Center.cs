@@ -16,7 +16,7 @@ namespace Assets.Map
         public bool border;     // at the edge of the map
         public Biome biome;     // biome type 
         public int camp = -1;
-        public int property = -1; //1 means town, 2 means bush1, 3 means bush2, 4 means boulder, 5 means gold vein
+        public int property = -1; // 0 means MainTown, 1 means Palace, 2 means Altar, 3 means FarmHouse, 4 means Tower, 5 means House1, 6 means House2
         public float elevation; // 0.0-1.0
         public float moisture;  // 0.0-1.0
         public List<Center> neighbors = new List<Center>();

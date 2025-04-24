@@ -20,11 +20,8 @@ public class DirectGenMap : MonoBehaviour
     private GameObject _showCamp;
     public Map globalMap;
 
-    private GameObject _townPrefab;
-    private GameObject _bush1Prefab;
-    private GameObject _bush2Prefab;
-    private GameObject _GoldVeinPrefab;
-    private GameObject _BoulderPrefab;
+    public GameObject[] blockList;
+    public List<Center> mainTownCenterList = new List<Center>();
 
 
     public string _name;
@@ -38,14 +35,6 @@ public class DirectGenMap : MonoBehaviour
         _mouseBiome = transform.Find("MouseBiome").GetComponent<Text>();
         _descLabel = transform.Find("DescLabel").GetComponent<Text>();
         _dFont = _inputName.textComponent.font;
-
-        _townPrefab = GameObject.Find("Town");
-        _bush1Prefab = GameObject.Find("Bush1");
-        _bush2Prefab = GameObject.Find("Bush2");
-        _GoldVeinPrefab = GameObject.Find("GoldVein");
-        _BoulderPrefab = GameObject.Find("Boulder");
-
-        //_btnGen.onClick.AddListener(GenMap);
 
         _showMap = GameObject.Find("Map");
         _showCamp = GameObject.Find("CampMap");
@@ -147,51 +136,6 @@ public class DirectGenMap : MonoBehaviour
         _showCamp.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Diffuse");
 
         _showCamp.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.5f);
-
-        //在center上生成城镇
-        foreach (Center p in map.Graph.centers)
-        {
-            if (p.water || p.ocean)
-                continue;
-            
-            float f = Random.value;
-            if (f > 0.97)
-            {
-                p.property = 1;
-                GameObject town = Instantiate(_townPrefab);
-                town.transform.position = new Vector3(p.point.x/4 - 75, p.point.y/4 - 50, 0);
-                //将物体挂载到_showMap上
-                town.transform.parent = _showMap.transform;
-            }
-            else if (f > 0.96)
-            {
-                p.property = 2;
-                GameObject bush1 = Instantiate(_bush1Prefab);
-                bush1.transform.position = new Vector3(p.point.x / 4 - 75, p.point.y / 4 - 50, 0);
-                bush1.transform.parent = _showMap.transform;
-            }
-            else if (f > 0.95)
-            {
-                p.property = 3;
-                GameObject bush2 = Instantiate(_bush2Prefab);
-                bush2.transform.position = new Vector3(p.point.x / 4 - 75, p.point.y / 4 - 50, 0);
-                bush2.transform.parent = _showMap.transform;
-            }
-            else if (f > 0.94)
-            {
-                p.property = 4;
-                GameObject boulder = Instantiate(_BoulderPrefab);
-                boulder.transform.position = new Vector3(p.point.x / 4 - 75, p.point.y / 4 - 50, 0);
-                boulder.transform.parent = _showMap.transform;
-            }
-            else if (f > 0.93)
-            {
-                p.property = 5;
-                GameObject goldVein = Instantiate(_GoldVeinPrefab);
-                goldVein.transform.position = new Vector3(p.point.x / 4 - 75, p.point.y / 4 - 50, 0);
-                goldVein.transform.parent = _showMap.transform;
-            }
-        }
     }
 
     private Map AdjustMapToSanGuo(Map map)
@@ -242,13 +186,13 @@ public class DirectGenMap : MonoBehaviour
             }
         }
 
-        // 在坐标大于Height/2的地区随机选择一个地块，设为主城，将周边地区camp设为0
+        // 在坐标大于Height2*/3的地区随机选择一个地块，设为主城，将周边地区camp设为0
         foreach (Center c in map.Graph.centers)
         {
             if (c.water || c.ocean)
                 continue;
             List<Center> town = new List<Center>();
-            if (c.point.y > Height / 2 )
+            if (c.point.y > Height*2 / 3 )
             {
                 if (c.property == -1)
                 {
@@ -261,31 +205,30 @@ public class DirectGenMap : MonoBehaviour
         {
             mainTown0 = map.Graph.centers[Random.Range(0, map.Graph.centers.Count)];
         }
-        mainTown0.property = 1;
-        mainTown0.camp = 0;
-        GameObject town0 = Instantiate(_townPrefab);
-        town0.transform.position = new Vector3(mainTown0.point.x / 4 - 75, mainTown0.point.y / 4 - 50, 0);
-        town0.transform.parent = _showMap.transform;
-        TextMesh textMesh0 = town0.transform.Find("name").GetComponent<TextMesh>();
-        if (textMesh0 != null) {
-            textMesh0.text = "Main Town 0";
-        }
 
+        mainTown0.camp = 0;
+        mainTown0.property = 0;
+        mainTownCenterList.Add(mainTown0);
 
         HashSet<Center> visited = new HashSet<Center>();
         TraverseNeighbors(mainTown0, 15, visited);
         foreach (Center c in visited)
         {
             c.camp = 0;
+            // 将这些地块的property设置为1-4的随机数
+            if (c.property == -1)
+            {
+                c.property = Random.Range(1, 5);
+            }
         }
 
-        // 在竖坐标小于Height/2 且横坐标小于Width/2 的地区随机选择一个地块，设为主城，将周边地区camp设为1
+        // 在竖坐标小于Height/3 且横坐标小于Width/3 的地区随机选择一个地块，设为主城，将周边地区camp设为1
         foreach (Center c in map.Graph.centers)
         {
             if (c.water || c.ocean)
                 continue;
             List<Center> town = new List<Center>();
-            if (c.point.y < Height / 2 && c.point.x < Width / 2)
+            if (c.point.y < Height / 3 && c.point.x < Width / 3)
             {
                 if (c.property == -1)
                 {
@@ -298,32 +241,26 @@ public class DirectGenMap : MonoBehaviour
         {
             mainTown1 = map.Graph.centers[Random.Range(0, map.Graph.centers.Count)];
         }
-        mainTown1.property = 1;
         mainTown1.camp = 1;
-        GameObject town1 = Instantiate(_townPrefab);
-        town1.transform.position = new Vector3(mainTown1.point.x / 4 - 75, mainTown1.point.y / 4 - 50, 0);
-        town1.transform.parent = _showMap.transform;
-        TextMesh textMesh1 = town1.transform.Find("name").GetComponent<TextMesh>();
-        if (textMesh1 != null)
-        {
-            textMesh1.text = "Main Town 1";
-        }
-
+        mainTown1.property = 0;
+        mainTownCenterList.Add(mainTown1);
 
         visited = new HashSet<Center>();
         TraverseNeighbors(mainTown1, 15, visited);
         foreach (Center c in visited)
         {
             c.camp = 1;
+            // 将这些地块的property设置为1-4的随机数
+            c.property = Random.Range(1, 5);
         }
 
-        // 在竖坐标小于Height/2 且横坐标大于Width/2 的地区随机选择一个地块，设为主城，将周边地区camp设为2
+        // 在竖坐标小于Height/3 且横坐标大于Width2*/3 的地区随机选择一个地块，设为主城，将周边地区camp设为2
         foreach (Center c in map.Graph.centers)
         {
             if (c.water || c.ocean)
                 continue;
             List<Center> town = new List<Center>();
-            if (c.point.y < Height / 2 && c.point.x > Width / 2)
+            if (c.point.y < Height / 3 && c.point.x > Width*2 / 3)
             {
                 if (c.property == -1)
                 {
@@ -336,27 +273,50 @@ public class DirectGenMap : MonoBehaviour
         {
             mainTown2 = map.Graph.centers[Random.Range(0, map.Graph.centers.Count)];
         }
-        mainTown2.property = 1;
         mainTown2.camp = 2;
-        GameObject town2 = Instantiate(_townPrefab);
-        town2.transform.position = new Vector3(mainTown2.point.x / 4 - 75, mainTown2.point.y / 4 - 50, 0);
-        town2.transform.parent = _showMap.transform;
-        TextMesh textMesh2 = town2.transform.Find("name").GetComponent<TextMesh>();
-        if (textMesh2 != null)
-        {
-            textMesh2.text = "Main Town 2";
-        }
-
+        mainTown2.property = 0;
+        mainTownCenterList.Add(mainTown2);
 
         visited = new HashSet<Center>();
         TraverseNeighbors(mainTown2, 15, visited);
         foreach (Center c in visited)
         {
             c.camp = 2;
+            // 将这些地块的property设置为1-4的随机数
+            c.property = Random.Range(1, 5);
+        }
+
+        foreach(Center c in mainTownCenterList)
+        {
+            c.property = 0;
+        }
+
+        // 遍历center，并将对应的建筑放置上去
+        float housePossibility = 0.1f;
+        foreach (Center c in map.Graph.centers)
+        {
+            if (c.water || c.ocean)
+                continue;
+            if (c.property == -1)
+            {
+                // 根据概率判断是否生成House
+                if (Random.Range(0f, 1f) < housePossibility)
+                {
+                    c.property = Random.Range(5, 7);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            GameObject newMainTown = Instantiate(blockList[c.property]);
+            newMainTown.transform.position = new Vector3(c.point.x/4-75, c.point.y/4-50, 0);
+            newMainTown.transform.localScale = new Vector3(0.2f, 0.2f, 1);
         }
         return map;
     }
 
+    // 遍历邻居节点, 采用深度优先策略
     private void TraverseNeighbors(Center center, int depth, HashSet<Center> visited)
     {
         if (depth == 0 || visited.Contains(center))

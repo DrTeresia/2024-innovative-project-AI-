@@ -7,12 +7,6 @@ public class ShowCamp : MonoBehaviour
 
     public Camera mainCamera;
     private bool isShow = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {

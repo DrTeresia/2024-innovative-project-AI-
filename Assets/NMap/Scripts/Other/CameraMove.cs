@@ -24,6 +24,7 @@ public class CameraMove : MonoBehaviour
     {
         c = this.GetComponent<Camera>();
         last_frame_mouse_position = Input.mousePosition;
+        c.transform.position = new Vector3(0, 0, -10);
     }
     
     // Update is called once per frame
