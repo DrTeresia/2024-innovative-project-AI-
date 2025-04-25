@@ -384,10 +384,16 @@
 "Assets/animator.cs"
 "Assets/Cover.cs"
 "Assets/csv.cs"
+"Assets/FormationManager.cs"
+"Assets/GeneralFollower.cs"
+"Assets/GlobalVariableManager.cs"
+"Assets/HealthBarUI.cs"
+"Assets/HealthSystem.cs"
 "Assets/JSONReader.cs"
 "Assets/Move.cs"
 "Assets/PredictedStrategy.cs"
 "Assets/RetreatToCity.cs"
+"Assets/StrongAttack.cs"
 -langversion:9.0
 /deterministic
 /optimize+

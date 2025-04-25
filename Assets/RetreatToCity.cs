@@ -11,8 +11,8 @@ public class RetreatController : MonoBehaviour
     [SerializeField] private int originalLayer;
     [SerializeField] private int hiddenLayer;
 
-    [Header("指令")]
-    public string inputCommand; //  撤退到城池,city
+    //[Header("指令")]
+    //public string inputCommand; //  撤退到城池,city
 
     private Move moveScript;
     public bool isInCity;
@@ -23,29 +23,46 @@ public class RetreatController : MonoBehaviour
         moveScript = GetComponent<Move>();
         originalLayer = gameObject.layer;
     }
-
-    void Update()
+    void OnEnable()
     {
-        if (string.IsNullOrEmpty(inputCommand))
-        {
-            //Debug.Log("1");
-            return;
-        }
-
-        // 解析指令格式：撤退到城池,城池名称
-        string[] commandParts = inputCommand.Split(',');
-        //inputCommand = "";
-
-        if (commandParts[0].Trim() != "撤退到城池")
-        {
-            //Debug.Log("2");
-            return;
-        }
-
-        string targetCityName = commandParts[1].Trim();
-        ExecuteRetreat(targetCityName);
+        GlobalVariableManager.Instance.Subscribe("inputCommand", OnInputCommandChanged);
     }
 
+    void OnDisable()
+    {
+        GlobalVariableManager.Instance.Unsubscribe("inputCommand", OnInputCommandChanged);
+    }
+    //void Update()
+    //{
+    //    if (string.IsNullOrEmpty(inputCommand))
+    //    {
+    //        return;
+    //    }
+
+    //    // 解析指令格式：撤退到城池,城池名称
+    //    string[] commandParts = inputCommand.Split(',');
+    //    //inputCommand = "";
+
+    //    if (commandParts[0].Trim() != "撤退到城池")
+    //    {
+    //        return;
+    //    }
+
+    //    string targetCityName = commandParts[1].Trim();
+    //    ExecuteRetreat(targetCityName);
+    //}
+    private void OnInputCommandChanged(object command)
+    {
+        string inputCommand = (string)command;
+        string[] parts = inputCommand.Split(',');
+        if (parts.Length >= 2 && parts[0].Trim() == "撤退到城池")
+        {
+            ExecuteRetreat(parts[1].Trim());
+        }else if(inputCommand == "死守")
+        {
+
+        }
+    }
     public void ExecuteRetreat(string cityName)
     {
         if (isInCity)
