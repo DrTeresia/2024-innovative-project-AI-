@@ -11,6 +11,12 @@ TagManager:
   - NPC
   - WangLangMilitary
   - Town
+  - 1
+  - 3
+  - 2
+  - Enemy
+  - TeamA
+  - TeamB
   layers:
   - Default
   - TransparentFX
