@@ -47,8 +47,6 @@ public class DirectGenMap : MonoBehaviour
     private const int Width = 600;
     private const int Height = 400;
     private int _pointNum = 5000;
-    private static bool _isLake = true;
-
 
     const int TextureScale = 20;
     public NoisyEdges noisyEdge;
@@ -74,19 +72,9 @@ public class DirectGenMap : MonoBehaviour
         if (check)
             _pointNum = 5000;
     }
-    void ToggleLand(bool check)
-    {
-        if (check)
-            _isLake = false;
-    }
-    void ToggleLake(bool check)
-    {
-        if (check)
-            _isLake = true;
-    }
     private void GenMap()
     {
-        //»ñÈ¡µØÍ¼Ãû×Ö²¢×÷ÎªËæ»úÖÖ×Ó, µØÍ¼Ãû×ÖÎ»ÓÚMapÎïÌåÏÂµÄMapName×ÓÎïÌåÏÂµÄText×é¼ş£¬·ÏÆúinputnameµÄÊ¹ÓÃ
+        //  È¡  Í¼   Ö²   Îª       ,   Í¼    Î»  Map     Âµ MapName       Âµ Text         inputname  Ê¹  
         _name = _showMap.transform.Find("MapName").GetComponent<Text>().text;
         Random.InitState(_name.GetHashCode());
         Random.InitState((int)DateTime.Now.Ticks);
@@ -128,7 +116,7 @@ public class DirectGenMap : MonoBehaviour
 
 
 
-        //½«_showCampÏÔÊ¾ÔÚ±È_showMap¸ü¸ßµÄÍ¼²ãÉÏ£¬²¢½«ÆäÍ¸Ã÷¶Èµ÷ÕûÎª0.5
+        //  _showCamp  Ê¾ Ú± _showMap   ßµ Í¼   Ï£       Í¸   Èµ   Îª0.5
         _showCamp.transform.position = _showMap.transform.position;
         _showCamp.transform.rotation = _showMap.transform.rotation;
         _showCamp.transform.localScale = _showMap.transform.localScale;
@@ -140,53 +128,24 @@ public class DirectGenMap : MonoBehaviour
 
     private Map AdjustMapToSanGuo(Map map)
     {
-        float p1Range = Width/5;
-        float p2Range = Width/8;
-        float p3Range = Width/7;
-        Vector2 p1 = new Vector2(Width*2 / 5, Height);
-        Vector2 p2 = new Vector2(0, Height / 2);
-        Vector2 p3 = new Vector2(Width, Height * 3 / 4);
-
-        //ÓÉp1, p2, p3 ÏòÍâ±éÀú·Çº£Ñó½Úµã£¬²¢½«±éÀúµ½µÄ½ÚµãÉèÖÃÎªº£Ñó
+        Texture2D texture = GetTextureFromImage("åœ°å›¾");
+        // éå†åœ°å›¾ä¸Šçš„æ¯ä¸ªç‚¹ï¼Œæ ¹æ®çº¹ç†åˆ¤æ–­æ˜¯é™†åœ°è¿˜æ˜¯æµ·æ´‹
         foreach (Center c in map.Graph.centers)
         {
             if (c.water || c.ocean)
                 continue;
-            if (Vector2.Distance(c.point, p1) < p1Range || Vector2.Distance(c.point, p2) < p2Range || Vector2.Distance(c.point, p3) < p3Range)
-            {
-                c.water = true;
-                c.ocean = true;
-                c.biome = Biome.Ocean;
-            }
-        }
+            int x = (int)(c.point.x * texture.width / Width);
+            int y = (int)(c.point.y * texture.height / Height);
+            Color pixelColor = texture.GetPixel(x, y);
 
-        // l1: (0, Height/4) -> (Width/5, 0) -> (0, 0)
-        // l2: (Width*4/5, 0) -> (Width, Height/4) -> (Width, 0)
-        // ½«ÔÚÁ½ÌõÖ±ÏßÒÔÏÂµÄ½ÚµãÉèÖÃÎªº£Ñó
-        foreach (Center c in map.Graph.centers)
-        {
-            if (c.water || c.ocean)
-                continue;
-            if (IsPointInTriangle(c.point, new Vector2(0, Height / 4), new Vector2(Width / 3, 0), new Vector2(0, 0)) ||
-                IsPointInTriangle(c.point, new Vector2(Width  / 2, 0), new Vector2(Width, Height / 4), new Vector2(Width, 0)))
-            {
-                c.water = true;
-                c.ocean = true;
-                c.biome = Biome.Ocean;
-            }
-        }
-
-        // ½«ºş²´ÉèÖÃÎªÂ½µØ
-        foreach (Center c in map.Graph.centers)
-        {
-            if (c.water && !c.ocean)
+            if (pixelColor == Color.black)
             {
                 c.water = false;
+                c.ocean = true;
                 c.biome = Biome.Ocean;
             }
         }
 
-        // ÔÚ×ø±ê´óÓÚHeight2*/3µÄµØÇøËæ»úÑ¡ÔñÒ»¸öµØ¿é£¬ÉèÎªÖ÷³Ç£¬½«ÖÜ±ßµØÇøcampÉèÎª0
         foreach (Center c in map.Graph.centers)
         {
             if (c.water || c.ocean)
@@ -215,14 +174,14 @@ public class DirectGenMap : MonoBehaviour
         foreach (Center c in visited)
         {
             c.camp = 0;
-            // ½«ÕâĞ©µØ¿éµÄpropertyÉèÖÃÎª1-4µÄËæ»úÊı
+            //     Ğ© Ø¿  property    Îª1-4       
             if (c.property == -1)
             {
                 c.property = Random.Range(1, 5);
             }
         }
 
-        // ÔÚÊú×ø±êĞ¡ÓÚHeight/3 ÇÒºá×ø±êĞ¡ÓÚWidth/3 µÄµØÇøËæ»úÑ¡ÔñÒ»¸öµØ¿é£¬ÉèÎªÖ÷³Ç£¬½«ÖÜ±ßµØÇøcampÉèÎª1
+        //         Ğ¡  Height/3  Òº     Ğ¡  Width/3  Äµ      Ñ¡  Ò»   Ø¿é£¬  Îª   Ç£    Ü±ßµ   camp  Îª1
         foreach (Center c in map.Graph.centers)
         {
             if (c.water || c.ocean)
@@ -250,11 +209,11 @@ public class DirectGenMap : MonoBehaviour
         foreach (Center c in visited)
         {
             c.camp = 1;
-            // ½«ÕâĞ©µØ¿éµÄpropertyÉèÖÃÎª1-4µÄËæ»úÊı
+            //     Ğ© Ø¿  property    Îª1-4       
             c.property = Random.Range(1, 5);
         }
 
-        // ÔÚÊú×ø±êĞ¡ÓÚHeight/3 ÇÒºá×ø±ê´óÓÚWidth2*/3 µÄµØÇøËæ»úÑ¡ÔñÒ»¸öµØ¿é£¬ÉèÎªÖ÷³Ç£¬½«ÖÜ±ßµØÇøcampÉèÎª2
+        //         Ğ¡  Height/3  Òº        Width2*/3  Äµ      Ñ¡  Ò»   Ø¿é£¬  Îª   Ç£    Ü±ßµ   camp  Îª2
         foreach (Center c in map.Graph.centers)
         {
             if (c.water || c.ocean)
@@ -281,8 +240,7 @@ public class DirectGenMap : MonoBehaviour
         TraverseNeighbors(mainTown2, 15, visited);
         foreach (Center c in visited)
         {
-            c.camp = 2;
-            // ½«ÕâĞ©µØ¿éµÄpropertyÉèÖÃÎª1-4µÄËæ»úÊı
+            c.camp = 2;    
             c.property = Random.Range(1, 5);
         }
 
@@ -291,7 +249,6 @@ public class DirectGenMap : MonoBehaviour
             c.property = 0;
         }
 
-        // ±éÀúcenter£¬²¢½«¶ÔÓ¦µÄ½¨Öş·ÅÖÃÉÏÈ¥
         float housePossibility = 0.1f;
         foreach (Center c in map.Graph.centers)
         {
@@ -299,7 +256,6 @@ public class DirectGenMap : MonoBehaviour
                 continue;
             if (c.property == -1)
             {
-                // ¸ù¾İ¸ÅÂÊÅĞ¶ÏÊÇ·ñÉú³ÉHouse
                 if (Random.Range(0f, 1f) < housePossibility)
                 {
                     c.property = Random.Range(5, 7);
@@ -316,7 +272,6 @@ public class DirectGenMap : MonoBehaviour
         return map;
     }
 
-    // ±éÀúÁÚ¾Ó½Úµã, ²ÉÓÃÉî¶ÈÓÅÏÈ²ßÂÔ
     private void TraverseNeighbors(Center center, int depth, HashSet<Center> visited)
     {
         if (depth == 0 || visited.Contains(center))
@@ -344,21 +299,23 @@ public class DirectGenMap : MonoBehaviour
     {
         System.Func<Vector2, bool> inside = q =>
         {
-            int x = Convert.ToInt32(q.x / Width * _txtWidth);
-            int y = Convert.ToInt32(q.y / Height * _txtHeight);
-            Color tColor = _txtTexture.GetPixel(x, y);  
-            bool isLand = false;
-            if (_isLake)
-                isLand = tColor != Color.white;
-            else
-                isLand = tColor == Color.white;
-            return isLand;
+            return true;
         };
         return inside;
     }
 
     private static int _txtWidth = 400;
     private static int _txtHeight = 200;
+
+    private Texture2D GetTextureFromImage(string imagePath)
+    {
+        Texture2D texture = Resources.Load<Texture2D>(imagePath);
+        if (texture == null)
+        {
+            Debug.LogError("Image not found: " + imagePath);
+        }
+        return texture;
+    }
     private Texture2D GetTextTexture()
     {
         Texture2D output = new Texture2D(_txtWidth, _txtHeight);
