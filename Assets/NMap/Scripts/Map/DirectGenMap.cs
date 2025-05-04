@@ -47,7 +47,7 @@ public class DirectGenMap : MonoBehaviour
     private const int Width = 600;
     private const int Height = 400;
     private int _pointNum = 5000;
-    private static bool _isLake = true;
+    private static bool _isLake = false;
 
 
     const int TextureScale = 20;
