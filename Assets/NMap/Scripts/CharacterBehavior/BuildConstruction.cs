@@ -57,12 +57,12 @@ namespace Assets.Map
                 //    Debug.Log("Cannot build here, property not -1");
                 //    return;
                 //}
-                if (currentCenter != null || currentCenter.camp != selfCamp)
-                {
-                    // 如果当前地块的Camp与自己的Camp不同，则不允许建造
-                    Debug.Log("Cannot build here, different camp");
-                    return;
-                }
+                //if (currentCenter != null || currentCenter.camp != selfCamp)
+                //{
+                //    // 如果当前地块的Camp与自己的Camp不同，则不允许建造
+                //    Debug.Log("Cannot build here, different camp");
+                //    return;
+                //}
                 //检测是否按下Z键，如果是则建造directGenMap.blockList[4]
                 if (Input.GetKeyDown(KeyCode.A))
                 {

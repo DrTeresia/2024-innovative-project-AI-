@@ -147,129 +147,105 @@ public class DirectGenMap : MonoBehaviour
             }
         }
 
-        foreach (Center c in map.Graph.centers)
+        // 从MainTownLocation中获取主要城镇的坐标
+        Dictionary<string, Vector2> weiMainTown = MainTownLocation.weiMainTown;
+        Dictionary<string, Vector2> shuMainTown = MainTownLocation.shuMainTown;
+        Dictionary<string, Vector2> wuMainTown = MainTownLocation.wuMainTown;
+
+        // 遍历主要城镇的坐标
+        foreach (var town in weiMainTown)
         {
-            if (c.water || c.ocean)
-                continue;
-            List<Center> town = new List<Center>();
-            if (c.point.y > Height*2 / 3 )
+            string townName = town.Key;
+            Vector2 townPosition = town.Value;
+            // 在地图上找到与主要城镇坐标最接近的点
+            Center closestCenter = null;
+            float closestDistance = float.MaxValue;
+            foreach (Center center in map.Graph.centers)
             {
-                if (c.property == -1)
-                {
-                    town.Add(c);
-                }
-            }
-        }
-        Center mainTown0 = map.Graph.centers[Random.Range(0, map.Graph.centers.Count)];
-        while (mainTown0.water || mainTown0.ocean || mainTown0.property != -1)
-        {
-            mainTown0 = map.Graph.centers[Random.Range(0, map.Graph.centers.Count)];
-        }
-
-        mainTown0.camp = 0;
-        mainTown0.property = 0;
-        mainTownCenterList.Add(mainTown0);
-
-        HashSet<Center> visited = new HashSet<Center>();
-        TraverseNeighbors(mainTown0, 15, visited);
-        foreach (Center c in visited)
-        {
-            c.camp = 0;
-            //     Щ ؿ  property    Ϊ1-4       
-            if (c.property == -1)
-            {
-                c.property = Random.Range(1, 5);
-            }
-        }
-
-        //         С  Height/3  Һ     С  Width/3  ĵ      ѡ  һ   ؿ飬  Ϊ   ǣ    ܱߵ   camp  Ϊ1
-        foreach (Center c in map.Graph.centers)
-        {
-            if (c.water || c.ocean)
-                continue;
-            List<Center> town = new List<Center>();
-            if (c.point.y < Height / 3 && c.point.x < Width / 3)
-            {
-                if (c.property == -1)
-                {
-                    town.Add(c);
-                }
-            }
-        }
-        Center mainTown1 = map.Graph.centers[Random.Range(0, map.Graph.centers.Count)];
-        while (mainTown1.water || mainTown1.ocean || mainTown1.property != -1)
-        {
-            mainTown1 = map.Graph.centers[Random.Range(0, map.Graph.centers.Count)];
-        }
-        mainTown1.camp = 1;
-        mainTown1.property = 0;
-        mainTownCenterList.Add(mainTown1);
-
-        visited = new HashSet<Center>();
-        TraverseNeighbors(mainTown1, 15, visited);
-        foreach (Center c in visited)
-        {
-            c.camp = 1;
-            //     Щ ؿ  property    Ϊ1-4       
-            c.property = Random.Range(1, 5);
-        }
-
-        //         С  Height/3  Һ        Width2*/3  ĵ      ѡ  һ   ؿ飬  Ϊ   ǣ    ܱߵ   camp  Ϊ2
-        foreach (Center c in map.Graph.centers)
-        {
-            if (c.water || c.ocean)
-                continue;
-            List<Center> town = new List<Center>();
-            if (c.point.y < Height / 3 && c.point.x > Width*2 / 3)
-            {
-                if (c.property == -1)
-                {
-                    town.Add(c);
-                }
-            }
-        }
-        Center mainTown2 = map.Graph.centers[Random.Range(0, map.Graph.centers.Count)];
-        while (mainTown2.water || mainTown2.ocean || mainTown2.property != -1)
-        {
-            mainTown2 = map.Graph.centers[Random.Range(0, map.Graph.centers.Count)];
-        }
-        mainTown2.camp = 2;
-        mainTown2.property = 0;
-        mainTownCenterList.Add(mainTown2);
-
-        visited = new HashSet<Center>();
-        TraverseNeighbors(mainTown2, 15, visited);
-        foreach (Center c in visited)
-        {
-            c.camp = 2;    
-            c.property = Random.Range(1, 5);
-        }
-
-        foreach(Center c in mainTownCenterList)
-        {
-            c.property = 0;
-        }
-
-        float housePossibility = 0.1f;
-        foreach (Center c in map.Graph.centers)
-        {
-            if (c.water || c.ocean)
-                continue;
-            if (c.property == -1)
-            {
-                if (Random.Range(0f, 1f) < housePossibility)
-                {
-                    c.property = Random.Range(5, 7);
-                }
-                else
-                {
+                if (center.water || center.ocean)
                     continue;
+                float distance = Vector2.Distance(center.point, townPosition);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestCenter = center;
                 }
             }
-            GameObject newMainTown = Instantiate(blockList[c.property]);
-            newMainTown.transform.position = new Vector3(c.point.x/4-75, c.point.y/4-50, 0);
-            newMainTown.transform.localScale = new Vector3(0.2f, 0.2f, 1);
+            // 将该点设置为主要城镇
+            if (closestCenter != null)
+            {
+                closestCenter.property = 0;
+                closestCenter.camp = 0;
+                mainTownCenterList.Add(closestCenter);
+                map.Graph.centers.Remove(closestCenter);
+            }
         }
+        foreach (var town in shuMainTown)
+        {
+            string townName = town.Key;
+            Vector2 townPosition = town.Value;
+            // 在地图上找到与主要城镇坐标最接近的点
+            Center closestCenter = null;
+            float closestDistance = float.MaxValue;
+            foreach (Center center in map.Graph.centers)
+            {
+                if (center.water || center.ocean)
+                    continue;
+                float distance = Vector2.Distance(center.point, townPosition);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestCenter = center;
+                }
+            }
+            // 将该点设置为主要城镇
+            if (closestCenter != null)
+            {
+                closestCenter.property = 0;
+                closestCenter.camp = 1;
+                mainTownCenterList.Add(closestCenter);
+                map.Graph.centers.Remove(closestCenter);
+            }
+        }
+        foreach (var town in wuMainTown)
+        {
+            string townName = town.Key;
+            Vector2 townPosition = town.Value;
+            // 在地图上找到与主要城镇坐标最接近的点
+            Center closestCenter = null;
+            float closestDistance = float.MaxValue;
+            foreach (Center center in map.Graph.centers)
+            {
+                if (center.water || center.ocean)
+                    continue;
+                float distance = Vector2.Distance(center.point, townPosition);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestCenter = center;
+                }
+            }
+            // 将该点设置为主要城镇
+            if (closestCenter != null)
+            {
+                closestCenter.property = 0;
+                closestCenter.camp = 2;
+                mainTownCenterList.Add(closestCenter);
+                map.Graph.centers.Remove(closestCenter);
+            }
+        }
+
+        // 生成城镇
+        foreach (Center center in mainTownCenterList)
+        {
+            // 生成城镇
+            GameObject town = Instantiate(blockList[0], new Vector3(center.point.x/4 - 75, center.point.y/4 - 75, 0), Quaternion.identity);
+            // Set BuildingSet as parent
+            GameObject BuildingSet = GameObject.Find("BuildingSet");
+            town.transform.SetParent(BuildingSet.transform);
+            town.name = "MainTown";
+        }
+
         return map;
     }
 
