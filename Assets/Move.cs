@@ -11,7 +11,6 @@ public class Move : MonoBehaviour
     public Vector2 MoveDirection => _currentDirection;
     public float CurrentSpeed => _currentSpeed;
     public bool IsPathfinding => currentPath != null;
-    public bool IsRandomMove = false;
 
     private Vector2 _currentDirection;
     private float _currentSpeed;
@@ -20,12 +19,9 @@ public class Move : MonoBehaviour
     private int currentPathIndex;
     private Grid grid;
 
-    void Start()
+    private void Start()
     {
-        if(!IsRandomMove)
-        {
-            targetPosition = transform.position;
-        }
+        targetPosition = transform.position;
     }
     void Update()
     {
