@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 5595895168434467215}
   m_Layer: 19
   m_Name: "\u8700\u56FD\u58EB\u5175"
-  m_TagString: Player
+  m_TagString: shu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -475,7 +475,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a576a66c06167b54aa480c1de13666e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTeamTags: []
+  enemyTeamTags:
+  - wei
   attackRange: 2
   detectionInterval: 0.3
   directionSmoothTime: 0.1
@@ -494,7 +495,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   vitality: 1
-  teamTag: Player
+  teamTag: shu
   attackRange: 2
   damage: 10
   attackCooldown: 1
