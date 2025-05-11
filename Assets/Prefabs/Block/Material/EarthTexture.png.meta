@@ -1,0 +1,985 @@
+fileFormatVersion: 2
+guid: 4e37b1166270d3548abdccd3240f2db2
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "\u571F\u5730_0"
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 3070
+        width: 388
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 503d8aa1bd637ef47ae2a86cdcae1ca8
+      internalID: 1827654460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ocean
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 3070
+        width: 388
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6817150e9f9e6b245a9443c84e2cfe45
+      internalID: -1678842126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_2"
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 3070
+        width: 390
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 900b87ee3c554d24fae7efe8443aabc8
+      internalID: -185640935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SubtropicalDesert
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 3070
+        width: 389
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 344dfa30ee9b0a148b3331c1a4dd43c4
+      internalID: 507917859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_4"
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 3070
+        width: 390
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79c8eddfc5f86ac48b230d69760ac7b6
+      internalID: 972800624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_5"
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 2665
+        width: 388
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1917b09ca86b5142b5643202767e0f6
+      internalID: 452784723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_6"
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 2665
+        width: 388
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f64bb3198d10b94a884bf40ca30c277
+      internalID: -1058399583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_7"
+      rect:
+        serializedVersion: 2
+        x: 1039
+        y: 2665
+        width: 389
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73620ed6961419f4f8738fc37415c378
+      internalID: -609704330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TropicalSeasonalForest
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 2665
+        width: 389
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f3cbbce7d837e140b19abb5e37fd256
+      internalID: 236553426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_9"
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 2665
+        width: 390
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c6232c86d873cf47bcca032de602a84
+      internalID: 149429679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_10"
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 2265
+        width: 388
+        height: 326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 445800bd8f84fd043a3e5bfba74f5bb9
+      internalID: 934472777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_11"
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 2265
+        width: 388
+        height: 326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82e063f4fa071284d8ad0d41229bfbb4
+      internalID: -587428900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Beach
+      rect:
+        serializedVersion: 2
+        x: 1039
+        y: 2265
+        width: 389
+        height: 326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b1e4c868159ac843ac158b777cdc002
+      internalID: -1247076076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scorched
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 2265
+        width: 389
+        height: 326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee084c4345c79d4468ba5098bd64a5f7
+      internalID: -808062985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_14"
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 2265
+        width: 390
+        height: 326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 877d7afca71201b4087643687e38c369
+      internalID: 1417870037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_15"
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 1859
+        width: 388
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 542d9a985ea3b8c45bb5766a319ed8ee
+      internalID: -943411394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_16"
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 1859
+        width: 388
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ee13b5e8f6228a47801f7fc0796a315
+      internalID: -1594059069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Taiga
+      rect:
+        serializedVersion: 2
+        x: 1039
+        y: 1859
+        width: 389
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25a52900d6a61b846a2f2b4df65555fd
+      internalID: 1240968566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_18"
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 1859
+        width: 389
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d74c64ad20a62a7488b623919e0bc319
+      internalID: -464241598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_19"
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 1859
+        width: 390
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19b2b8de568fcc84ca98ca4fdb5b1082
+      internalID: 1663701721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_20"
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 1451
+        width: 388
+        height: 325
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cc540d45a67a5448abf3917eef4cb3a
+      internalID: -1971018529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_21"
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 1439
+        width: 388
+        height: 325
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c04ed3675bb8dd0439447daf4510a95d
+      internalID: -267787238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_22"
+      rect:
+        serializedVersion: 2
+        x: 1039
+        y: 1439
+        width: 389
+        height: 325
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 869eb599292fb0848b318c440570d7b1
+      internalID: -521461774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grassland
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 1439
+        width: 389
+        height: 325
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc07e973b5e1c914d9b331fec36b4403
+      internalID: 451529751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tundra
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 1439
+        width: 390
+        height: 325
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6107670273d060d43b6d288d73d97d50
+      internalID: -1970621479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ice
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 1030
+        width: 388
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f19059305e87a24c948d9f959d08e1c
+      internalID: -1808034546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_26"
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 1030
+        width: 388
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db34f7fa689a9114d96a3670ece04c54
+      internalID: 1668111480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snow
+      rect:
+        serializedVersion: 2
+        x: 1039
+        y: 1030
+        width: 389
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19236a126ea0bf740b6f0fc35cd5d385
+      internalID: 256014278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shrubland
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 1030
+        width: 389
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86f068c92b2884f41b2c7a7fb3e68a2a
+      internalID: 1956459932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_29"
+      rect:
+        serializedVersion: 2
+        x: 1922
+        y: 1063
+        width: 387
+        height: 325
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 145e51a2651494b44b8badc2691633d6
+      internalID: 1941207545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marsh
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 618
+        width: 388
+        height: 326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbb6d122c70ee794b8d90e6dfb90fd2e
+      internalID: 1411539264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TemperateRainForest
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 618
+        width: 390
+        height: 326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0478b131f6037fc4d89c4fddcc1c8b0f
+      internalID: -679758758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TemperateDesert
+      rect:
+        serializedVersion: 2
+        x: 1039
+        y: 618
+        width: 389
+        height: 326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf8084ea249f14c4bbe7648e4bbee3c5
+      internalID: -943320035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TropicalRainForest
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 618
+        width: 389
+        height: 326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ffe36ca222cdb448b8ee1f6fcbbf848
+      internalID: -532604576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bare
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 618
+        width: 390
+        height: 390
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ae41df2de3d4844f9a19a8dc4fd88a1
+      internalID: -1864183702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lake
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 50
+        width: 707
+        height: 387
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8398bd6178bb6ed4db332074875d0f8b
+      internalID: 1715008622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TemperateDeciduousForest
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 87
+        width: 388
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab1a405b2bcfc7245b0c8c64399c0467
+      internalID: -1025987870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_37"
+      rect:
+        serializedVersion: 2
+        x: 1231
+        y: 87
+        width: 389
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 390bf6745e2833646b128e36fc6310c4
+      internalID: -2015566493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u571F\u5730_38"
+      rect:
+        serializedVersion: 2
+        x: 1678
+        y: 87
+        width: 389
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df994f3255386a0499a4efc94e16efa0
+      internalID: 340983845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Bare: -1864183702
+      Beach: -1247076076
+      Grassland: 451529751
+      Ice: -1808034546
+      Lake: 1715008622
+      Marsh: 1411539264
+      Ocean: -1678842126
+      Scorched: -808062985
+      Shrubland: 1956459932
+      Snow: 256014278
+      SubtropicalDesert: 507917859
+      Taiga: 1240968566
+      TemperateDeciduousForest: -1025987870
+      TemperateDesert: -943320035
+      TemperateRainForest: -679758758
+      TropicalRainForest: -532604576
+      TropicalSeasonalForest: 236553426
+      Tundra: -1970621479
+      "\u571F\u5730_0": 1827654460
+      "\u571F\u5730_10": 934472777
+      "\u571F\u5730_11": -587428900
+      "\u571F\u5730_14": 1417870037
+      "\u571F\u5730_15": -943411394
+      "\u571F\u5730_16": -1594059069
+      "\u571F\u5730_18": -464241598
+      "\u571F\u5730_19": 1663701721
+      "\u571F\u5730_2": -185640935
+      "\u571F\u5730_20": -1971018529
+      "\u571F\u5730_21": -267787238
+      "\u571F\u5730_22": -521461774
+      "\u571F\u5730_26": 1668111480
+      "\u571F\u5730_29": 1941207545
+      "\u571F\u5730_37": -2015566493
+      "\u571F\u5730_38": 340983845
+      "\u571F\u5730_4": 972800624
+      "\u571F\u5730_5": 452784723
+      "\u571F\u5730_6": -1058399583
+      "\u571F\u5730_7": -609704330
+      "\u571F\u5730_9": 149429679
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -145,6 +145,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 4431894915730320612, guid: 71bd7f12399a5b448a9b15964deccee1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6130893308748271550, guid: 71bd7f12399a5b448a9b15964deccee1,
         type: 3}
       propertyPath: m_Pivot.x
@@ -3439,6 +3444,25 @@ MonoBehaviour:
   - {fileID: 7273073763954481506, guid: 01ac42987b20e7e4b9061914ffc9225a, type: 3}
   - {fileID: 8110579301683412258, guid: cf99ca49fd36a8341bdaff5fd23e3084, type: 3}
   - {fileID: 325653514958068026, guid: f42d7e2126eeefb4b90928a7d5bdd547, type: 3}
+  earthTextures:
+  - {fileID: -1678842126, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: 1715008622, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: 1411539264, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: -1808034546, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: -1247076076, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: 256014278, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: -1970621479, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: -1864183702, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: -808062985, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: 1240968566, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: 1956459932, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: -943320035, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: -679758758, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: -1025987870, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: 451529751, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: 507917859, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: -532604576, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
+  - {fileID: 236553426, guid: 4e37b1166270d3548abdccd3240f2db2, type: 3}
   _name: 
   indexOfTexture: 0
 --- !u!222 &1296711614
@@ -5056,7 +5080,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2760733609338723415, guid: 71bd7f12399a5b448a9b15964deccee1,
         type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2760733609338723415, guid: 71bd7f12399a5b448a9b15964deccee1,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f55150fd70510c64bb3248f599e0ae05, type: 2}
+    - target: {fileID: 2760733609338723415, guid: 71bd7f12399a5b448a9b15964deccee1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 361fa52b5561d434baaff15f2fe36f3d, type: 2}
     - target: {fileID: 4431894915730320612, guid: 71bd7f12399a5b448a9b15964deccee1,

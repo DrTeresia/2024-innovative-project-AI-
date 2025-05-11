@@ -20,17 +20,26 @@ public class CameraMove : MonoBehaviour
     public float horizontal_limit = 80.0f;
     public float vertical_limit = 80.0f;
 
+    public int curOrthographicSize = 4;
+
     void Start()
     {
         c = this.GetComponent<Camera>();
         last_frame_mouse_position = Input.mousePosition;
         c.transform.position = new Vector3(0, 0, -10);
+        // set size as 4
+        if (c.orthographic)
+        {
+            c.orthographicSize = 4;
+        }
     }
-    
+
     // Update is called once per frame
     void Update()
     {
         float mouseCenter = Input.GetAxis("Mouse ScrollWheel");
+        curOrthographicSize = (int)c.orthographicSize;
+
         if (mouseCenter > 0)
         {
             //投影采用orthographic
