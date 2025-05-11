@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DiscretBattle/JinZhouBattle.unity
     guid: c60e0a62a0a7baf4e9c86071d5b7367f
+  - enabled: 1
+    path: Assets/Scenes/DiscretBattle/SubMap/YouZhou.unity
+    guid: cc8b7a48b8520844daa8bd9634a6950a
   m_configObjects: {}
