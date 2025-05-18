@@ -1,9 +1,13 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class General : MonoBehaviour
 {
     public ArmyManager armyManager;
+    public string name;
+    public int environment;
+    public int weather;
+    public int happenTime;
     public Formation formation = Formation.Rectangle;
     public int soldiersPerRow = 5;
     public float spacing = 1f;
@@ -13,7 +17,7 @@ public class General : MonoBehaviour
 
     public int SoldierCount = 0;
     public float ledRange = 20f;
-    public LayerMask soldierLayer; // ¼ì²â"Soldier"²ã
+    public LayerMask soldierLayer; // ï¿½ï¿½ï¿½"Soldier"ï¿½ï¿½
 
     private void Start()
     {
@@ -23,6 +27,7 @@ public class General : MonoBehaviour
         }
 
         InitializeFormation();
+        name = gameObject.name;
     }
 
     private void Update()
@@ -91,7 +96,7 @@ public class General : MonoBehaviour
             }
             else
             {
-                // Èç¹ûÊ¿±øÊýÁ¿³¬¹ýÕóÐÍÈÝÁ¿£¬¿ÉÒÔ¿¼ÂÇÌí¼Ó¶îÍâµÄÂß¼­
+                // ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
                 soldiers[i].SetFormationOffset(Vector2.zero);
             }
         }
@@ -106,7 +111,7 @@ public class General : MonoBehaviour
             case Formation.Rectangle:
                 CalculateRectangleFormation();
                 break;
-                // ¿ÉÒÔÌí¼ÓÆäËûÕóÐÍÂß¼­
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
         }
     }
 
@@ -133,13 +138,13 @@ public class General : MonoBehaviour
     }
     public void SetFormationOffsetForSoldier(Soldier soldier)
     {
-        // ¼ÆËãÊ¿±øÔÚÕóÐÍÖÐµÄÆ«ÒÆÁ¿
-        // ÕâÀïÖ»ÊÇÒ»¸ö¼òµ¥µÄÊ¾Àý£¬Êµ¼ÊÂß¼­»á¸ù¾ÝÕóÐÍÀàÐÍºÍÊ¿±øÊýÁ¿À´È·¶¨
+        // ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Æ«ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ò»ï¿½ï¿½ï¿½òµ¥µï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½
         int index = soldiers.IndexOf(soldier);
-        int soldiersPerRow = 5; // Ã¿ÐÐµÄÊ¿±øÊýÁ¿
+        int soldiersPerRow = 5; // Ã¿ï¿½Ðµï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         int row = index / soldiersPerRow;
         int col = index % soldiersPerRow;
-        float spacing = 1f; // Ê¿±øÖ®¼äµÄ¼ä¾à
+        float spacing = 1f; // Ê¿ï¿½ï¿½Ö®ï¿½ï¿½Ä¼ï¿½ï¿½
 
         Vector2 offset = new Vector2(
             col * spacing - (soldiersPerRow - 1) * spacing * 0.5f,

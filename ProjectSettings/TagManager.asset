@@ -17,6 +17,9 @@ TagManager:
   - Enemy
   - TeamA
   - TeamB
+  - shu
+  - wei
+  - wu
   layers:
   - Default
   - TransparentFX

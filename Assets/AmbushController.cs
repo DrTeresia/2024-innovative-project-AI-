@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class AmbushController : MonoBehaviour
     //public string inputCommand; 
 
     private Move moveScript;
-    private Cover currentCover;
+    public Cover currentCover;
     public bool isAmbushing;
     private Dictionary<Behaviour, bool> componentStates = new Dictionary<Behaviour, bool>();
     private bool isStrategyLoaded = false; // 新增加载状态标识
@@ -39,9 +40,22 @@ public class AmbushController : MonoBehaviour
     private void OnInputCommandChanged(object command)
     {
         string inputCommand = (string)command;
-        if (inputCommand == "伏击")
+        string[] commandParts = inputCommand.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
+
+        // 验证命令格式有效性
+        if (commandParts.Length != 2) return;
+
+        string targetName = commandParts[0];
+        string strategy = commandParts[1];
+
+        // 调试输出解析结果
+        Debug.Log($"解析命令 - 目标: {targetName}, 计策: {strategy}");
+
+        // 判断是否执行伏击
+        if (targetName == gameObject.name && strategy == "伏击")
         {
             ExecuteAmbush();
+            Debug.Log($"{gameObject.name} 执行伏击命令");
         }
     }
     //void Update()
