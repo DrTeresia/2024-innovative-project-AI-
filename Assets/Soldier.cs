@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Soldier : MonoBehaviour
@@ -12,8 +13,22 @@ public class Soldier : MonoBehaviour
     private bool isFollowingGeneral = true;
     private Vector2 formationOffset; // 定义formationOffset
 
+    [Header("伏击设置")]
+    [SerializeField] private List<Behaviour> componentsToDisable = new List<Behaviour>();
+    [SerializeField] public int hiddenLayer = 9;
+    public int originalLayer = 13;
+    private Cover currentCover;
+    private bool isInAmbush;
+    private Dictionary<Behaviour, bool> componentStates = new Dictionary<Behaviour, bool>();
+
+    [SerializeField] private string teamTag;
+
     private void Start()
     {
+        originalLayer = gameObject.layer;
+        hiddenLayer = 9;
+        teamTag = this.tag;
+
         if (armyManager == null)
         {
             armyManager = FindObjectOfType<ArmyManager>();
@@ -42,10 +57,11 @@ public class Soldier : MonoBehaviour
             //Debug.Log(targetPosition);
             MoveToTarget();
         }
- 
+
 
         // 在移动过程中随时检查是否有附近的将军
         CheckForNearbyGeneral();
+        HandleAmbushBehavior();
     }
 
     private void FollowGeneral()
@@ -145,12 +161,96 @@ public class Soldier : MonoBehaviour
         foreach (Collider2D collider in colliders)
         {
             General general = collider.GetComponent<General>();
-            if (general != null && general != currentGeneral)
+            if (general != null && general != currentGeneral && currentGeneral == null && general.tag == teamTag)
             {
                 // 找到新的将军，切换到跟随该将军
                 AssignToGeneral(general);
                 break;
             }
         }
+    }
+    private void HandleAmbushBehavior()
+    {
+        if (currentGeneral == null) return;
+
+        // 获取将军的AmbushController
+        var generalAmbush = currentGeneral.GetComponent<AmbushController>();
+        if (generalAmbush == null) return;
+
+        // 将军进入埋伏状态时触发
+        if (generalAmbush.isAmbushing && !isInAmbush)
+        {
+            StartAmbush(generalAmbush.currentCover);
+        }
+        // 将军退出埋伏状态时触发
+        else if (!generalAmbush.isAmbushing && isInAmbush)
+        {
+            ExitAmbushState();
+        }
+    }
+
+    private void StartAmbush(Cover generalCover)
+    {
+        if (generalCover == null) return;
+
+        currentCover = generalCover;
+        moveComponent.controlMode = 0; // 切换到坐标控制模式
+        moveComponent.targetPosition = currentCover.transform.position;
+
+        // 持续检测到达状态
+        if (Vector2.Distance(transform.position, currentCover.transform.position) <= currentCover.occupyRadius)
+        {
+            TryOccupyCover();
+        }
+    }
+
+    private void TryOccupyCover()
+    {
+        if (currentCover.TryOccupyCover())
+        {
+            EnterAmbushState();
+        }
+        else
+        {
+            // 掩体已满时的备用逻辑
+            Debug.Log($"{name}: 掩体已满，保持警戒状态");
+            moveComponent.targetPosition = currentCover.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle * 2f;
+        }
+    }
+
+    private void EnterAmbushState()
+    {
+        isInAmbush = true;
+        componentStates.Clear();
+
+        foreach (var component in componentsToDisable)
+        {
+            if (component != null)
+            {
+                componentStates[component] = component.enabled;
+                component.enabled = false;
+            }
+        }
+        Debug.Log(111);
+        gameObject.layer = hiddenLayer;
+        GetComponent<Collider2D>().enabled = false;
+        moveComponent.controlMode = 1; // 锁定移动
+    }
+
+    public void ExitAmbushState()
+    {
+        if (!isInAmbush) return;
+
+        foreach (var component in componentsToDisable)
+        {
+            if (component != null && componentStates.ContainsKey(component))
+                component.enabled = componentStates[component];
+        }
+
+        gameObject.layer = originalLayer;
+        GetComponent<Collider2D>().enabled = true;
+        currentCover.ReleaseCover();
+        isInAmbush = false;
+        moveComponent.controlMode = 0; // 恢复移动
     }
 }

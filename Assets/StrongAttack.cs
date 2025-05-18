@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class StrongAttackController : MonoBehaviour
 {
@@ -26,9 +27,22 @@ public class StrongAttackController : MonoBehaviour
     private void OnInputCommandChanged(object command)
     {
         string inputCommand = (string)command;
-        if (inputCommand == "强攻")
+        string[] commandParts = inputCommand.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
+
+        // 验证命令格式有效性
+        if (commandParts.Length != 2) return;
+
+        string targetName = commandParts[0];
+        string strategy = commandParts[1];
+
+        // 调试输出解析结果
+        Debug.Log($"解析命令 - 目标: {targetName}, 计策: {strategy}");
+
+        // 判断是否执行伏击
+        if (targetName == gameObject.name && strategy == "强攻")
         {
             ExecuteStrongAttack();
+            Debug.Log($"{gameObject.name} 执行强攻命令");
         }
     }
 

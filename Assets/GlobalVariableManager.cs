@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.IO;
 using UnityEngine.Networking;
 using System.Collections;
+using System.Text;
 
 public class GlobalVariableManager : MonoBehaviour
 {
@@ -54,19 +55,28 @@ public class GlobalVariableManager : MonoBehaviour
                 try
                 {
                     string jsonContent = request.downloadHandler.text;
-                    PredictedStrategy strategy = JsonConvert.DeserializeObject<PredictedStrategy>(jsonContent);
-                    SetVariable("inputCommand", strategy.strategyName);
-                    Debug.Log($"JSON策略加载成功：{strategy.strategyName}");
+                    List<StrategyEntry> strategyEntries = JsonConvert.DeserializeObject<List<StrategyEntry>>(jsonContent);
+
+                    // 构建命令字符串
+                    StringBuilder commandBuilder = new StringBuilder();
+                    foreach (var entry in strategyEntries)
+                    {
+                        commandBuilder.AppendLine($"{entry.名字}: {entry.预测的计策名称}");
+                    }
+
+                    string combinedCommand = commandBuilder.ToString().Trim();
+                    SetVariable("inputCommand", combinedCommand);
+                    Debug.Log($"Successfully loaded strategies:\n{combinedCommand}");
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"JSON解析失败: {e.Message}");
+                    Debug.LogError($"JSON解析错误: {e.Message}");
                     SetVariable("inputCommand", _inputCommand);
                 }
             }
             else
             {
-                Debug.LogError($"文件加载失败：{request.error}");
+                Debug.LogError($"文件加载错误: {request.error}");
                 SetVariable("inputCommand", _inputCommand);
             }
         }
@@ -124,5 +134,13 @@ public class GlobalVariableManager : MonoBehaviour
     private class PredictedStrategy
     {
         public string strategyName;
+    }
+    [System.Serializable]
+    private class StrategyEntry
+    {
+        public string 名字;
+        public string 最有影响力特征;
+        public double 预测的计策编号;
+        public string 预测的计策名称;
     }
 }
