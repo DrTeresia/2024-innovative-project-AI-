@@ -21,7 +21,7 @@ public class DirectGenMap : MonoBehaviour
     private GameObject _showCamp;
     public Map globalMap;
 
-    public GameObject[] blockList;
+    public GameObject[] blockList; // 0 is weiMainTown, 1 is shuMainTown, 2 is wuMainTown
     public List<Center> mainTownCenterList = new List<Center>();
     public List<Sprite> earthTextures = new List<Sprite>();
 
@@ -213,7 +213,7 @@ public class DirectGenMap : MonoBehaviour
                 closestCenter.property = 0;
                 closestCenter.camp = 1;
                 mainTownCenterList.Add(closestCenter);
-                GameObject newTown = Instantiate(blockList[0], new Vector3(closestCenter.point.x / 4 - 75, closestCenter.point.y / 4 - 50, 0), Quaternion.identity);
+                GameObject newTown = Instantiate(blockList[1], new Vector3(closestCenter.point.x / 4 - 75, closestCenter.point.y / 4 - 50, 0), Quaternion.identity);
                 GameObject BuildingSet = GameObject.Find("BuildingSet");
                 newTown.transform.SetParent(BuildingSet.transform);
                 newTown.name = town.Key;
@@ -248,7 +248,7 @@ public class DirectGenMap : MonoBehaviour
                 closestCenter.property = 0;
                 closestCenter.camp = 2;
                 mainTownCenterList.Add(closestCenter);
-                GameObject newTown = Instantiate(blockList[0], new Vector3(closestCenter.point.x / 4 - 75, closestCenter.point.y / 4 - 50, 0), Quaternion.identity);
+                GameObject newTown = Instantiate(blockList[2], new Vector3(closestCenter.point.x / 4 - 75, closestCenter.point.y / 4 - 50, 0), Quaternion.identity);
                 GameObject BuildingSet = GameObject.Find("BuildingSet");
                 newTown.transform.SetParent(BuildingSet.transform);
                 newTown.name = town.Key;
