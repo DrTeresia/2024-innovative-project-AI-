@@ -76,19 +76,17 @@ namespace Assets.Map
         }
 
         // 绘制不需扰乱的地块
+        // 该函数目前只在地图生成时使用， 如果需要按季节变化颜色需要重新优化
+        // 更改：从原本的纯色填充修改为使用Assets/Prefabs/Block/Material/EarthTexture.png（Sprite）作为底色
+        // earthTextures放在Biome.cs里， 格式为<Biome, Sprite>
         public Texture2D FastGetTexture(Map map, int indexOfTexture = 0)
         {
             int textureWidth = (int)Map.Width * _textureScale;
             int textureHeight = (int)Map.Height * _textureScale;
             Texture2D texture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGB565, true);
 
-            // 绘制camp底色为ocean, 色号为44447a
-            Color[] fillColorArray = texture.GetPixels();
-            for (int i = 0; i < fillColorArray.Length; ++i)
-            {
-                fillColorArray[i] = BiomeProperties.Colors[Biome.Ocean];
-            }
-            texture.SetPixels(fillColorArray);
+            // 底色为ocean, 使用Biome.Ocean的颜色
+            texture.SetPixels(0, 0, textureWidth, textureHeight, new Color[textureWidth * textureHeight].Select(x => BiomeProperties.Colors[Biome.Ocean]).ToArray());
 
             List<Vector2> periphery = new List<Vector2>();
             foreach (Center p in map.Graph.centers)
@@ -249,6 +247,62 @@ namespace Assets.Map
                 (int) (y1*_textureScale), color);
         }
 
-        
+        void FillPolygon(Texture2D tex, Vector2[] polygon, Texture2D sourceTex)
+        {
+            // 实现多边形填充算法
+            // 这里简化为填充多边形边界框内的所有点
+            // 实际应用中应该使用更精确的多边形填充算法
+
+            // 获取多边形边界
+            float minX = Mathf.Min(polygon[0].x, polygon[1].x, polygon[2].x);
+            float maxX = Mathf.Max(polygon[0].x, polygon[1].x, polygon[2].x);
+            float minY = Mathf.Min(polygon[0].y, polygon[1].y, polygon[2].y);
+            float maxY = Mathf.Max(polygon[0].y, polygon[1].y, polygon[2].y);
+
+            // 转换为像素坐标
+            int texWidth = tex.width;
+            int texHeight = tex.height;
+            int pxMinX = Mathf.FloorToInt(minX * texWidth);
+            int pxMaxX = Mathf.CeilToInt(maxX * texWidth);
+            int pxMinY = Mathf.FloorToInt(minY * texHeight);
+            int pxMaxY = Mathf.CeilToInt(maxY * texHeight);
+
+            // 遍历边界框内的每个像素
+            for (int y = pxMinY; y <= pxMaxY; y++)
+            {
+                for (int x = pxMinX; x <= pxMaxX; x++)
+                {
+                    Vector2 point = new Vector2((float)x / texWidth, (float)y / texHeight);
+                    if (IsPointInPolygon(point, polygon))
+                    {
+                        // 从源纹理获取颜色（考虑UV）
+                        Color color = sourceTex.GetPixel(
+                            Mathf.FloorToInt(point.x * sourceTex.width),
+                            Mathf.FloorToInt(point.y * sourceTex.height));
+                        tex.SetPixel(x, y, color);
+                    }
+                }
+            }
+        }
+
+        bool IsPointInPolygon(Vector2 point, Vector2[] polygon)
+        {
+            // 射线法判断点是否在多边形内
+            int polygonLength = polygon.Length;
+            bool inside = false;
+
+            for (int i = 0, j = polygonLength - 1; i < polygonLength; j = i++)
+            {
+                if (((polygon[i].y > point.y) != (polygon[j].y > point.y)) &&
+                    (point.x < (polygon[j].x - polygon[i].x) * (point.y - polygon[i].y) /
+                    (polygon[j].y - polygon[i].y) + polygon[i].x))
+                {
+                    inside = !inside;
+                }
+            }
+            return inside;
+        }
+
+
     }
 }

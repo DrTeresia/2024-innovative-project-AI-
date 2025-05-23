@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Collections.Generic;
+using TMPro;
 
 public class DirectGenMap : MonoBehaviour
 {
@@ -20,9 +21,9 @@ public class DirectGenMap : MonoBehaviour
     private GameObject _showCamp;
     public Map globalMap;
 
-    public GameObject[] blockList;
+    public GameObject[] blockList; // 0 is weiMainTown, 1 is shuMainTown, 2 is wuMainTown
     public List<Center> mainTownCenterList = new List<Center>();
-
+    public List<Sprite> earthTextures = new List<Sprite>();
 
     public string _name;
 
@@ -51,7 +52,8 @@ public class DirectGenMap : MonoBehaviour
 
     const int TextureScale = 20;
     public NoisyEdges noisyEdge;
-    public int indexOfTexture = 0;
+
+    public int indexOfTexture = 0; // 依据地理环境选择不同的纹理
 
     void Toggle1(bool check)
     {
@@ -111,13 +113,11 @@ public class DirectGenMap : MonoBehaviour
         map = AdjustMapToSanGuo(map);
 
         new MapTexture(TextureScale).FastAttachTexture(_showMap, map, indexOfTexture);
+
         new MapTexture(TextureScale).FastAttachCampTexture(_showCamp, map, indexOfTexture);
 
         globalMap = map;
 
-
-
-        //  _showCamp  ʾ ڱ _showMap   ߵ ͼ   ϣ       ͸   ȵ   Ϊ0.5
         _showCamp.transform.position = _showMap.transform.position;
         _showCamp.transform.rotation = _showMap.transform.rotation;
         _showCamp.transform.localScale = _showMap.transform.localScale;
@@ -152,6 +152,8 @@ public class DirectGenMap : MonoBehaviour
         Dictionary<string, Vector2> shuMainTown = MainTownLocation.shuMainTown;
         Dictionary<string, Vector2> wuMainTown = MainTownLocation.wuMainTown;
 
+        Vector2 offset = new Vector2(-10.0f, -48.0f);
+
         // 遍历主要城镇的坐标
         foreach (var town in weiMainTown)
         {
@@ -164,7 +166,7 @@ public class DirectGenMap : MonoBehaviour
             {
                 if (center.water || center.ocean)
                     continue;
-                float distance = Vector2.Distance(center.point, townPosition);
+                float distance = Vector2.Distance(center.point, townPosition + offset);
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
@@ -177,7 +179,14 @@ public class DirectGenMap : MonoBehaviour
                 closestCenter.property = 0;
                 closestCenter.camp = 0;
                 mainTownCenterList.Add(closestCenter);
-                map.Graph.centers.Remove(closestCenter);
+                GameObject newTown = Instantiate(blockList[0], new Vector3(closestCenter.point.x / 4 - 75, closestCenter.point.y / 4 - 50, 0), Quaternion.identity);
+                GameObject BuildingSet = GameObject.Find("BuildingSet");
+                newTown.transform.SetParent(BuildingSet.transform);
+                newTown.name = town.Key;
+                // 子Canvas/Name下的TextMeshPro展示城池名字
+                GameObject nameText = newTown.transform.Find("Canvas/Name").gameObject;
+                TextMeshPro textMeshPro = nameText.GetComponent<TextMeshPro>();
+                textMeshPro.text = townName;
             }
         }
         foreach (var town in shuMainTown)
@@ -191,7 +200,7 @@ public class DirectGenMap : MonoBehaviour
             {
                 if (center.water || center.ocean)
                     continue;
-                float distance = Vector2.Distance(center.point, townPosition);
+                float distance = Vector2.Distance(center.point, townPosition + offset);
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
@@ -204,7 +213,15 @@ public class DirectGenMap : MonoBehaviour
                 closestCenter.property = 0;
                 closestCenter.camp = 1;
                 mainTownCenterList.Add(closestCenter);
-                map.Graph.centers.Remove(closestCenter);
+                GameObject newTown = Instantiate(blockList[1], new Vector3(closestCenter.point.x / 4 - 75, closestCenter.point.y / 4 - 50, 0), Quaternion.identity);
+                GameObject BuildingSet = GameObject.Find("BuildingSet");
+                newTown.transform.SetParent(BuildingSet.transform);
+                newTown.name = town.Key;
+                // 子Canvas/Name下的TextMeshPro展示城池名字
+                GameObject nameText = newTown.transform.Find("Canvas/Name").gameObject;
+                TextMeshPro textMeshPro = nameText.GetComponent<TextMeshPro>();
+                textMeshPro.text = townName;
+
             }
         }
         foreach (var town in wuMainTown)
@@ -218,7 +235,7 @@ public class DirectGenMap : MonoBehaviour
             {
                 if (center.water || center.ocean)
                     continue;
-                float distance = Vector2.Distance(center.point, townPosition);
+                float distance = Vector2.Distance(center.point , townPosition + offset);
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
@@ -231,20 +248,29 @@ public class DirectGenMap : MonoBehaviour
                 closestCenter.property = 0;
                 closestCenter.camp = 2;
                 mainTownCenterList.Add(closestCenter);
-                map.Graph.centers.Remove(closestCenter);
+                GameObject newTown = Instantiate(blockList[2], new Vector3(closestCenter.point.x / 4 - 75, closestCenter.point.y / 4 - 50, 0), Quaternion.identity);
+                GameObject BuildingSet = GameObject.Find("BuildingSet");
+                newTown.transform.SetParent(BuildingSet.transform);
+                newTown.name = town.Key;
+                // 子Canvas/Name下的TextMeshPro展示城池名字
+                GameObject nameText = newTown.transform.Find("Canvas/Name").gameObject;
+                TextMeshPro textMeshPro = nameText.GetComponent<TextMeshPro>();
+                textMeshPro.text = townName;
             }
         }
 
-        // 生成城镇
-        foreach (Center center in mainTownCenterList)
-        {
-            // 生成城镇
-            GameObject town = Instantiate(blockList[0], new Vector3(center.point.x/4 - 75, center.point.y/4 - 75, 0), Quaternion.identity);
-            // Set BuildingSet as parent
-            GameObject BuildingSet = GameObject.Find("BuildingSet");
-            town.transform.SetParent(BuildingSet.transform);
-            town.name = "MainTown";
-        }
+        //// 生成城镇
+        //foreach (Center center in mainTownCenterList)
+        //{
+        //    // 生成城镇
+        //    GameObject town = Instantiate(blockList[0], new Vector3(center.point.x/4 - 75, center.point.y/4 - 50, 0), Quaternion.identity);
+        //    // Set BuildingSet as parent
+        //    GameObject BuildingSet = GameObject.Find("BuildingSet");
+        //    town.transform.SetParent(BuildingSet.transform);
+        //    town.name = "MainTown";
+
+        //}
+
 
         return map;
     }

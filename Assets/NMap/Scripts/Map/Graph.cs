@@ -37,7 +37,8 @@ namespace Assets.Map
             inside = checkIsland;
 
             BuildGraph(points, voronoi);
-            AssignCornerElevations();
+            //AssignCornerElevations();
+            AssignCornerElevationsOfChina();
             AssignOceanCoastAndLand(lakeThreshold);
             RedistributeElevations();
 
@@ -311,6 +312,53 @@ namespace Assets.Map
                     }
                     // If this point changed, we'll add it to the queue so
                     // that we can process its neighbors too.
+                    if (newElevation < s.elevation)
+                    {
+                        s.elevation = newElevation;
+                        queue.Enqueue(s);
+                    }
+                }
+            }
+        }
+
+        private void AssignCornerElevationsOfChina()
+        {
+            // This is the new corner elevation based on China's terrain, means elevation increase from East to West, South to North.
+            // The elevation is set to 0.0f for corners in the ocean and coast, and 1.0f for corners in the land.
+            var queue = new Queue<Corner>();
+            foreach (var q in corners)
+            {
+                q.water = !inside(q.point);
+            }
+            foreach (var q in corners)
+            {
+                if (q.border && q.point.x > Width/2 && q.point.y < Height/2)
+                {
+                    q.elevation = 0.0f;
+                    queue.Enqueue(q);
+                } 
+                else
+                {
+                    q.elevation = float.PositiveInfinity;
+                }
+            }
+            while (queue.Any())
+            {
+                var q = queue.Dequeue();
+                foreach (var s in q.adjacent)
+                {
+                    // Every step up is epsilon over water or 1 over land. The
+                    // number doesn't matter because we'll rescale the
+                    // elevations later.
+                    var newElevation = 0.01f + q.elevation;
+                    if (!q.water && !s.water)
+                    {
+                        newElevation += 1;
+                        if (_needsMoreRandomness)
+                        {
+                            newElevation += UnityEngine.Random.value;
+                        }
+                    }
                     if (newElevation < s.elevation)
                     {
                         s.elevation = newElevation;

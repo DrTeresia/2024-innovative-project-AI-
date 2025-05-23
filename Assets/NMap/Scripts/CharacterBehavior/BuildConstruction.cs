@@ -64,7 +64,7 @@ namespace Assets.Map
                 //    return;
                 //}
                 //检测是否按下Z键，如果是则建造directGenMap.blockList[4]
-                if (Input.GetKeyDown(KeyCode.A))
+                if (Input.GetKeyDown(KeyCode.Z))
                 {
                     // 更改地块属性
                     currentCenter.property = 4;
