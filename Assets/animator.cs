@@ -9,6 +9,8 @@ public class FactionAnimator : MonoBehaviour
     private Move moveScript;
 
     [Header("Team Settings")]
+    //[SerializeField] private string myTeamTag;
+    //[SerializeField] private string enemyTeamTag = "TeamB";
     [SerializeField] private List<string> enemyTeamTags = new List<string>();
 
     [Header("Combat Settings")]
@@ -96,10 +98,10 @@ public class FactionAnimator : MonoBehaviour
 
         return angle switch
         {
-            >= 315f or < 45f => Vector2.up,    // Up (315ï¿½ï¿½-45ï¿½ï¿½)
-            >= 45f and < 135f => Vector2.left,  // Left (45ï¿½ï¿½-135ï¿½ï¿½)
-            >= 135f and < 225f => Vector2.down, // Down (135ï¿½ï¿½-225ï¿½ï¿½)
-            _ => Vector2.right                  // Right (225ï¿½ï¿½-315ï¿½ï¿½)
+            >= 315f or < 45f => Vector2.up,    // Up (315¡ã-45¡ã)
+            >= 45f and < 135f => Vector2.left,  // Left (45¡ã-135¡ã)
+            >= 135f and < 225f => Vector2.down, // Down (135¡ã-225¡ã)
+            _ => Vector2.right                  // Right (225¡ã-315¡ã)
         };
     }
 

@@ -1,9 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Newtonsoft.Json;
-using System.IO;
-using UnityEngine.Networking;
 
 [RequireComponent(typeof(Move))]
 public class AmbushController : MonoBehaviour
@@ -15,10 +13,10 @@ public class AmbushController : MonoBehaviour
     [SerializeField] private int hiddenLayer;           // 埋伏时切换到的隐藏层级
 
     [Header("计策")]
-    public string inputCommand; 
+    //public string inputCommand; 
 
     private Move moveScript;
-    private Cover currentCover;
+    public Cover currentCover;
     public bool isAmbushing;
     private Dictionary<Behaviour, bool> componentStates = new Dictionary<Behaviour, bool>();
     private bool isStrategyLoaded = false; // 新增加载状态标识
@@ -27,19 +25,47 @@ public class AmbushController : MonoBehaviour
     {
         moveScript = GetComponent<Move>();
         originalLayer = gameObject.layer;
+        //Debug.Log("AmbushController Awake method called");
     }
-    void Start()
+    void OnEnable()
     {
-        StartCoroutine(LoadStrategyFromStreamingAssets());
+        GlobalVariableManager.Instance.Subscribe("inputCommand", OnInputCommandChanged);
     }
-    void Update()
+
+    void OnDisable()
     {
-        if (inputCommand == "伏击")
+        GlobalVariableManager.Instance.Unsubscribe("inputCommand", OnInputCommandChanged);
+    }
+
+    private void OnInputCommandChanged(object command)
+    {
+        string inputCommand = (string)command;
+        string[] commandParts = inputCommand.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
+
+        // 验证命令格式有效性
+        if (commandParts.Length != 2) return;
+
+        string targetName = commandParts[0];
+        string strategy = commandParts[1];
+
+        // 调试输出解析结果
+        Debug.Log($"解析命令 - 目标: {targetName}, 计策: {strategy}");
+
+        // 判断是否执行伏击
+        if (targetName == gameObject.name && strategy == "伏击")
         {
-            inputCommand = ""; 
             ExecuteAmbush();
+            Debug.Log($"{gameObject.name} 执行伏击命令");
         }
     }
+    //void Update()
+    //{
+    //    if (inputCommand == "伏击")
+    //    {
+    //        inputCommand = ""; 
+    //        ExecuteAmbush();
+    //    }
+    //}
 
     // 外部调用：执行伏击指令
     public void ExecuteAmbush()
@@ -80,8 +106,11 @@ public class AmbushController : MonoBehaviour
             Debug.Log("成功进入埋伏状态");
             moveScript.controlMode = 1;
             EnterAmbushState();
-            yield return new WaitUntil(() => !isAmbushing);
+            yield return new WaitUntil(() => Vector2.Distance(transform.position, currentCover.transform.position) > currentCover.occupyRadius);
+            //yield return new WaitUntil(() => !isAmbushing);
             currentCover.ReleaseCover();
+            ExitAmbushState();
+            Debug.Log("成功退出埋伏状态");
         }
         else
         {
@@ -106,38 +135,7 @@ public class AmbushController : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
     }
 
-    // 新增：异步加载策略配置
-    private IEnumerator LoadStrategyFromStreamingAssets()
-    {
-        string filePath = Path.Combine(Application.streamingAssetsPath, "predicted_strategy.json");
 
-        using (UnityWebRequest request = UnityWebRequest.Get(filePath))
-        {
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                try
-                {
-                    string jsonContent = request.downloadHandler.text;
-                    PredictedStrategy strategy = JsonConvert.DeserializeObject<PredictedStrategy>(jsonContent);
-                    inputCommand = strategy.strategyName;
-                    Debug.Log($"策略加载成功：{inputCommand}");
-                    isStrategyLoaded = true;
-                }
-                catch (System.Exception e)
-                {
-                    Debug.LogError($"JSON解析失败: {e.Message}");
-                    isStrategyLoaded = false;
-                }
-            }
-            else
-            {
-                Debug.LogError($"文件加载失败：{request.error}");
-                isStrategyLoaded = false;
-            }
-        }
-    }
 
     // 退出埋伏状态（保持不变）
     public void ExitAmbushState()

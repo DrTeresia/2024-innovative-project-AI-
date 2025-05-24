@@ -58,6 +58,9 @@ public class RetreatController : MonoBehaviour
         if (parts.Length >= 2 && parts[0].Trim() == "≥∑ÕÀµΩ≥«≥ÿ")
         {
             ExecuteRetreat(parts[1].Trim());
+        }else if(inputCommand == "À¿ ÿ")
+        {
+
         }
     }
     public void ExecuteRetreat(string cityName)
