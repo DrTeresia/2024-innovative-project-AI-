@@ -194,9 +194,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5061156384089151608}
   - component: {fileID: -1217643996006150771}
+  - component: {fileID: 4846608716547538433}
+  - component: {fileID: 465906895674380379}
   m_Layer: 0
   m_Name: wuMainTown
-  m_TagString: Untagged
+  m_TagString: wu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -239,6 +241,38 @@ MonoBehaviour:
   attackRange: 2
   damage: 10
   attackCooldown: 1
+--- !u!114 &4846608716547538433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4050066782307363993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848d9b8383eabef499454242a4f4ec91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armyManager: {fileID: 0}
+--- !u!114 &465906895674380379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4050066782307363993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e0c745f136db54b8ff014ba7d24911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectionRange: 10
+  generalLayer:
+    serializedVersion: 2
+    m_Bits: 262144
+  lineWidth: 0.2
+  sameTagColor: {r: 0, g: 1, b: 0, a: 1}
+  differentTagColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &7266640400512936849
 GameObject:
   m_ObjectHideFlags: 0
