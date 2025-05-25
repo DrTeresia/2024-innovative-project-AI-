@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Assets.Map; // 确保引用了正确的命名空间
-
 public class General : MonoBehaviour
 {
     public ArmyManager armyManager;
     public string name;
-    public float environment; // 只有当物体下挂载ChangeFieldColor.cs时才有意义
+    public float environment;
     public int weather;
     public int happenTime;
     public Formation formation = Formation.Rectangle;
@@ -19,7 +18,27 @@ public class General : MonoBehaviour
     public int SoldierCount = 0;
     public float ledRange = 20f;
     public LayerMask soldierLayer; // ���"Soldier"��
+    private int GenerateWeatherByGaussian(Vector2 position){
+        // 地图中心
+        float muX = 75f;
+        float muY = 50f;
+        // 标准差，控制天气分布范围
+        float sigmaX = 40f;
+        float sigmaY = 30f;
 
+        // 高斯公式
+        float gauss = Mathf.Exp(
+            -(
+                Mathf.Pow(position.x - muX, 2) / (2 * sigmaX * sigmaX) +
+                Mathf.Pow(position.y - muY, 2) / (2 * sigmaY * sigmaY)
+            )
+        );
+        // 将高斯值映射到天气编码（假设0-3）
+        if (gauss > 0.7f) return 0; // 晴
+        if (gauss > 0.4f) return 1; // 多云
+        if (gauss > 0.15f) return 2; // 阴
+        return 3; // 雨
+    }
     private void Start()
     {
         if (armyManager != null)
@@ -33,8 +52,9 @@ public class General : MonoBehaviour
 
     private void Update()
     {
-        UpdateLedSoldierCount();
+        weather = GenerateWeatherByGaussian(transform.position);
         UpdateEnvironment();
+        UpdateLedSoldierCount();
     }
 
     private void OnDestroy()
@@ -113,7 +133,6 @@ public class General : MonoBehaviour
             case Formation.Rectangle:
                 CalculateRectangleFormation();
                 break;
-                // �����������������߼�
         }
     }
 
@@ -140,13 +159,11 @@ public class General : MonoBehaviour
     }
     public void SetFormationOffsetForSoldier(Soldier soldier)
     {
-        // ����ʿ���������е�ƫ����
-        // ����ֻ��һ���򵥵�ʾ����ʵ���߼�������������ͺ�ʿ��������ȷ��
         int index = soldiers.IndexOf(soldier);
-        int soldiersPerRow = 5; // ÿ�е�ʿ������
+        int soldiersPerRow = 5; 
         int row = index / soldiersPerRow;
         int col = index % soldiersPerRow;
-        float spacing = 1f; // ʿ��֮��ļ��
+        float spacing = 1f; 
 
         Vector2 offset = new Vector2(
             col * spacing - (soldiersPerRow - 1) * spacing * 0.5f,
@@ -164,7 +181,6 @@ public class General : MonoBehaviour
             this.environment = changeFieldColor.locationElevation;
         }
     }
-
     public enum Formation
     {
         Rectangle,
