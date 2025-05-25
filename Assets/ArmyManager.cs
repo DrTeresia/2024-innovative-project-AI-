@@ -2,19 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using Newtonsoft.Json; // ÒıÈë JSON.NET ¿âÓÃÓÚ JSON ĞòÁĞ»¯
+using Newtonsoft.Json; 
 
 public class ArmyManager : MonoBehaviour
 {
     public List<General> generals = new List<General>();
     public List<Castle> castles = new List<Castle>();
-    public float detectionRange = 20f; // Õì²â·¶Î§
-    public float interval = 10f; // ¶¨Ê±ÈÎÎñ¼ä¸ôÊ±¼ä£¨Ãë£©
+    public List<General> nearbyGenerals = new List<General>();
+    public float detectionRange = 20f; 
+    public float interval = 10f; 
 
     private Dictionary<Soldier, General> soldierToGeneralMap = new Dictionary<Soldier, General>();
     public LayerMask generalLayer;
 
-    private float timer = 0f; // ¶¨Ê±Æ÷
+    private float timer = 0f; // ï¿½ï¿½Ê±ï¿½ï¿½
 
     private void Update()
     {
@@ -23,7 +24,7 @@ public class ArmyManager : MonoBehaviour
         if (timer >= interval)
         {
             WriteGeneralsInfoToJson();
-            timer = 0f; // ÖØÖÃ¶¨Ê±Æ÷
+            timer = 0f; 
         }
     }
 
@@ -49,6 +50,22 @@ public class ArmyManager : MonoBehaviour
         {
             castles.Add(castle);
         }
+    }
+
+    // æ–°å¢æ–¹æ³•ï¼šæ£€æµ‹ä¸€å®šèŒƒå›´å†…çš„æ™ºèƒ½ä½“ï¼ˆGeneralï¼‰
+    public List<General> DetectNearbyGenerals(Vector2 position)
+    {
+        List<General> nearbyGenerals = new List<General>();
+
+        foreach (General general in generals)
+        {
+            if (general != null && Vector2.Distance(position, general.transform.position) <= detectionRange)
+            {
+                nearbyGenerals.Add(general);
+            }
+        }
+
+        return nearbyGenerals;
     }
 
     public General FindNearestGeneral(Vector2 position)
@@ -115,24 +132,36 @@ public class ArmyManager : MonoBehaviour
     private void WriteGeneralsInfoToJson()
     {
         List<GeneralInfo> generalsInfo = new List<GeneralInfo>();
-
         foreach (var general in generals)
         {
+            nearbyGenerals = DetectNearbyGenerals(general.transform.position);
+            int friendlySoldiers = 1;
+            int enemySoldiers = 1;
+            foreach (var nearbyGeneral in nearbyGenerals)
+            {
+                if (nearbyGeneral == null) continue;
+                if (nearbyGeneral.tag == general.tag)
+                    friendlySoldiers += nearbyGeneral.SoldierCount;
+                else
+                    enemySoldiers += nearbyGeneral.SoldierCount;
+            }
+
+            float soldierComparison = enemySoldiers > 0 ? (float)friendlySoldiers / enemySoldiers : friendlySoldiers;
             generalsInfo.Add(new GeneralInfo
             {
                 Name = general.name,
-                ±øÁ¦±È¹éÒ»»¯ = general.SoldierCount,
-                µØĞÎ±àÂë = general.environment,
-                ÌìÆø±àÂë = general.weather,
-                ·¢ÉúÊ±¼ä = general.happenTime
+                å…µåŠ›æ¯”å½’ä¸€åŒ– = soldierComparison,
+                åœ°å½¢ç¼–ç  = general.environment,
+                å¤©æ°”ç¼–ç  = general.weather,
+                å‘ç”Ÿæ—¶é—´ = general.happenTime
             });
         }
 
         string json = JsonConvert.SerializeObject(generalsInfo, Formatting.Indented);
-        string directoryPath = Path.Combine(Application.persistentDataPath, "General_Data"); // Ê¹ÓÃ Path.Combine È·±£Â·¾¶ÕıÈ·
-        string filePath = Path.Combine(directoryPath, "generals_info.json"); // Ê¹ÓÃ Path.Combine È·±£Â·¾¶ÕıÈ·
+        string directoryPath = Path.Combine(Application.persistentDataPath, "General_Data"); // Ê¹ï¿½ï¿½ Path.Combine È·ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½È·
+        string filePath = Path.Combine(directoryPath, "generals_info.json"); // Ê¹ï¿½ï¿½ Path.Combine È·ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½È·
 
-        // È·±£Ä¿Â¼´æÔÚ
+        // È·ï¿½ï¿½Ä¿Â¼ï¿½ï¿½ï¿½ï¿½
         if (!Directory.Exists(directoryPath))
         {
             Directory.CreateDirectory(directoryPath);
@@ -159,10 +188,10 @@ public class ArmyManager : MonoBehaviour
     private class GeneralInfo
     {
         public string Name;
-        public int ±øÁ¦±È¹éÒ»»¯;
-        public int µØĞÎ±àÂë;
-        public int ÌìÆø±àÂë;
-        public int ·¢ÉúÊ±¼ä;
+        public float å…µåŠ›æ¯”å½’ä¸€åŒ–;
+        public float åœ°å½¢ç¼–ç ;
+        public int å¤©æ°”ç¼–ç ;
+        public int å‘ç”Ÿæ—¶é—´;
 
     }
 
