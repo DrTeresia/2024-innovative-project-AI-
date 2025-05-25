@@ -160,7 +160,7 @@ public class ArmyManager : MonoBehaviour
     {
         public string Name;
         public int 兵力比归一化;
-        public int 地形编码;
+        public float 地形编码;
         public int 天气编码;
         public int 发生时间;
 

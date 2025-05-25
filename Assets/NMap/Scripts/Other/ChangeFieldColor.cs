@@ -20,6 +20,8 @@ namespace Assets.Map
 
         public int camp = 1;
         public int locationCamp = -1;
+        public float locationElevation = 0.0f;
+        public float locationMoisture = 0.0f;
         public Biome locationBiome = Biome.Ocean;
 
         void Start()
@@ -72,6 +74,8 @@ namespace Assets.Map
             }
             locationCamp = currentCenter.camp;
             locationBiome = currentCenter.biome;
+            locationElevation = currentCenter.elevation;
+            locationMoisture = currentCenter.moisture;
         }
 
         // 根据所在Center，将该地块颜色改变为camp

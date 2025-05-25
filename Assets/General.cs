@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Assets.Map; // 确保引用了正确的命名空间
 
 public class General : MonoBehaviour
 {
     public ArmyManager armyManager;
     public string name;
-    public int environment;
+    public float environment; // 只有当物体下挂载ChangeFieldColor.cs时才有意义
     public int weather;
     public int happenTime;
     public Formation formation = Formation.Rectangle;
@@ -33,6 +34,7 @@ public class General : MonoBehaviour
     private void Update()
     {
         UpdateLedSoldierCount();
+        UpdateEnvironment();
     }
 
     private void OnDestroy()
@@ -152,6 +154,15 @@ public class General : MonoBehaviour
         );
 
         soldier.SetFormationOffset(offset);
+    }
+    private void UpdateEnvironment()
+    {
+        // 获取当前物体下的 ChangeFieldColor 组件
+        ChangeFieldColor changeFieldColor = GetComponent<ChangeFieldColor>();
+        if (changeFieldColor != null)
+        {
+            this.environment = changeFieldColor.locationElevation;
+        }
     }
 
     public enum Formation
