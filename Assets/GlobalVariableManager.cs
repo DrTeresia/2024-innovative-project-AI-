@@ -1,23 +1,22 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using System.IO;
-using UnityEngine.Networking;
-using System.Collections;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Collections;
 
 public class GlobalVariableManager : MonoBehaviour
 {
     public static GlobalVariableManager Instance { get; private set; }
 
-    // 公共变量，可在 Inspector 中直接输入
     [SerializeField] private string _inputCommand;
 
-    // JSON文件配置
-    [Header("JSON配置")]
-    [SerializeField] private bool loadFromJSON = true;
-    [SerializeField] private string strategyFileName = "predicted_strategy.json";
+    // JSON监控相关变量
+    private string _strategyFilePath;
+    private DateTime _lastModifiedTime;
+    private HashSet<string> _processedHashes = new HashSet<string>();
 
     private Dictionary<string, object> _variables = new Dictionary<string, object>();
     private Dictionary<string, Action<object>> _onVariableChanged = new Dictionary<string, Action<object>>();
@@ -32,57 +31,87 @@ public class GlobalVariableManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // 初始化时同步公共变量到全局字典
-        if (loadFromJSON)
+        // 初始化JSON监控
+        _strategyFilePath = Path.Combine(Application.streamingAssetsPath, "predicted_strategy.json");
+        if (File.Exists(_strategyFilePath))
         {
-            StartCoroutine(LoadStrategyFromJSON());
+            _lastModifiedTime = File.GetLastWriteTime(_strategyFilePath);
+            LoadFromFileSystem(_strategyFilePath);
         }
-        else
-        {
-            SetVariable("inputCommand", _inputCommand);
-        }
+        StartCoroutine(CheckForFileUpdates());
+
+        SetVariable("inputCommand", _inputCommand);
     }
-    private IEnumerator LoadStrategyFromJSON()
+
+    private IEnumerator CheckForFileUpdates()
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, strategyFileName);
-
-        using (UnityWebRequest request = UnityWebRequest.Get(filePath))
+        while (true)
         {
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success)
+            if (File.Exists(_strategyFilePath))
             {
-                try
+                DateTime currentModifiedTime = File.GetLastWriteTime(_strategyFilePath);
+                if (currentModifiedTime != _lastModifiedTime)
                 {
-                    string jsonContent = request.downloadHandler.text;
-                    List<StrategyEntry> strategyEntries = JsonConvert.DeserializeObject<List<StrategyEntry>>(jsonContent);
-
-                    // 构建命令字符串
-                    StringBuilder commandBuilder = new StringBuilder();
-                    foreach (var entry in strategyEntries)
-                    {
-                        commandBuilder.AppendLine($"{entry.名字}: {entry.预测的计策名称}");
-                    }
-
-                    string combinedCommand = commandBuilder.ToString().Trim();
-                    SetVariable("inputCommand", combinedCommand);
-                    Debug.Log($"Successfully loaded strategies:\n{combinedCommand}");
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"JSON解析错误: {e.Message}");
-                    SetVariable("inputCommand", _inputCommand);
+                    _lastModifiedTime = currentModifiedTime;
+                    LoadFromFileSystem(_strategyFilePath);
                 }
             }
-            else
-            {
-                Debug.LogError($"文件加载错误: {request.error}");
-                SetVariable("inputCommand", _inputCommand);
-            }
+            yield return new WaitForSeconds(1f);
         }
     }
 
-    // 当 Inspector 中的值变化时触发（仅在编辑器模式下有效）
+    private void LoadFromFileSystem(string path)
+    {
+        try
+        {
+            string jsonData = File.ReadAllText(path);
+            ProcessJSON(jsonData);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"文件读取失败: {e.Message}");
+        }
+    }
+
+    private void ProcessJSON(string jsonString)
+    {
+        try
+        {
+            string wrappedJson = $"{{\"strategies\":{jsonString}}}";
+            var wrapper = JsonUtility.FromJson<StrategyDataWrapper>(wrappedJson);
+
+            foreach (var strategy in wrapper.strategies)
+            {
+                string hash = GenerateDataHash(strategy);
+                if (!_processedHashes.Contains(hash))
+                {
+                    // 更新inputCommand为最新条目的计策名称
+                    _inputCommand = strategy.名字 + ":" + strategy.预测的计策名称;
+                    SetVariable("inputCommand", _inputCommand);
+
+                    _processedHashes.Add(hash);
+                    Debug.Log($"更新全局命令: {_inputCommand}");
+                    Debug.Log(1);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"JSON解析错误: {e.Message}");
+        }
+    }
+
+    private string GenerateDataHash(StrategyData data)
+    {
+        string json = JsonUtility.ToJson(data);
+        using (SHA256 sha256 = SHA256.Create())
+        {
+            byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(json));
+            return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+        }
+    }
+
+    // 原有功能保持不变
     private void OnValidate()
     {
         if (!Application.isPlaying) return;
@@ -131,16 +160,17 @@ public class GlobalVariableManager : MonoBehaviour
     }
 
     [System.Serializable]
-    private class PredictedStrategy
+    private class StrategyDataWrapper
     {
-        public string strategyName;
+        public List<StrategyData> strategies;
     }
+
     [System.Serializable]
-    private class StrategyEntry
+    public class StrategyData
     {
         public string 名字;
         public string 最有影响力特征;
-        public double 预测的计策编号;
+        public float 预测的计策编号;
         public string 预测的计策名称;
     }
 }

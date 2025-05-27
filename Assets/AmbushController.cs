@@ -9,8 +9,8 @@ public class AmbushController : MonoBehaviour
     [Header("伏击设置")]
     [SerializeField] private string enemyTeamTag = "TeamA";
     [SerializeField] private List<Behaviour> componentsToDisable = new List<Behaviour>();
-    [SerializeField] private int originalLayer;         // 记录原始层级
-    [SerializeField] private int hiddenLayer;           // 埋伏时切换到的隐藏层级
+    [SerializeField] private int originalLayer = 9;         // 记录原始层级
+    [SerializeField] private int hiddenLayer = 12;           // 埋伏时切换到的隐藏层级
 
     [Header("计策")]
     //public string inputCommand; 
@@ -37,35 +37,28 @@ public class AmbushController : MonoBehaviour
         GlobalVariableManager.Instance.Unsubscribe("inputCommand", OnInputCommandChanged);
     }
 
-    private void OnInputCommandChanged(object command)
+    private void OnInputCommandChanged(object command)        //关羽：伏击
     {
         string inputCommand = (string)command;
-        string[] commandParts = inputCommand.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
 
-        // 验证命令格式有效性
-        if (commandParts.Length != 2) return;
+        string[] commandParts = inputCommand.Split(new[] { '：', ':' }, 2, StringSplitOptions.RemoveEmptyEntries); // 支持中文/英文冒号
+        if (commandParts.Length != 2)
+        {
+            Debug.LogWarning($"指令格式错误: {inputCommand} (正确格式: 名字：命令)");
+            return;
+        }
 
-        string targetName = commandParts[0];
-        string strategy = commandParts[1];
+        string targetName = commandParts[0].Trim();
+        string strategy = commandParts[1].Trim();
 
-        // 调试输出解析结果
-        Debug.Log($"解析命令 - 目标: {targetName}, 计策: {strategy}");
+        Debug.Log($"解析命令 - 目标: {targetName}, 策略: {strategy}");
 
-        // 判断是否执行伏击
         if (targetName == gameObject.name && strategy == "伏击")
         {
+            Debug.Log($"{gameObject.name} 执行伏击指令");
             ExecuteAmbush();
-            Debug.Log($"{gameObject.name} 执行伏击命令");
         }
     }
-    //void Update()
-    //{
-    //    if (inputCommand == "伏击")
-    //    {
-    //        inputCommand = ""; 
-    //        ExecuteAmbush();
-    //    }
-    //}
 
     // 外部调用：执行伏击指令
     public void ExecuteAmbush()

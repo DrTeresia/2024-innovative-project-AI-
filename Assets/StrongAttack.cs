@@ -24,25 +24,26 @@ public class StrongAttackController : MonoBehaviour
         GlobalVariableManager.Instance.Unsubscribe("inputCommand", OnInputCommandChanged);
     }
 
-    private void OnInputCommandChanged(object command)
+    private void OnInputCommandChanged(object command)        //关羽：强攻
     {
         string inputCommand = (string)command;
-        string[] commandParts = inputCommand.Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
 
-        // 验证命令格式有效性
-        if (commandParts.Length != 2) return;
+        string[] commandParts = inputCommand.Split(new[] { '：', ':' }, 2, StringSplitOptions.RemoveEmptyEntries); // 支持中文/英文冒号
+        if (commandParts.Length != 2)
+        {
+            Debug.LogWarning($"指令格式错误: {inputCommand} (正确格式: 名字：命令)");
+            return;
+        }
 
-        string targetName = commandParts[0];
-        string strategy = commandParts[1];
+        string targetName = commandParts[0].Trim();
+        string strategy = commandParts[1].Trim();
 
-        // 调试输出解析结果
-        Debug.Log($"解析命令 - 目标: {targetName}, 计策: {strategy}");
+        Debug.Log($"解析命令 - 目标: {targetName}, 策略: {strategy}");
 
-        // 判断是否执行伏击
         if (targetName == gameObject.name && strategy == "强攻")
         {
+            Debug.Log($"{gameObject.name} 执行强攻指令");
             ExecuteStrongAttack();
-            Debug.Log($"{gameObject.name} 执行强攻命令");
         }
     }
 
