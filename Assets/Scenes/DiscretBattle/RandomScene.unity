@@ -2213,7 +2213,22 @@ PrefabInstance:
     - target: {fileID: 5230070064894885518, guid: b853827279d9f0e4ab0bd79c18629d74,
         type: 3}
       propertyPath: detectionRange
-      value: 1000
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5230070064894885518, guid: b853827279d9f0e4ab0bd79c18629d74,
+        type: 3}
+      propertyPath: enemyTags.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5230070064894885518, guid: b853827279d9f0e4ab0bd79c18629d74,
+        type: 3}
+      propertyPath: enemyTags.Array.data[0]
+      value: wei
+      objectReference: {fileID: 0}
+    - target: {fileID: 5230070064894885518, guid: b853827279d9f0e4ab0bd79c18629d74,
+        type: 3}
+      propertyPath: enemyTags.Array.data[1]
+      value: wu
       objectReference: {fileID: 0}
     - target: {fileID: 7336421931416013540, guid: b853827279d9f0e4ab0bd79c18629d74,
         type: 3}

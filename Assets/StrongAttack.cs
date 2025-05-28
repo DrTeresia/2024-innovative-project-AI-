@@ -6,7 +6,8 @@ public class StrongAttackController : MonoBehaviour
 {
     [Header("Strong Attack Settings")]
     [SerializeField] private string teamTag = "TeamA"; // 自己的阵营标签
-    [SerializeField] private string enemyTag = "Enemy"; // 敌人的标签
+    //[SerializeField] private string enemyTag = "Enemy"; // 敌人的标签
+    [SerializeField] private string[] enemyTags = new string[] { "Enemy" };
     [SerializeField] private float detectionRange = 10f; // 检测范围
 
     private Move moveScript;
@@ -109,7 +110,17 @@ public class StrongAttackController : MonoBehaviour
 
         foreach (var enemy in enemies)
         {
-            if (enemy.CompareTag(enemyTag))
+            bool isEnemy = false;
+            foreach (string tag in enemyTags)
+            {
+                if (enemy.CompareTag(tag))
+                {
+                    isEnemy = true;
+                    break;
+                }
+            }
+
+            if (isEnemy)
             {
                 float distance = Vector2.Distance(transform.position, enemy.transform.position);
                 if (distance < minDistance)
