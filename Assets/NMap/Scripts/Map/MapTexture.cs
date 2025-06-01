@@ -79,6 +79,7 @@ namespace Assets.Map
         // 该函数目前只在地图生成时使用， 如果需要按季节变化颜色需要重新优化
         // 更改：从原本的纯色填充修改为使用Assets/Prefabs/Block/Material/EarthTexture.png（Sprite）作为底色
         // earthTextures放在Biome.cs里， 格式为<Biome, Sprite>
+        // 再次更改：由于难度过大，且效果不一定好，改回纯色填充
         public Texture2D FastGetTexture(Map map, int indexOfTexture = 0)
         {
             int textureWidth = (int)Map.Width * _textureScale;
@@ -103,6 +104,12 @@ namespace Assets.Map
                     texture.FillPolygon(periphery.Select(x => new Vector2(x.x * _textureScale, x.y * _textureScale)).ToArray(), BiomeProperties.Colors[p.biome]);
                 }
             }
+
+            //// 绘制边界线
+            //foreach (var line in map.Graph.edges.Where(p => !p.d0.water && !p.d1.water))
+            //{
+            //    DrawLine(texture, line.v0.point.x, line.v0.point.y, line.v1.point.x, line.v1.point.y, Color.black);
+            //}
             texture.Apply();
             return texture;
         }
