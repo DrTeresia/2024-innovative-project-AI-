@@ -44,7 +44,7 @@ public class AmbushController : MonoBehaviour
         string[] commandParts = inputCommand.Split(new[] { '：', ':' }, 2, StringSplitOptions.RemoveEmptyEntries); // 支持中文/英文冒号
         if (commandParts.Length != 2)
         {
-            Debug.LogWarning($"指令格式错误: {inputCommand} (正确格式: 名字：命令)");
+            //Debug.LogWarning($"指令格式错误: {inputCommand} (正确格式: 名字：命令)");
             return;
         }
 
