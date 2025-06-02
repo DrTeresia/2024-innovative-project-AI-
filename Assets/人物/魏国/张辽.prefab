@@ -230,6 +230,7 @@ MonoBehaviour:
   componentsToDisable: []
   originalLayer: 10
   hiddenLayer: 9
+  currentCover: {fileID: 0}
   isAmbushing: 0
 --- !u!114 &1699795651886987945
 MonoBehaviour:
@@ -282,7 +283,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamTag: wei
-  enemyTag: Enemy
+  enemyTags:
+  - wu
+  - wei
   detectionRange: 100
 --- !u!114 &6365787982074403186
 MonoBehaviour:
@@ -297,6 +300,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armyManager: {fileID: 0}
+  name: 
+  environment: 0
+  weather: 0
+  happenTime: 0
   formation: 0
   soldiersPerRow: 5
   spacing: 1
