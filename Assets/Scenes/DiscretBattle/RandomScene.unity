@@ -3403,8 +3403,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1811506767763896137, guid: 8fcdbe2c5b25a584e9075c6043badc7f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 509581745}
   m_SourcePrefab: {fileID: 100100000, guid: 8fcdbe2c5b25a584e9075c6043badc7f, type: 3}
+--- !u!1 &509581744 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1811506767763896137, guid: 8fcdbe2c5b25a584e9075c6043badc7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 509581743}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &509581745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509581744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e357efea497b0ae4999664f608568397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showMap: {fileID: 0}
+  _showCamp: {fileID: 0}
+  Panel: {fileID: 0}
+  position: {x: 0, y: 0}
+  camp: 1
+  locationCamp: -1
+  locationElevation: 0
+  locationMoisture: 0
+  locationBiome: 0
 --- !u!1 &533318124
 GameObject:
   m_ObjectHideFlags: 0
@@ -5810,6 +5841,33 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!1 &816774427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4529572615780424412, guid: debfa73ce1fd66049b9f2f0a69539001,
+    type: 3}
+  m_PrefabInstance: {fileID: 1097559296}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &816774440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816774427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e357efea497b0ae4999664f608568397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showMap: {fileID: 0}
+  _showCamp: {fileID: 0}
+  Panel: {fileID: 0}
+  position: {x: 0, y: 0}
+  camp: 1
+  locationCamp: -1
+  locationElevation: 0
+  locationMoisture: 0
+  locationBiome: 0
 --- !u!1 &864443087
 GameObject:
   m_ObjectHideFlags: 0
@@ -7175,7 +7233,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4529572615780424412, guid: debfa73ce1fd66049b9f2f0a69539001,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 816774440}
   m_SourcePrefab: {fileID: 100100000, guid: debfa73ce1fd66049b9f2f0a69539001, type: 3}
 --- !u!4 &1098671997 stripped
 Transform:

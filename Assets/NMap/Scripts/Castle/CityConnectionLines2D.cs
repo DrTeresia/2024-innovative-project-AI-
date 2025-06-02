@@ -4,9 +4,9 @@ using System.Collections.Generic;
 public class CityConnectionLines2D : MonoBehaviour
 {
     [Header("连线设置")]
-    public float connectionRange = 10f;
+    public float connectionRange = 2f;
     public LayerMask generalLayer;
-    public float lineWidth = 0.2f;
+    public float lineWidth = 0.01f;
 
     [Header("颜色设置")]
     public Color sameTagColor = Color.green;
@@ -14,6 +14,11 @@ public class CityConnectionLines2D : MonoBehaviour
 
     private List<LineRenderer> lineRenderers = new List<LineRenderer>();
 
+    void Start()
+    {
+        connectionRange = 10.0f;
+        lineWidth = 0.1f; // 调整线宽以适应2D场景
+    }
     void Update()
     {
         UpdateConnections();
