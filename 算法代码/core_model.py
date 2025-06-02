@@ -103,7 +103,7 @@ def process_row(row, model_name="RandomForest"):
     }
 
 def check_and_process_file():
-    new_battle_file_path = "C:\\Users\\21196\\AppData\\LocalLow\\Sustech\\SanGuoTown\\General_Data\\generals_info.json"
+    new_battle_file_path = "C:\\Users\\mikusama\\\AppData\\LocalLow\\Sustech\\SanGuoTown\\General_Data\\generals_info.json"
     if not os.path.exists(new_battle_file_path):
         print("新战役数据文件不存在，跳过处理。")
         return
@@ -113,7 +113,7 @@ def check_and_process_file():
     # 并行处理每一行
     with ThreadPoolExecutor() as executor:
         results = list(executor.map(process_row, [row for _, row in new_battle_data.iterrows()]))
-    with open("../2024-innovative-project-AI-/Assets/StreamingAssets/predicted_strategy.json", "w", encoding='utf-8') as f:
+    with open("../Assets/StreamingAssets/predicted_strategy.json", "w", encoding='utf-8') as f:
         json.dump(results, f, ensure_ascii=False, indent=4)
     print("预测结果已更新到文件：predicted_strategy.json")
 

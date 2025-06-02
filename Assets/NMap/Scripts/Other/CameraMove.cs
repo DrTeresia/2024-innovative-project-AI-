@@ -28,10 +28,7 @@ public class CameraMove : MonoBehaviour
         last_frame_mouse_position = Input.mousePosition;
         c.transform.position = new Vector3(0, 0, -10);
         // set size as 4
-        if (c.orthographic)
-        {
-            c.orthographicSize = 4;
-        }
+        c.orthographicSize = 4;
     }
 
     // Update is called once per frame

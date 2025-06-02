@@ -7,7 +7,9 @@ namespace Assets.Map
     { 
         public static Dictionary<Biome, Color> Colors = new Dictionary<Biome, Color> //color of NorthUnify
         {
-            { Biome.Ocean, HexToColor("44447a") },
+            //{ Biome.Ocean, HexToColor("44447a") },
+            // 将Ocean的颜色全设置为沙滩的颜色
+            { Biome.Ocean, HexToColor("a09077") },
             { Biome.Lake, HexToColor("336699") },
             { Biome.Marsh, HexToColor("2f6666") },
             { Biome.Ice, HexToColor("99ffff") },
