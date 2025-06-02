@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.13, y: -6.63, z: -0.049611576}
-  m_LocalScale: {x: 1.5539, y: 1.5539, z: 1.5539}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.0133002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 106796325230811190}
@@ -246,6 +246,10 @@ MonoBehaviour:
   moveComponent: {fileID: 2226709969663634904}
   generalDetectionRange: 20
   currentGeneral: {fileID: 0}
+  componentsToDisable: []
+  hiddenLayer: 9
+  originalLayer: 13
+  teamTag: 
 --- !u!1 &324615346879680469
 GameObject:
   m_ObjectHideFlags: 0
