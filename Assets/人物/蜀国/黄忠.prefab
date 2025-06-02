@@ -230,6 +230,7 @@ MonoBehaviour:
   componentsToDisable: []
   originalLayer: 10
   hiddenLayer: 9
+  currentCover: {fileID: 0}
   isAmbushing: 0
 --- !u!114 &5727833564941738750
 MonoBehaviour:
@@ -281,8 +282,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04865005b27b5474a84797c88130d87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamTag: Player
-  enemyTag: Enemy
+  teamTag: shu
+  enemyTags:
+  - wu
+  - wei
   detectionRange: 100
 --- !u!114 &4809355695470736638
 MonoBehaviour:

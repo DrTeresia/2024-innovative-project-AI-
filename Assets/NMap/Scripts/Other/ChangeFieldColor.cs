@@ -26,9 +26,47 @@ namespace Assets.Map
 
         void Start()
         {
-            directGenMap = Panel.GetComponent<DirectGenMap>();
+            // 如果Panel为空，则尝试从场景中查找
+            if (Panel == null)
+            {
+                Panel = GameObject.Find("Canvas/Panel");
+                if (Panel == null)
+                {
+                    Debug.LogError("Panel not found in the scene.");
+                }
+                // 获取DirectGenMap组件
+                directGenMap = Panel.GetComponent<DirectGenMap>();
+                textureScale = directGenMap.getTextureScale();
+            } else
+            {
+                // 如果Panel不为空，则直接获取DirectGenMap组件
+                directGenMap = Panel.GetComponent<DirectGenMap>();
+                if (directGenMap == null)
+                {
+                    Debug.LogError("DirectGenMap component not found on Panel.");
+                }
+                textureScale = directGenMap.getTextureScale();
+            }
+            // 如果_showMap为空，则尝试从场景中查找
+            if (_showMap == null)
+            {
+                _showMap = GameObject.Find("Map");
+                if (_showMap == null)
+                {
+                    Debug.LogError("ShowMap not found in the scene.");
+                }
+            }
+            // 如果_showCamp为空，则尝试从场景中查找
+            if (_showCamp == null)
+            {
+                _showCamp = GameObject.Find("CampMap");
+                if (_showCamp == null)
+                {
+                    Debug.LogError("ShowCamp not found in the scene.");
+                }
+            }
+
             position = new Vector2(0, 0);
-            textureScale = directGenMap.getTextureScale();
         }
 
         // 如果该物体在统一地块上停留超过一定时间，改变地块颜色
