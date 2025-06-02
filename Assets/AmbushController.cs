@@ -53,7 +53,7 @@ public class AmbushController : MonoBehaviour
 
         Debug.Log($"解析命令 - 目标: {targetName}, 策略: {strategy}");
 
-        if (targetName == gameObject.name && strategy == "伏击")
+        if (targetName == gameObject.name && strategy == "伏击" && moveScript.controlMode == 0)
         {
             Debug.Log($"{gameObject.name} 执行伏击指令");
             ExecuteAmbush();
@@ -82,7 +82,7 @@ public class AmbushController : MonoBehaviour
     private IEnumerator AmbushRoutine()
     {
         Debug.Log("开始向掩体移动");
-        moveScript.controlMode = 0;
+        //moveScript.controlMode = 0;
         moveScript.targetPosition = currentCover.transform.position;
         //moveScript.HandleInput();
         //moveScript.FollowPath();
@@ -97,7 +97,7 @@ public class AmbushController : MonoBehaviour
         if (currentCover.TryOccupyCover())
         {
             Debug.Log("成功进入埋伏状态");
-            moveScript.controlMode = 1;
+            //moveScript.controlMode = 1;
             EnterAmbushState();
             yield return new WaitUntil(() => Vector2.Distance(transform.position, currentCover.transform.position) > currentCover.occupyRadius);
             //yield return new WaitUntil(() => !isAmbushing);

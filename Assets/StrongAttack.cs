@@ -41,7 +41,7 @@ public class StrongAttackController : MonoBehaviour
 
         Debug.Log($"解析命令 - 目标: {targetName}, 策略: {strategy}");
 
-        if (targetName == gameObject.name && strategy == "强攻")
+        if (targetName == gameObject.name && strategy == "强攻" && moveScript.controlMode == 0)
         {
             Debug.Log($"{gameObject.name} 执行强攻指令");
             ExecuteStrongAttack();
@@ -70,7 +70,7 @@ public class StrongAttackController : MonoBehaviour
             yield break;
         }
 
-        moveScript.controlMode = 0;
+        //moveScript.controlMode = 0;
         // 检查目标是否被销毁
         if (currentTarget == null || currentTarget.gameObject == null)
         {
