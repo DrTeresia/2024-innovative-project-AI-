@@ -22,6 +22,16 @@ public class Move : MonoBehaviour
     private void Start()
     {
         targetPosition = transform.position;
+        // 检查是否是玩家选择的英雄
+        if (gameObject.name == GeneralDataManager.SelectedHeroName)
+        {
+            controlMode = 1; // 玩家控制模式
+            Debug.Log($"{gameObject.name} 设置为玩家控制");
+        }
+        else
+        {
+            controlMode = 0; // AI控制模式
+        }
     }
     void Update()
     {
