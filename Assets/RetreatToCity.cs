@@ -48,12 +48,12 @@ public class RetreatController : MonoBehaviour
 
         Debug.Log($"½âÎöÃüÁî - Ä¿±ê: {targetName}, ²ßÂÔ: {strategy}");
 
-        if (targetName == gameObject.name && strategy == "³·ÍË")
+        if (targetName == gameObject.name && strategy == "³·ÍË"&& moveScript.controlMode == 0)
         {
             Debug.Log($"{gameObject.name} Ö´ÐÐ³·ÍËÖ¸Áî");
             ExecuteRetreat();
         }
-        else if (targetName == gameObject.name && strategy == "ËÀÊØ")
+        else if (targetName == gameObject.name && strategy == "ËÀÊØ" && moveScript.controlMode == 0)
         {
             Debug.Log($"{gameObject.name} Ö´ÐÐËÀÊØÖ¸Áî");
             ExecuteRetreat();
@@ -102,7 +102,7 @@ public class RetreatController : MonoBehaviour
 
     private IEnumerator RetreatRoutine(Transform cityTransform)
     {
-        moveScript.controlMode = 0;
+        //moveScript.controlMode = 0;
         moveScript.targetPosition = cityTransform.position;
 
         while (Vector2.Distance(transform.position, cityTransform.position) > 0.5f)
@@ -111,7 +111,7 @@ public class RetreatController : MonoBehaviour
         }
 
         Debug.Log("³É¹¦µÖ´ï³Ç³Ø");
-        moveScript.controlMode = 1;
+        //moveScript.controlMode = 1;
         EnterCityState();
     }
 
