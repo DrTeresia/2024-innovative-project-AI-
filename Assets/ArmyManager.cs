@@ -17,6 +17,30 @@ public class ArmyManager : MonoBehaviour
 
     private float timer = 0f; // ��ʱ��
 
+    public static ArmyManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 跨场景保持
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    private void Start()
+    {
+        // 确保场景中所有将军都被注册
+        General[] allGenerals = FindObjectsOfType<General>();
+        foreach (General general in allGenerals)
+        {
+            RegisterGeneral(general);
+        }
+    }
+
     private void Update()
     {
         timer += Time.deltaTime;

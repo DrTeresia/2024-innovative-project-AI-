@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,14 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(Move))]
 public class RetreatController : MonoBehaviour
 {
-    [Header("撤退设置")]
-    [SerializeField] private LayerMask cityLayerMask;    // 在Inspector中设置为City层级
+    [Header("城池设置")]
+    [SerializeField] private LayerMask cityLayerMask;    // 在Inspector中设置为City图层
     [SerializeField] private List<Behaviour> componentsToDisable = new List<Behaviour>();
     [SerializeField] private int originalLayer;
     [SerializeField] private int hiddenLayer;
-
-    //[Header("指令")]
-    //public string inputCommand; //  撤退到城池,city
 
     private Move moveScript;
     public bool isInCity;
@@ -23,6 +21,7 @@ public class RetreatController : MonoBehaviour
         moveScript = GetComponent<Move>();
         originalLayer = gameObject.layer;
     }
+
     void OnEnable()
     {
         GlobalVariableManager.Instance.Subscribe("inputCommand", OnInputCommandChanged);
@@ -32,73 +31,78 @@ public class RetreatController : MonoBehaviour
     {
         GlobalVariableManager.Instance.Unsubscribe("inputCommand", OnInputCommandChanged);
     }
-    //void Update()
-    //{
-    //    if (string.IsNullOrEmpty(inputCommand))
-    //    {
-    //        return;
-    //    }
 
-    //    // 解析指令格式：撤退到城池,城池名称
-    //    string[] commandParts = inputCommand.Split(',');
-    //    //inputCommand = "";
-
-    //    if (commandParts[0].Trim() != "撤退到城池")
-    //    {
-    //        return;
-    //    }
-
-    //    string targetCityName = commandParts[1].Trim();
-    //    ExecuteRetreat(targetCityName);
-    //}
     private void OnInputCommandChanged(object command)
     {
         string inputCommand = (string)command;
-        string[] parts = inputCommand.Split(',');
-        if (parts.Length >= 2 && parts[0].Trim() == "撤退到城池")
-        {
-            ExecuteRetreat(parts[1].Trim());
-        }else if(inputCommand == "死守")
-        {
 
-        }
-    }
-    public void ExecuteRetreat(string cityName)
-    {
-        if (isInCity)
+        string[] commandParts = inputCommand.Split(new[] { '：', ':' }, 2, StringSplitOptions.RemoveEmptyEntries); // 支持中文/英文冒号
+        if (commandParts.Length != 2)
         {
-            Debug.LogWarning("已在城池内");
+            Debug.LogWarning($"指令格式错误: {inputCommand} (正确格式: 名字：命令)");
             return;
         }
 
-        GameObject targetCity = FindCityByName(cityName);
+        string targetName = commandParts[0].Trim();
+        string strategy = commandParts[1].Trim();
+
+        Debug.Log($"解析命令 - 目标: {targetName}, 策略: {strategy}");
+
+        if (targetName == gameObject.name && strategy == "撤退")
+        {
+            Debug.Log($"{gameObject.name} 执行撤退指令");
+            ExecuteRetreat();
+        }
+        else if (targetName == gameObject.name && strategy == "死守")
+        {
+            Debug.Log($"{gameObject.name} 执行死守指令");
+            ExecuteRetreat();
+        }
+    }
+
+    public void ExecuteRetreat()
+    {
+        if (isInCity)
+        {
+            Debug.LogWarning("已在城池中");
+            return;
+        }
+
+        GameObject targetCity = FindNearestCastleWithSameTag();
         if (targetCity == null)
         {
-            Debug.LogWarning($"未找到目标城池：{cityName}");
+            Debug.LogWarning("未找到符合要求的城池");
             return;
         }
         StartCoroutine(RetreatRoutine(targetCity.transform));
     }
 
-    // 根据名称和层级查找城池
-    private GameObject FindCityByName(string targetName)
+    // 按标签查找最近的城池
+    private GameObject FindNearestCastleWithSameTag()
     {
-        foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>())
+        GameObject[] allCastles = GameObject.FindGameObjectsWithTag(gameObject.tag);
+        GameObject nearestCastle = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (GameObject castle in allCastles)
         {
-            if (obj.layer == (int)Mathf.Log(cityLayerMask.value, 2) &&
-                obj.name.Equals(targetName, System.StringComparison.OrdinalIgnoreCase))
+            // 检查城池图层
+            if (cityLayerMask != (cityLayerMask | (1 << castle.layer)))
+                continue;
+
+            float distance = Vector2.Distance(transform.position, castle.transform.position);
+            if (distance < minDistance)
             {
-                return obj;
+                minDistance = distance;
+                nearestCastle = castle;
             }
         }
-        return null;
+        return nearestCastle;
     }
 
     private IEnumerator RetreatRoutine(Transform cityTransform)
     {
-        //Debug.Log("开始向城池移动");
         moveScript.controlMode = 0;
-        //moveScript.StartPathfinding(cityTransform.position);
         moveScript.targetPosition = cityTransform.position;
 
         while (Vector2.Distance(transform.position, cityTransform.position) > 0.5f)
@@ -106,7 +110,7 @@ public class RetreatController : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("成功进入城池");
+        Debug.Log("成功抵达城池");
         moveScript.controlMode = 1;
         EnterCityState();
     }
