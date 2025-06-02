@@ -60,3 +60,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: background
+    uniqueID: 3451711403
+    locked: 0
