@@ -20,9 +20,22 @@ public class HealthSystem : MonoBehaviour
     public float MaxHealth => maxHealth;  
     public float CurrentHealth => currentHealth;
 
+    private Castle castle;
+
     void Start()
     {
+        castle = GetComponent<Castle>();
+        string currentLayerName = LayerMask.LayerToName(gameObject.layer);
+        if (currentLayerName == "General")
+        {
+            damage = 4f;
+        }
+        else
+        {
+            damage = 2f;
+        }
         currentHealth = maxHealth;
+        teamTag = gameObject.tag;
         anim = GetComponent<Animator>();
         attackCoroutine = StartCoroutine(AttackRoutine());
     }
@@ -96,7 +109,15 @@ public class HealthSystem : MonoBehaviour
 
 
         // 延迟销毁对象，以确保动画播放完成
-        Invoke("DestroyObject", 0f);
+        string LayerName = LayerMask.LayerToName(gameObject.layer);
+        if (LayerName != "City")
+        {
+            Invoke("DestroyObject", 0f);
+        }
+        else {
+            castle.spawnCount = 0;
+        }
+       
     }
 
     void DestroyObject()

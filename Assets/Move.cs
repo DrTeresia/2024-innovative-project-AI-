@@ -21,6 +21,8 @@ public class Move : MonoBehaviour
 
     private void Start()
     {
+        obstacleLayer = LayerMask.NameToLayer("Ob");
+        moveSpeed = 2f;
         targetPosition = transform.position;
         // 检查是否是玩家选择的英雄
         if (gameObject.name == GeneralDataManager.SelectedHeroName)

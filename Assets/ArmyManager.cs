@@ -124,7 +124,7 @@ public class ArmyManager : MonoBehaviour
                 nearestCastle = castle;
             }
         }
-        Debug.Log(nearestCastle);
+        //Debug.Log(nearestCastle);
         return nearestCastle;
     }
 

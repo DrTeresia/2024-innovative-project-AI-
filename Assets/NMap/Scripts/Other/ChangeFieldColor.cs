@@ -67,6 +67,8 @@ namespace Assets.Map
             }
 
             position = new Vector2(0, 0);
+
+            timerMax = Random.Range(5.0f, 10.0f);
         }
 
         // 如果该物体在统一地块上停留超过一定时间，改变地块颜色

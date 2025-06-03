@@ -9,10 +9,10 @@ public class Castle : MonoBehaviour
     public GameObject spawnPrefab2;      // wei
     public GameObject spawnPrefab3;      // wu
     public GameObject spawnPrefab;      //最终确定使用的预制体
-    public int spawnCount = 10;          // 每批生成的数量
+    public int spawnCount = 3;          // 每批生成的数量
     public float spawnRadius = 5f;      // 生成半径
     public float spawnHeightOffset = 0; // 高度偏移
-    public float spawnInterval = 15f;   // 生成间隔（秒）
+    public float spawnInterval = 20f;   // 生成间隔（秒）
     public bool spawnOnStart = true;    // 是否在游戏开始时生成第一波
 
     private Coroutine spawnCoroutine;   // 协程引用
@@ -35,6 +35,8 @@ public class Castle : MonoBehaviour
         {
             spawnPrefab = spawnPrefab3;
         }
+        spawnCount = 3;
+        spawnInterval = 20f;
         // 启动定期生成协程
         spawnCoroutine = StartCoroutine(PeriodicSpawn());
     }

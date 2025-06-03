@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4836907392970670176}
   - component: {fileID: 3496132938384924765}
   - component: {fileID: 1139756844113942214}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5693835340567742483}
   - component: {fileID: 3502679843436841653}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,9 @@ GameObject:
   - component: {fileID: -1217643996006150771}
   - component: {fileID: -6231951534660479521}
   - component: {fileID: 6401771886133896378}
-  m_Layer: 0
+  - component: {fileID: 306891345783532299}
+  - component: {fileID: 7201796319151314234}
+  m_Layer: 21
   m_Name: weiMainTown
   m_TagString: wei
   m_Icon: {fileID: 0}
@@ -285,6 +287,68 @@ MonoBehaviour:
   lineWidth: 0.2
   sameTagColor: {r: 0, g: 1, b: 0, a: 1}
   differentTagColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!50 &306891345783532299
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4050066782307363993}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!70 &7201796319151314234
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4050066782307363993}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 1}
+  m_Direction: 0
 --- !u!1 &7266640400512936849
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +360,7 @@ GameObject:
   - component: {fileID: 5929768954189058367}
   - component: {fileID: 8411974644093871291}
   - component: {fileID: 5488702147149444310}
-  m_Layer: 5
+  m_Layer: 21
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,7 +531,7 @@ GameObject:
   - component: {fileID: 4039114806033183558}
   - component: {fileID: 7422802895770316847}
   - component: {fileID: 1845155691430990964}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,6 +740,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1848890368193404388, guid: 152e588281a88d442a49df5da65b62a5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 5708142648319795573, guid: 152e588281a88d442a49df5da65b62a5,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -686,6 +755,16 @@ PrefabInstance:
       propertyPath: healthSystem
       value: 
       objectReference: {fileID: -1217643996006150771}
+    - target: {fileID: 7042829950636375273, guid: 152e588281a88d442a49df5da65b62a5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 8493629261283053183, guid: 152e588281a88d442a49df5da65b62a5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 21
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

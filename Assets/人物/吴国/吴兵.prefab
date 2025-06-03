@@ -167,10 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlMode: 0
-  moveSpeed: 3.5
+  moveSpeed: 2
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16777216
   nodeRadius: 0.5
   targetPosition: {x: 6, y: 6}
 --- !u!95 &2171559724405472078
@@ -228,7 +228,7 @@ MonoBehaviour:
   vitality: 1
   teamTag: wu
   attackRange: 2
-  damage: 10
+  damage: 5
   attackCooldown: 1
 --- !u!114 &8191949357045299193
 MonoBehaviour:
