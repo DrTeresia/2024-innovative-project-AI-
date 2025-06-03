@@ -78,29 +78,21 @@ public class AmbushController : MonoBehaviour
         StartCoroutine(AmbushRoutine());
     }
 
-    // 伏击流程协程（保持不变）
+    // 伏击流程协程
     private IEnumerator AmbushRoutine()
     {
         Debug.Log("开始向掩体移动");
-        //moveScript.controlMode = 0;
         moveScript.targetPosition = currentCover.transform.position;
-        //moveScript.HandleInput();
-        //moveScript.FollowPath();
-
-        //moveScript.StartPathfinding(currentCover.transform.position);
 
         while (Vector2.Distance(transform.position, currentCover.transform.position) > currentCover.occupyRadius)
         {
             yield return null;
         }
-
         if (currentCover.TryOccupyCover())
         {
             Debug.Log("成功进入埋伏状态");
-            //moveScript.controlMode = 1;
             EnterAmbushState();
             yield return new WaitUntil(() => Vector2.Distance(transform.position, currentCover.transform.position) > currentCover.occupyRadius);
-            //yield return new WaitUntil(() => !isAmbushing);
             currentCover.ReleaseCover();
             ExitAmbushState();
             Debug.Log("成功退出埋伏状态");
@@ -111,7 +103,7 @@ public class AmbushController : MonoBehaviour
         }
     }
 
-    // 进入埋伏状态（保持不变）
+    // 进入埋伏状态
     private void EnterAmbushState()
     {
         isAmbushing = true;

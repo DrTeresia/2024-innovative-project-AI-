@@ -102,7 +102,6 @@ public class RetreatController : MonoBehaviour
 
     private IEnumerator RetreatRoutine(Transform cityTransform)
     {
-        //moveScript.controlMode = 0;
         moveScript.targetPosition = cityTransform.position;
 
         while (Vector2.Distance(transform.position, cityTransform.position) > 0.5f)

@@ -23,15 +23,15 @@ public class Castle : MonoBehaviour
         {
             armyManager.RegisterCastle(this);
         }
-        if (gameObject.tag == spawnPrefab1.tag)
+        if (gameObject.tag == "shu")
         {
             spawnPrefab = spawnPrefab1;
         }
-        else if (gameObject.tag == spawnPrefab2.tag)
+        else if (gameObject.tag == "wei")
         {
             spawnPrefab = spawnPrefab2;
         }
-        else if (gameObject.tag == spawnPrefab3.tag)
+        else if (gameObject.tag == "wu")
         {
             spawnPrefab = spawnPrefab3;
         }

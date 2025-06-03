@@ -9,11 +9,9 @@ public class HeroSelection : MonoBehaviour
     {
         public Button button;
         public string heroName;
-        //public Sprite heroSprite;
     }
 
     public HeroButton[] heroButtons;
-    //public Image selectedHeroImage;
 
     void Start()
     {

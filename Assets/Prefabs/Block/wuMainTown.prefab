@@ -254,6 +254,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armyManager: {fileID: 0}
+  spawnPrefab1: {fileID: 2166548272216668883, guid: 96ef1eacf7e9a604891d7f919e630a42,
+    type: 3}
+  spawnPrefab2: {fileID: 309444204748848491, guid: 0c0407313966aaa4e8fedef8f1aac204,
+    type: 3}
+  spawnPrefab3: {fileID: 322417869481099212, guid: 7b3b9cfe2fac89f4480a7ce479b4a289,
+    type: 3}
+  spawnPrefab: {fileID: 0}
+  spawnCount: 10
+  spawnRadius: 5
+  spawnHeightOffset: 0
+  spawnInterval: 15
+  spawnOnStart: 1
 --- !u!114 &465906895674380379
 MonoBehaviour:
   m_ObjectHideFlags: 0
