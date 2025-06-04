@@ -12,6 +12,11 @@ from sklearn.svm import SVC
 from econml.dml import CausalForestDML
 from concurrent.futures import ThreadPoolExecutor
 import warnings
+
+import random
+# 设置随机种子
+random.seed(42)
+
 warnings.filterwarnings("ignore", message="'force_all_finite' was renamed to 'ensure_all_finite'")
 
 # 加载数据
@@ -99,7 +104,8 @@ def process_row(row, model_name="RandomForest"):
         "名字": str(row.get("Name", "")),
         "最有影响力特征": str(most_influential["特征"]),
         "预测的计策编号": int(pred_label),
-        "预测的计策名称": str(pred_name)
+        "预测的计策名称": str(pred_name),
+        "随机数": random.randint(0, 10000)
     }
 
 def check_and_process_file():

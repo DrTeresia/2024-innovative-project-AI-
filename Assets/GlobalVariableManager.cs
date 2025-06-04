@@ -82,17 +82,17 @@ public class GlobalVariableManager : MonoBehaviour
 
             foreach (var strategy in wrapper.strategies)
             {
-                string hash = GenerateDataHash(strategy);
-                if (!_processedHashes.Contains(hash))
-                {
+                //string hash = GenerateDataHash(strategy);
+                //if (!_processedHashes.Contains(hash))
+                //{
                     // 更新inputCommand为最新条目的计策名称
                     _inputCommand = strategy.名字 + ":" + strategy.预测的计策名称;
                     SetVariable("inputCommand", _inputCommand);
 
-                    _processedHashes.Add(hash);
+                    //_processedHashes.Add(hash);
                     Debug.Log($"更新全局命令: {_inputCommand}");
                     Debug.Log(1);
-                }
+                //}
             }
         }
         catch (Exception e)

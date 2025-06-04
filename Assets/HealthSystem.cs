@@ -28,11 +28,11 @@ public class HealthSystem : MonoBehaviour
         string currentLayerName = LayerMask.LayerToName(gameObject.layer);
         if (currentLayerName == "General")
         {
-            damage = 4f;
+            damage = 40f;
         }
         else
         {
-            damage = 2f;
+            damage = 15f;
         }
         currentHealth = maxHealth;
         teamTag = gameObject.tag;
@@ -116,6 +116,7 @@ public class HealthSystem : MonoBehaviour
         }
         else {
             castle.spawnCount = 0;
+            castle.tag = "destoried";
         }
        
     }

@@ -39,7 +39,7 @@ public class StrongAttackController : MonoBehaviour
         string targetName = commandParts[0].Trim();
         string strategy = commandParts[1].Trim();
 
-        Debug.Log($"解析命令 - 目标: {targetName}, 策略: {strategy}");
+        //Debug.Log($"解析命令 - 目标: {targetName}, 策略: {strategy}");
 
         if (targetName == gameObject.name && strategy == "强攻" && moveScript.controlMode == 0)
         {
@@ -113,7 +113,7 @@ public class StrongAttackController : MonoBehaviour
             bool isEnemy = false;
             foreach (string tag in enemyTags)
             {
-                if (enemy.CompareTag(tag))
+                if (enemy.CompareTag(tag) && enemy.tag != "City")
                 {
                     isEnemy = true;
                     break;

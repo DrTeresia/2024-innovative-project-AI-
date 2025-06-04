@@ -51,7 +51,7 @@ public class AmbushController : MonoBehaviour
         string targetName = commandParts[0].Trim();
         string strategy = commandParts[1].Trim();
 
-        Debug.Log($"解析命令 - 目标: {targetName}, 策略: {strategy}");
+        //Debug.Log($"解析命令 - 目标: {targetName}, 策略: {strategy}");
 
         if (targetName == gameObject.name && strategy == "伏击" && moveScript.controlMode == 0)
         {
