@@ -69,5 +69,11 @@ public class CameraMove : MonoBehaviour
             //c.transform.position = new Vector3(Mathf.Clamp(c.transform.position.x, -horizontal_limit, horizontal_limit), Mathf.Clamp(c.transform.position.y, -vertical_limit, vertical_limit), c.transform.position.z);
             last_frame_mouse_position = Input.mousePosition;
         }
+        // 如果按下H键则将摄像头位置重置到(0, 0, -10)
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            c.transform.position = new Vector3(0, 0, -10);
+            c.orthographicSize = 4;
+        }
     }
 }

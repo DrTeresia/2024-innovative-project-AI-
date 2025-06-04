@@ -17,8 +17,9 @@ public class DirectGenMap : MonoBehaviour
     private RawImage _image;
     private Text _mouseBiome;
     private Text _descLabel;
-    private GameObject _showMap;
-    private GameObject _showCamp;
+    
+    public GameObject _showMap;
+    public GameObject _showCamp;
     public Map globalMap;
 
     public GameObject[] blockList; // 0 is weiMainTown, 1 is shuMainTown, 2 is wuMainTown
@@ -37,8 +38,10 @@ public class DirectGenMap : MonoBehaviour
         _descLabel = transform.Find("DescLabel").GetComponent<Text>();
         _dFont = _inputName.textComponent.font;
 
-        _showMap = GameObject.Find("Map");
-        _showCamp = GameObject.Find("CampMap");
+        if (_showCamp == null)
+            _showCamp = GameObject.Find("CampMap");
+        if (_showMap == null)
+            _showMap = GameObject.Find("Map");
 
         GenMap();
         
@@ -122,7 +125,7 @@ public class DirectGenMap : MonoBehaviour
         _showCamp.transform.rotation = _showMap.transform.rotation;
         _showCamp.transform.localScale = _showMap.transform.localScale;
         _showCamp.SetActive(true);
-        _showCamp.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Diffuse");
+        //_showCamp.GetComponent<Renderer>().material.shader = Shader.Find("Transparent/Diffuse");
 
         _showCamp.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0.5f);
     }

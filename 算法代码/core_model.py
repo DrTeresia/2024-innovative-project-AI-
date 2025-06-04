@@ -37,10 +37,10 @@ X_scaled = scaler.transform(X)
 # 定义多种模型
 models = {
     "RandomForest": RandomForestClassifier(n_estimators=200, random_state=42),
-    "LogisticRegression": LogisticRegression(max_iter=1000, random_state=42),
-    "KNN": KNeighborsClassifier(n_neighbors=5),
-    "SVC": SVC(probability=True, random_state=42),
-    "GradientBoosting": GradientBoostingClassifier(n_estimators=100, random_state=42)
+    # "LogisticRegression": LogisticRegression(max_iter=1000, random_state=42),
+    # "KNN": KNeighborsClassifier(n_neighbors=5),
+    # "SVC": SVC(probability=True, random_state=42),
+    # "GradientBoosting": GradientBoostingClassifier(n_estimators=100, random_state=42)
 }
 
 # 训练所有模型
